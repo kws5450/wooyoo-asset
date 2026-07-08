@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WOOYOO ASSET v18</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#f3f6fb;--card:#fff;--line:#dfe5ef;--text:#172033;--muted:#697386;
+  --navy:#172033;--pri:#5662e8;--pri2:#eef0ff;--red:#d92d20;--blue:#2563eb;
+  --green:#15803d;--amber:#b45309;--shadow:0 8px 26px rgba(23,32,51,.08)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Arial,"Noto Sans KR",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}.app{max-width:1440px;margin:auto;padding:18px}
+.hero{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:20px 24px;border-radius:22px;color:#fff;background:linear-gradient(135deg,#172033,#283552);box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:18px}.logo{width:3cm;height:3cm;min-width:3cm;min-height:3cm;border-radius:22px;display:grid;place-items:center;background:#c5f24a;color:#172033;font-size:42px;box-shadow:inset 0 0 0 1px #ffffff55;overflow:hidden}.logo img{width:100%;height:100%;object-fit:cover;display:block}.brand h1{margin:0;font-size:28px;letter-spacing:.8px}.brand h1 b{color:#ffbe39}.brand p{margin:6px 0 0;color:#cbd5e1;font-size:14px}
+.hero-tools{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}.hero-tools label{font-size:12px;color:#cbd5e1}.hero-tools select{margin-top:6px;min-width:128px;background:#fff;color:#111827}
+.fx-pill{padding:10px 13px;border-radius:12px;background:#ffffff12;border:1px solid #ffffff1f;min-width:215px}.fx-pill small{display:block;color:#cbd5e1}.fx-pill strong{display:block;font-size:19px;margin-top:3px}.fx-pill em{display:block;font-style:normal;font-size:11px;color:#aeb8c8;margin-top:2px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}nav button{border:1px solid transparent;background:#fff;color:#364152;padding:11px 16px;border-radius:12px;cursor:pointer;box-shadow:0 2px 8px #0000000a}nav button.active{background:var(--pri);color:#fff}
+.panel{display:none}.panel.active{display:block}.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 0 14px}.sectionhead h2{margin:0;font-size:23px}.sectionhead p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.btn{border:0;border-radius:10px;padding:10px 14px;cursor:pointer;white-space:nowrap}.primary{background:var(--pri);color:#fff}.secondary{background:var(--pri2);color:#343daa}.soft{background:#f1f5f9;color:#334155}.danger{background:#fee2e2;color:#991b1b}.btn:active{transform:translateY(1px)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card,.box{background:#fff;border-radius:16px;padding:18px;box-shadow:var(--shadow);border:1px solid #edf1f7}.card span{font-size:13px;color:var(--muted)}.card b{display:block;font-size:26px;margin-top:8px}.card small{display:block;margin-top:7px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.chartbox{height:350px}.box h3{margin:0 0 14px}
+.asset-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.asset-card{background:#fff;border:1px solid #edf1f7;border-radius:14px;padding:15px;cursor:pointer;box-shadow:0 4px 15px #00000008;transition:.15s}.asset-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.asset-card .topline{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.tag{display:inline-flex;padding:4px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:11px}.tag.cash{background:#ecfdf3;color:#166534}.tag.finance{background:#eff6ff;color:#1d4ed8}.asset-card h4{margin:9px 0 4px;font-size:17px}.asset-card p{margin:0;color:var(--muted);font-size:12px}.asset-card strong{display:block;margin-top:11px;font-size:21px}.asset-card .sub{display:flex;justify-content:space-between;gap:8px;margin-top:7px;font-size:12px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}.tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 13px;cursor:pointer}.tabs button.active{background:#172033;color:#fff;border-color:#172033}.tab-label{font-size:12px;color:var(--muted);margin-top:8px}
+.form{background:#fff;border:1px solid #e7ecf4;padding:17px;border-radius:16px;margin-bottom:16px;box-shadow:var(--shadow)}.formgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.form label{font-size:12px;color:var(--muted)}.field-note{display:block;margin-top:5px;color:var(--muted);font-size:11px}.readonly-money{background:#f4f6fa;color:#475569;font-weight:700}input,select,textarea{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:9px;margin-top:5px;background:#fff;color:var(--text)}textarea{resize:vertical;min-height:42px}.ko-input{ime-mode:active}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;flex-wrap:wrap}.hint{font-size:12px;color:var(--muted);margin:0 0 12px}.inline{display:flex;gap:8px;align-items:center}.inline>*{margin-top:0}
+.batch-list{display:grid;gap:12px}.batch-row{border:1px solid #e6ebf3;border-radius:14px;padding:13px;background:#fbfcfe}.batch-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.batch-head b{font-size:14px}.batch-grid{display:grid;grid-template-columns:1fr 1fr 1.2fr .8fr 1fr 1fr 1.3fr;gap:10px}.row-remove{border:0;background:#fee2e2;color:#991b1b;border-radius:8px;padding:7px 10px;cursor:pointer}
+.selection-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:10px 0 12px;padding:11px 13px;border:1px solid #dfe5ef;border-radius:12px;background:#fff;box-shadow:0 3px 12px #00000008}.selection-toolbar .selection-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.selection-toolbar label{display:flex;align-items:center;gap:7px;font-size:13px;color:#475569;cursor:pointer}.selection-toolbar input[type=checkbox],.select-box{width:17px;height:17px;margin:0;accent-color:var(--pri);cursor:pointer}.selection-count{font-size:12px;color:var(--muted)}button:disabled{opacity:.45;cursor:not-allowed;transform:none!important}.select-col{width:44px;text-align:center!important}.tablewrap{overflow:auto;border-radius:15px;background:#fff;border:1px solid #e7ecf4;box-shadow:var(--shadow)}table{width:100%;border-collapse:collapse;min-width:960px}th,td{padding:11px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}th{background:#f8fafc;font-size:12px;color:#566074;position:sticky;top:0}td{font-size:13px}.muted{color:var(--muted)}.pos{color:var(--red);font-weight:700}.neg{color:var(--blue);font-weight:700}.neutral{color:var(--muted);font-weight:700}.owner-dot{display:inline-block;width:8px;height:8px;background:#7c8af4;border-radius:99px;margin-right:5px}
+.property-grid,.debt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:16px}.property-card,.debt-card{background:#fff;border:1px solid #e8edf4;border-radius:16px;padding:17px;box-shadow:var(--shadow)}.property-card header,.debt-card header{display:flex;justify-content:space-between;gap:10px}.property-card h3,.debt-card h3{margin:0}.meta{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.meta div{background:#f8fafc;border-radius:10px;padding:10px}.meta small{display:block;color:var(--muted)}.meta b{display:block;margin-top:4px}.card-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:13px;flex-wrap:wrap}
+.selected{outline:2px solid var(--pri)}.subpanel{margin-top:16px}.empty{padding:30px;text-align:center;color:var(--muted)}
+.setting-list{margin-top:12px}.setting-item{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #edf1f5}.setting-item .left{display:flex;align-items:center;gap:8px;min-width:0}.setting-item .left span:last-child{overflow:hidden;text-overflow:ellipsis}.logo-preview{width:3cm;height:3cm;border-radius:20px;overflow:hidden;background:#c5f24a;display:grid;place-items:center;font-size:38px;margin-bottom:12px}.logo-preview img{width:100%;height:100%;object-fit:cover}
+.modal{position:fixed;inset:0;background:#11182799;display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal.show{display:flex}.modal-card{width:min(980px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;padding:20px;box-shadow:0 30px 80px #0006}.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.modal-head h2{margin:0}.modal-head p{margin:5px 0 0;color:var(--muted)}.modal-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}.modal-stats div{background:#f8fafc;padding:13px;border-radius:12px}.modal-stats small{display:block;color:var(--muted)}.modal-stats b{display:block;margin-top:5px;font-size:18px}.modal-chart{height:360px}
+.footer{color:var(--muted);text-align:center;font-size:11px;margin:26px 0 8px}.footer a{color:inherit}
+
+.date-combo{display:grid;grid-template-columns:1fr 42px;gap:6px;align-items:start;margin-top:5px}.date-combo input{margin-top:0}.date-picker-btn{height:42px;border:1px solid var(--line);border-radius:9px;background:#f8fafc;cursor:pointer;font-size:18px}.native-date-picker{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}.date-preview{grid-column:1/-1;display:block;color:var(--muted);font-size:11px;margin-top:-1px}.smart-date.invalid{border-color:#dc2626;background:#fff7f7}
+.buy-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}.buy-summary>div{background:#fff;border:1px solid #e7ecf4;border-radius:14px;padding:15px;box-shadow:var(--shadow)}.buy-summary small{display:block;color:var(--muted)}.buy-summary b{display:block;font-size:21px;margin-top:7px}.buy-controls{display:grid;grid-template-columns:1.2fr 1fr auto auto;gap:12px;align-items:end}.buy-table input{margin-top:0;min-width:120px}.buy-table td:first-child{text-align:left}.buy-warning{padding:10px 12px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:12px;margin:10px 0;display:none}.buy-warning.show{display:block}.qty-badge{display:inline-flex;min-width:46px;justify-content:center;padding:5px 9px;border-radius:999px;background:#eef2ff;color:#3730a3;font-weight:800}.buy-note{background:#f8fafc;border-radius:12px;padding:12px;color:var(--muted);font-size:12px;margin-top:12px}
+@media(max-width:1150px){.batch-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:1000px){.buy-controls{grid-template-columns:1fr 1fr}.buy-summary{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr 1fr}.asset-summary,.grid3{grid-template-columns:1fr 1fr}.formgrid{grid-template-columns:1fr 1fr}.property-grid,.debt-grid{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.hero-tools{width:100%}.fx-pill{flex:1}.modal-stats{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.buy-controls,.buy-summary{grid-template-columns:1fr}.batch-grid{grid-template-columns:1fr 1fr}.app{padding:10px}.cards,.asset-summary,.grid2,.grid3,.formgrid,.modal-stats{grid-template-columns:1fr}.hero{padding:16px}.brand{align-items:flex-start}.brand h1{font-size:21px}.logo{width:3cm;height:3cm;min-width:3cm}.chartbox{height:300px}.sectionhead{align-items:flex-start;flex-direction:column}.sectionhead .btn{width:100%}.property-card,.debt-card{padding:14px}}
+@media(max-width:480px){.batch-grid{grid-template-columns:1fr}.brand{flex-direction:column}.hero-tools{align-items:stretch}.hero-tools>*{width:100%}}
+
+
+/* WOOYOO ASSET v10 — professional interface */
+:root{
+  --bg:#f5f7fa;--card:#ffffff;--line:#dfe4ea;--text:#152235;--muted:#667085;
+  --navy:#10243e;--pri:#0f766e;--pri-dark:#0b5f59;--pri2:#e7f6f3;
+  --red:#d92d20;--blue:#2563eb;--green:#067647;--amber:#b54708;
+  --shadow:0 8px 24px rgba(16,36,62,.07);--shadow-lg:0 18px 44px rgba(16,36,62,.12)
+}
+body{background:linear-gradient(180deg,#eef2f6 0,#f7f9fb 230px,#f5f7fa 100%);letter-spacing:-.01em}
+.app{max-width:1480px;padding:24px 26px 32px}
+.hero{position:relative;overflow:hidden;padding:24px 28px;border-radius:20px;background:linear-gradient(125deg,#0d213a 0%,#173552 62%,#0f766e 145%);box-shadow:0 20px 50px rgba(15,35,58,.18)}
+.hero:after{content:"";position:absolute;width:330px;height:330px;border-radius:50%;right:-135px;top:-190px;background:rgba(255,255,255,.055)}
+.brand,.hero-tools{position:relative;z-index:1}.brand h1{font-size:29px;font-weight:800;letter-spacing:1.4px}.brand h1 b{color:#6ee7d2}.brand p{color:#c8d4df;font-size:13px;letter-spacing:.01em}
+.logo{border-radius:18px;background:linear-gradient(145deg,#c7f36b,#8ed451);box-shadow:0 9px 24px rgba(0,0,0,.16),inset 0 0 0 1px rgba(255,255,255,.45)}
+.fx-pill{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(7px);border-radius:11px}
+.hero-tools select{border:0;border-radius:9px;min-height:42px}.hero-tools .secondary{background:#fff;color:#12324d}
+nav{position:sticky;top:10px;z-index:30;margin:18px 0 22px;padding:6px;width:max-content;max-width:100%;background:rgba(255,255,255,.88);border:1px solid rgba(215,222,230,.9);border-radius:14px;box-shadow:0 8px 24px rgba(16,36,62,.08);backdrop-filter:blur(12px)}
+nav button{box-shadow:none;background:transparent;padding:10px 16px;border-radius:9px;font-weight:700;color:#526072;transition:.18s ease}
+nav button:hover{background:#f0f4f7;color:#10243e}nav button.active{background:var(--navy);color:#fff;box-shadow:0 5px 13px rgba(16,36,62,.18)}
+.sectionhead{margin:2px 0 16px}.sectionhead h2{font-size:22px;font-weight:800;letter-spacing:-.025em}.sectionhead p{font-size:12.5px;color:#748094}
+.btn{min-height:40px;border-radius:9px;padding:9px 14px;font-weight:750;transition:.15s ease;box-shadow:none}.btn:hover{filter:brightness(.98);transform:translateY(-1px)}.primary{background:var(--pri)}.primary:hover{background:var(--pri-dark)}.secondary{background:var(--pri2);color:#075e58}.soft{background:#eef2f6;color:#344054}
+.card,.box,.form,.tablewrap,.property-card,.debt-card{border:1px solid #e3e8ee;box-shadow:var(--shadow)}
+.card{position:relative;overflow:hidden;padding:19px 20px;border-radius:14px}.card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--pri)}.card span{font-weight:700;color:#697586}.card b{font-size:25px;letter-spacing:-.025em}.card small{font-size:11.5px}
+.box{border-radius:14px;padding:19px}.box h3{font-size:16px;color:#213249}.grid2{gap:18px}.cards{gap:13px}
+.form{border-radius:14px;padding:19px;background:linear-gradient(180deg,#fff,#fcfdfd)}.formgrid{gap:13px}.form label{font-weight:700;color:#536174}
+input,select,textarea{min-height:42px;border-radius:8px;border:1px solid #d7dee7;background:#fff;transition:border-color .15s,box-shadow .15s}input:hover,select:hover,textarea:hover{border-color:#bac5d2}input:focus,select:focus,textarea:focus{outline:none;border-color:#15958b;box-shadow:0 0 0 3px rgba(15,118,110,.12)}
+.tabs{gap:7px}.tabs button{font-weight:650;border-color:#dce3ea;background:#fff;padding:7px 12px}.tabs button:hover{border-color:#97a6b7}.tabs button.active{background:#12314b;border-color:#12314b}
+.tab-label{font-weight:750;color:#49566a;text-transform:uppercase;letter-spacing:.035em;font-size:10.5px}
+.tablewrap{border-radius:13px}.tablewrap table{background:#fff}th{background:#f4f7f9;color:#465467;font-weight:800;letter-spacing:.01em}th,td{padding:12px 11px}tbody tr:nth-child(even){background:#fbfcfd}tbody tr:hover{background:#f1f8f7}td button{border:0;border-radius:7px;padding:6px 9px;background:#eef2f6;color:#344054;cursor:pointer}td button:hover{background:#e1e7ed}
+.asset-summary{gap:13px}.asset-card{border-radius:13px;padding:16px;box-shadow:0 4px 14px rgba(16,36,62,.05)}.asset-card:hover{border-color:#b8d9d5;box-shadow:0 10px 25px rgba(16,36,62,.1)}.asset-card h4{color:#1d2e44}.asset-card strong{font-size:20px}
+.tag{font-weight:750}.tag.cash{background:#ecfdf3;color:#067647}.tag.finance{background:#edf5ff;color:#175cd3}
+.batch-row{border-radius:11px;background:#f8fafb}.batch-head b{color:#213249}.row-remove{font-weight:700}
+.property-card,.debt-card{border-radius:14px}.meta div{background:#f4f7f9;border:1px solid #edf0f3}.meta small{color:#697586}.meta b{color:#213249}
+.buy-controls{background:#f7f9fb;border:1px solid #e3e8ee;border-radius:12px;padding:14px}.buy-summary{gap:10px}.buy-summary>div{border-radius:12px;box-shadow:none;border-color:#e1e7ed;background:#fcfdfd}.buy-summary small{font-weight:700}.buy-summary b{font-size:20px}.buy-example{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:13px;padding:12px 14px;border-radius:10px;background:#eef8f6;border:1px solid #d1ebe6;color:#315b57;font-size:12px}.buy-example b{color:#075e58}.buy-note{margin-top:9px;border:1px solid #e3e8ee;background:#f8fafb}.qty-badge{background:#e7f6f3;color:#075e58}
+.setting-item{padding:10px 0}.modal{backdrop-filter:blur(4px)}.modal-card{border-radius:17px;box-shadow:var(--shadow-lg)}
+.footer{margin-top:32px}.date-picker-btn{background:#f4f7f9}.date-picker-btn:hover{background:#eaf0f3}.date-preview{color:#7a8798}
+@media(max-width:900px){nav{width:100%;overflow-x:auto;flex-wrap:nowrap}nav button{flex:0 0 auto}.hero{align-items:flex-start}.cards{grid-template-columns:repeat(2,1fr)}.asset-summary{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.app{padding:12px}.hero{padding:17px}.cards,.asset-summary{grid-template-columns:1fr}.card{padding:17px}.buy-controls{padding:11px}nav{top:5px}.sectionhead h2{font-size:20px}}
+
+
+/* WOOYOO ASSET v13 — unified typography, alignment and responsive layout */
+:root{
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+  --radius-sm:8px;--radius-md:12px;--radius-lg:16px;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;
+}
+html{font-size:16px}
+body{font-family:var(--font-sans);font-size:14px;line-height:1.5;font-weight:400;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button,input,select,textarea{font-family:var(--font-sans);font-size:13px;line-height:1.35}
+.app{max-width:1480px;padding:24px 28px 36px}
+
+/* Header */
+.hero{min-height:150px;align-items:center;gap:24px;padding:24px 30px}
+.brand{gap:20px}.brand>div:last-child{min-width:0}
+.brand h1{font-size:30px;line-height:1.12;letter-spacing:.08em}.brand p{font-size:13px;line-height:1.45;margin-top:8px}
+.logo{flex:0 0 3cm}
+.hero-tools{align-items:center;justify-content:flex-end;gap:12px}
+.hero-tools label{display:flex;flex-direction:column;justify-content:center;font-size:12px;font-weight:700;line-height:1.3}
+.hero-tools select{min-width:136px;margin-top:6px;text-align:center;font-weight:700}
+.fx-pill{min-width:225px;text-align:center;padding:11px 14px}.fx-pill small{font-size:11px;font-weight:700}.fx-pill strong{font-size:19px;line-height:1.25}.fx-pill em{font-size:10.5px}
+
+/* Main navigation */
+nav{width:100%;justify-content:center;gap:6px;padding:6px;margin:18px 0 24px}
+nav button{min-width:104px;min-height:42px;display:inline-flex;align-items:center;justify-content:center;padding:10px 15px;font-size:13px;line-height:1;font-weight:750}
+
+/* Section hierarchy */
+.panel{animation:panelFade .16s ease}
+@keyframes panelFade{from{opacity:.35;transform:translateY(3px)}to{opacity:1;transform:none}}
+.sectionhead{min-height:48px;align-items:center;margin:0 0 16px}
+.sectionhead>div{min-width:0}.sectionhead h2{font-size:22px!important;line-height:1.25;margin:0;font-weight:800;letter-spacing:-.025em}
+.sectionhead p{font-size:12.5px;line-height:1.55;margin:5px 0 0}
+.subpanel .sectionhead h2{font-size:19px!important}
+.box h3,.property-card h3,.debt-card h3{font-size:16px;line-height:1.35;font-weight:800;margin:0 0 14px}
+
+/* Buttons */
+.btn,.row-remove,td button{min-height:38px;display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12.5px;line-height:1;font-weight:750;border-radius:8px;padding:9px 13px}
+.actions{align-items:center;gap:8px;margin-top:16px}
+.card-actions{align-items:center;gap:7px}
+
+/* Dashboard cards */
+.cards{gap:14px}.card{text-align:center;display:flex;min-height:135px;flex-direction:column;align-items:center;justify-content:center;padding:20px 18px}
+.card:before{left:0;right:0;top:0;bottom:auto;width:auto;height:4px}
+.card span{font-size:12.5px;line-height:1.3;font-weight:750}.card b{font-size:25px;line-height:1.2;margin-top:9px}.card small{font-size:11.5px;line-height:1.4;margin-top:7px}
+.grid2{gap:18px;margin-top:18px}.chartbox{height:350px;padding:18px}
+.asset-summary{gap:14px}.asset-card{min-height:164px;display:flex;flex-direction:column;justify-content:space-between;padding:17px}
+.asset-card .topline{align-items:center}.asset-card h4{font-size:16px;line-height:1.35;margin:9px 0 5px}.asset-card p{font-size:11.5px;line-height:1.45}.asset-card strong{font-size:20px;line-height:1.25}.asset-card .sub{align-items:center;font-size:11.5px}
+.tag{align-items:center;justify-content:center;min-height:24px;font-size:10.5px;line-height:1;padding:5px 8px}
+
+/* Filters */
+.tab-label{margin-top:12px;font-size:10.5px;line-height:1.3}.tabs{align-items:center;gap:7px;margin:8px 0 14px}
+.tabs button{min-height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;line-height:1;padding:7px 13px}
+
+/* Forms */
+.form{padding:20px;margin-bottom:18px}.formgrid{align-items:start;gap:14px}.form label{display:block;font-size:12px;line-height:1.35;font-weight:750}
+input,select,textarea{min-height:42px;padding:10px 12px;margin-top:6px;font-size:13px;line-height:1.35}
+textarea{min-height:76px}.field-note,.date-preview{font-size:10.5px;line-height:1.45}
+.inline{align-items:stretch;gap:8px}.inline input,.inline select{margin-top:0}.inline .btn{flex:0 0 auto}
+.date-combo{grid-template-columns:minmax(0,1fr) 42px;align-items:start}.date-picker-btn{display:flex;align-items:center;justify-content:center;font-size:17px}
+.batch-list{gap:14px}.batch-row{padding:14px}.batch-head{min-height:34px;margin-bottom:11px}.batch-head b{font-size:13px;line-height:1.3}.batch-grid{align-items:start;gap:11px}
+
+/* Selection toolbar */
+.selection-toolbar{min-height:54px;padding:11px 14px;margin:12px 0 13px}
+.selection-toolbar .selection-left{align-items:center;gap:12px}.selection-toolbar label{font-size:12.5px;line-height:1.3}.selection-count{font-size:11.5px}
+
+/* Tables: consistent vertical rhythm and alignment */
+.tablewrap{border-radius:13px}.tablewrap table{font-variant-numeric:tabular-nums lining-nums}
+th,td{height:50px;padding:10px 12px;vertical-align:middle;line-height:1.3}
+th{text-align:center!important;font-size:11.5px;font-weight:800;letter-spacing:.01em}
+td{text-align:center!important;font-size:12.5px}
+.select-col{width:46px;min-width:46px}.select-box{display:block;margin:0 auto}
+#portfolioRows td:nth-child(7),#portfolioRows td:nth-child(8),#portfolioRows td:nth-child(9),#portfolioRows td:nth-child(10),#portfolioRows td:nth-child(11),
+#tradeRows td:nth-child(2),#tradeRows td:nth-child(3),
+#paymentRows td:nth-child(n+2):nth-child(-n+8),
+#buyRows td:nth-child(n+2):nth-child(-n+7){text-align:right!important}
+#portfolioRows td:nth-child(5),#tradeRows td:nth-child(4),#buyRows td:first-child{text-align:left!important}
+#portfolioRows td:last-child,#tradeRows td:last-child,#paymentRows td:last-child,#buyRows td:last-child{text-align:center!important}
+td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align-items:center;justify-content:flex-end;min-width:74px}
+.tablewrap td button{margin:2px 1px}
+
+/* Property and debt cards */
+.property-grid,.debt-grid{gap:16px}.property-card,.debt-card{padding:18px}
+.property-card header,.debt-card header{align-items:flex-start}.property-card header>div,.debt-card header>div{min-width:0}
+.meta{gap:10px}.meta div{min-height:66px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px}
+.meta small{font-size:10.5px;line-height:1.3}.meta b{font-size:13px;line-height:1.3}
+
+/* Buy table */
+.buy-controls{align-items:end;gap:12px;padding:15px}.buy-controls label{font-size:12px;font-weight:750}
+.buy-summary{gap:12px}.buy-summary>div{min-height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px}
+.buy-summary small{font-size:11.5px}.buy-summary b{font-size:20px;line-height:1.2}
+.buy-example,.buy-note{line-height:1.55}
+
+/* Settings and modal */
+.setting-item{min-height:46px;padding:10px 2px}.setting-item .left{font-size:12.5px}.logo-preview{margin-left:auto;margin-right:auto}
+.modal-card{padding:22px}.modal-head{align-items:center}.modal-head h2{font-size:21px;line-height:1.3}.modal-head p{font-size:12px;line-height:1.5}
+.modal-stats div{min-height:82px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.modal-stats small{font-size:11px}.modal-stats b{font-size:17px}
+.empty{font-size:13px;line-height:1.55}.hint{font-size:11.5px;line-height:1.55}.footer{font-size:10.5px;line-height:1.5}
+
+/* Tablet */
+@media(max-width:1100px){
+  .app{padding:20px}.hero{align-items:flex-start;flex-direction:column}.hero-tools{width:100%;justify-content:flex-start}.fx-pill{flex:1;max-width:320px}
+  nav{justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .asset-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.formgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .batch-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.buy-controls{grid-template-columns:1fr 1fr auto auto}
+}
+
+/* Mobile */
+@media(max-width:720px){
+  html{font-size:15px}.app{padding:10px 10px 24px}.hero{min-height:0;padding:17px;border-radius:16px;gap:18px}.brand{width:100%;gap:14px;align-items:center}.logo{width:76px;height:76px;min-width:76px;min-height:76px;border-radius:15px}.brand h1{font-size:21px}.brand p{font-size:11.5px}.brand>div:last-child>span{font-size:8.5px!important}
+  .hero-tools{display:grid;grid-template-columns:1fr;align-items:stretch;gap:9px}.hero-tools label,.fx-pill,.hero-tools .btn{width:100%;max-width:none}.hero-tools select{text-align:left}.fx-pill{text-align:left}
+  nav{top:4px;margin:12px 0 18px;padding:5px;border-radius:12px}nav button{min-width:88px;min-height:38px;padding:9px 12px;font-size:12px}
+  .sectionhead{min-height:0;align-items:stretch;flex-direction:column;gap:10px}.sectionhead h2{font-size:20px!important}.sectionhead p{font-size:11.5px}.sectionhead>.btn{width:100%}
+  .cards,.asset-summary,.grid2,.grid3,.formgrid,.property-grid,.debt-grid,.modal-stats,.buy-summary,.buy-controls{grid-template-columns:1fr}
+  .card{min-height:118px}.chartbox{height:300px;padding:14px}.form{padding:14px}.batch-grid{grid-template-columns:1fr}.batch-row{padding:12px}
+  .actions{display:grid;grid-template-columns:1fr 1fr;width:100%}.actions .btn{width:100%}.actions .btn:only-child{grid-column:1/-1}
+  .selection-toolbar{align-items:stretch;flex-direction:column}.selection-toolbar .selection-left{justify-content:space-between}.selection-toolbar .btn{width:100%}
+  .tablewrap{margin-left:-2px;margin-right:-2px;border-radius:10px}th,td{height:46px;padding:9px 10px;font-size:12px}th{font-size:11px}
+  .buy-controls .btn{width:100%}.inline{flex-wrap:wrap}.inline>*{flex:1 1 180px}.inline .btn{flex:1 1 100%}
+  .modal{padding:8px}.modal-card{padding:16px;border-radius:14px}.modal-head{align-items:flex-start}.modal-chart{height:300px}
+}
+
+@media(max-width:420px){
+  .brand{align-items:flex-start}.logo{width:64px;height:64px;min-width:64px;min-height:64px}.brand h1{font-size:19px;letter-spacing:.06em}
+  .card b{font-size:22px}.asset-card strong{font-size:18px}.actions{grid-template-columns:1fr}.actions .btn{grid-column:1/-1}
+}
+
+
+/* Data management layout */
+.data-management-actions{display:grid;gap:14px}
+.data-backup-row,.data-reset-row{display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap}
+.data-reset-row{padding-top:14px;border-top:1px solid var(--line)}
+.data-reset-row .reset-year-field{display:flex;flex-direction:column;min-width:150px;font-size:12px;font-weight:750;color:var(--muted)}
+.data-reset-row .reset-year-field select{margin-top:6px}
+@media(max-width:720px){
+  .data-backup-row,.data-reset-row{display:grid;grid-template-columns:1fr}
+  .data-backup-row .btn,.data-reset-row .btn,.data-reset-row .reset-year-field{width:100%}
+}
+
+
+
+/* Secure entry screen */
+.app.app-locked{display:none}
+.welcome-screen{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 15% 10%,#e9efff 0,transparent 36%),radial-gradient(circle at 90% 85%,#dff8ef 0,transparent 34%),linear-gradient(135deg,#eef2f8,#f8fafc)}
+.welcome-screen.hidden{display:none}
+.welcome-card{width:min(560px,100%);background:#fff;border:1px solid #e1e7f0;border-radius:28px;padding:34px;box-shadow:0 28px 80px rgba(23,32,51,.16)}
+.welcome-brand{display:flex;align-items:center;gap:16px;margin-bottom:24px}.welcome-logo{width:72px;height:72px;border-radius:20px;background:#c5f24a;display:grid;place-items:center;font-size:36px;overflow:hidden}.welcome-logo img{width:100%;height:100%;object-fit:cover}.welcome-brand h1{margin:0;font-size:26px;letter-spacing:.06em}.welcome-brand h1 b{color:#5662e8}.welcome-brand p{margin:6px 0 0;color:var(--muted);font-size:13px}
+.security-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:#eef6ff;color:#1d4ed8;font-size:11px;font-weight:800;margin-bottom:18px}.welcome-copy{color:#4b5563;font-size:13px;line-height:1.65;margin:0 0 20px}.welcome-actions{display:grid;gap:10px}.welcome-actions .btn{width:100%;min-height:48px;font-weight:800}.pin-panel{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.pin-panel.show{display:block}.pin-grid{display:grid;gap:10px}.pin-grid label{font-size:12px;color:var(--muted);font-weight:750}.pin-grid input{text-align:center;font-size:20px;letter-spacing:.35em;font-weight:800}.welcome-error{min-height:18px;margin-top:8px;color:#b42318;font-size:12px;text-align:center}.welcome-note{margin-top:18px;padding:12px 13px;border-radius:12px;background:#f8fafc;color:#64748b;font-size:11px;line-height:1.55}.lock-btn{background:#ffffff12!important;color:#fff!important;border:1px solid #ffffff24!important}
+.security-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.security-row .btn{flex:1 1 130px}
+.profile-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 12px}.profile-head b{font-size:14px}.profile-head small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.profile-list{display:grid;gap:10px}.profile-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:stretch}.profile-card{width:100%;border:1px solid var(--line);background:#fff;border-radius:15px;padding:14px;display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;transition:.15s}.profile-card:hover{border-color:#a5b4fc;box-shadow:0 8px 24px rgba(86,98,232,.12);transform:translateY(-1px)}.profile-delete{border:1px solid #fecaca;background:#fff5f5;color:#b42318;border-radius:13px;padding:0 14px;font-size:12px;font-weight:800;cursor:pointer;transition:.15s}.profile-delete:hover{background:#fee2e2;border-color:#fca5a5}.profile-delete:active{transform:translateY(1px)}.profile-avatar{width:44px;height:44px;flex:0 0 44px;border-radius:12px;background:#eaf7bf;display:grid;place-items:center;font-size:22px;overflow:hidden}.profile-avatar img{width:100%;height:100%;object-fit:cover}.profile-card-main{min-width:0;flex:1}.profile-card-main b{display:block;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.profile-card-main small{display:block;color:var(--muted);font-size:10.5px;margin-top:4px}.profile-open{font-size:12px;font-weight:800;color:var(--pri)}.profile-empty{padding:22px;border:1px dashed #cbd5e1;border-radius:14px;text-align:center;color:var(--muted);font-size:12px;line-height:1.55}.selected-profile{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 12px;border-radius:12px;background:#f8fafc;margin-bottom:10px}.selected-profile b{font-size:14px}.selected-profile button{border:0;background:transparent;color:var(--pri);cursor:pointer;font-size:11px;font-weight:800}.portfolio-pill{padding:9px 12px;border-radius:12px;background:#ffffff12;border:1px solid #ffffff1f;min-width:170px;text-align:center}.portfolio-pill small{display:block;color:#cbd5e1;font-size:10.5px}.portfolio-pill strong{display:block;margin-top:3px;font-size:13px;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.profile-management{display:grid;gap:10px}.profile-management label{font-size:12px;font-weight:750;color:var(--muted)}
+@media(max-width:720px){.welcome-card{padding:24px 18px;border-radius:20px}.welcome-brand h1{font-size:22px}.welcome-logo{width:60px;height:60px}.welcome-screen{padding:14px}.profile-head{align-items:stretch;flex-direction:column}.profile-head .btn{width:100%}.portfolio-pill{width:100%;max-width:none;text-align:left}.profile-row{grid-template-columns:1fr}.profile-delete{min-height:42px}}
+
+
+/* WOOYOO ASSET v18 — app-like welcome, cards, keypad */
+.welcome-menu-single{grid-template-columns:1fr}.welcome-menu-single .welcome-menu-card{min-height:118px}
+.welcome-card{width:min(720px,100%);padding:30px}.welcome-menu{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0 20px}.welcome-menu-card{border:1px solid #e1e7f0;background:linear-gradient(180deg,#fff,#f8fafc);border-radius:18px;padding:18px;text-align:left;cursor:pointer;box-shadow:0 8px 24px rgba(16,36,62,.07);transition:.16s}.welcome-menu-card:hover{transform:translateY(-2px);border-color:#b8d9d5;box-shadow:0 14px 34px rgba(16,36,62,.12)}.welcome-menu-card span{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:#eef2ff;font-size:22px;margin-bottom:12px}.welcome-menu-card.create span{background:#e7f6f3;color:#075e58}.welcome-menu-card b{display:block;font-size:15px;color:#172033}.welcome-menu-card small{display:block;margin-top:5px;color:#697386;line-height:1.45}.portfolio-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.profile-row{display:block}.profile-card{min-height:178px;display:grid;grid-template-columns:auto 1fr;align-items:start;padding:16px}.profile-card .profile-open{grid-column:1/-1;justify-self:end;margin-top:8px}.profile-card-main b{font-size:16px}.profile-stats{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.profile-stats div{background:#f8fafc;border:1px solid #edf1f7;border-radius:12px;padding:10px;text-align:center}.profile-stats small{display:block;color:#697386;font-size:10.5px}.profile-stats strong{display:block;margin-top:3px;font-size:13px;color:#172033}.profile-delete{width:100%;min-height:40px;margin-top:8px}.create-panel-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}.create-panel-head b{display:block;font-size:16px}.create-panel-head small{display:block;color:var(--muted);font-size:11px}.unlock-panel-v18 .pin-grid{max-width:360px;margin:0 auto}.sr-only{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(1px,1px,1px,1px)!important}.pin-dots{display:flex;justify-content:center;gap:10px;margin:12px 0 16px}.pin-dots span{width:16px;height:16px;border-radius:99px;border:2px solid #cbd5e1;background:#fff;transition:.12s}.pin-dots span.filled{background:#172033;border-color:#172033;box-shadow:0 0 0 4px rgba(23,32,51,.08)}.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}.pin-keypad button{min-height:52px;border:1px solid #e1e7f0;border-radius:16px;background:#fff;font-weight:850;font-size:18px;cursor:pointer;box-shadow:0 5px 14px rgba(16,36,62,.06);transition:.12s}.pin-keypad button:hover{background:#f8fafc;transform:translateY(-1px)}.pin-keypad button:active{transform:translateY(1px);box-shadow:none}.data-management-actions{background:#f8fafc;border:1px solid #edf1f7;border-radius:14px;padding:14px}.data-reset-row{background:#fff7f7;border:1px solid #fecaca;border-radius:12px;padding:14px}.data-backup-row{background:#f8fffd;border:1px solid #d1ebe6;border-radius:12px;padding:14px}@media(max-width:720px){.welcome-menu,.portfolio-card-grid{grid-template-columns:1fr}.welcome-card{width:min(560px,100%)}.profile-stats{grid-template-columns:1fr}.pin-keypad button{min-height:50px}}
+
+</style>
+</head>
+<body>
+
+<div id="welcomeScreen" class="welcome-screen">
+  <div class="welcome-card">
+    <div class="welcome-brand">
+      <div id="welcomeLogo" class="welcome-logo">🐮</div>
+      <div><h1><b>WOOYOO</b> ASSET</h1><p>Private family wealth dashboard</p></div>
+    </div>
+    <div class="security-badge">🔒 포트폴리오별 PIN 잠금</div>
+    <p id="welcomeCopy" class="welcome-copy">사용할 포트폴리오를 선택하거나 새 포트폴리오를 개설하세요.</p>
+
+    <div id="profileListSection">
+      <div class="welcome-menu welcome-menu-single">
+        <button class="welcome-menu-card create" onclick="showCreateProfile()"><span>＋</span><b>새 포트폴리오 만들기</b><small>가족·지인별 이름과 PIN을 따로 설정</small></button>
+      </div>
+      <div class="profile-head">
+        <div><b>포트폴리오 선택</b><small>각 포트폴리오는 이름과 PIN, 자산 데이터가 분리됩니다.</small></div>
+        <button class="btn primary" onclick="showCreateProfile()">＋ 새 포트폴리오</button>
+      </div>
+      <div id="profileList" class="profile-list portfolio-card-grid"></div>
+    </div>
+
+    <div id="createProfilePanel" class="pin-panel create-panel-v18">
+      <div class="create-panel-head"><button class="btn soft" onclick="cancelCreateProfile()">← 목록으로</button><div><b>새 포트폴리오 개설</b><small>포트폴리오 이름과 6자리 PIN을 설정하세요.</small></div></div>
+      <div class="pin-grid">
+        <label>포트폴리오 이름<input id="newProfileName" class="ko-input" lang="ko" autocomplete="off" maxlength="30" placeholder="예: 우리 가족 자산"></label>
+        <label>6자리 PIN<input id="setupPin" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="••••••"></label>
+        <label>PIN 확인<input id="setupPinConfirm" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="••••••"></label>
+        <button class="btn primary" onclick="createNewPortfolio()">포트폴리오 개설</button>
+      </div>
+    </div>
+
+    <div id="unlockPinPanel" class="pin-panel unlock-panel-v18">
+      <div class="selected-profile"><b id="selectedProfileName">선택한 포트폴리오</b><button onclick="backToProfileList()">다른 포트폴리오 선택</button></div>
+      <div class="pin-grid">
+        <label class="sr-only">PIN<input id="unlockPin" type="password" inputmode="numeric" maxlength="6" autocomplete="current-password" placeholder="••••••" oninput="syncPinDots()" onkeydown="if(event.key==='Enter')unlockPortfolio()"></label>
+        <div id="pinDots" class="pin-dots" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="pin-keypad" aria-label="PIN 숫자 키패드">
+          <button type="button" onclick="pressPinDigit('1')">1</button><button type="button" onclick="pressPinDigit('2')">2</button><button type="button" onclick="pressPinDigit('3')">3</button>
+          <button type="button" onclick="pressPinDigit('4')">4</button><button type="button" onclick="pressPinDigit('5')">5</button><button type="button" onclick="pressPinDigit('6')">6</button>
+          <button type="button" onclick="pressPinDigit('7')">7</button><button type="button" onclick="pressPinDigit('8')">8</button><button type="button" onclick="pressPinDigit('9')">9</button>
+          <button type="button" onclick="clearPinInput()">지움</button><button type="button" onclick="pressPinDigit('0')">0</button><button type="button" onclick="backspacePinInput()">⌫</button>
+        </div>
+        <button class="btn primary" onclick="unlockPortfolio()">포트폴리오 열기</button>
+      </div>
+    </div>
+    <div id="welcomeError" class="welcome-error"></div>
+    <div class="welcome-note">포트폴리오별 데이터는 같은 브라우저 안에서 서로 분리됩니다. 다만 현재 PIN은 화면 접근을 막는 기본 잠금 기능이며 저장 데이터 자체를 암호화하지는 않습니다. 공용 PC 사용을 피하고 백업 파일을 안전한 곳에 보관하세요.</div>
+  </div>
+</div>
+
+<div id="mainApp" class="app app-locked">
+  <header class="hero">
+    <div class="brand">
+      <div id="brandLogo" class="logo">🐮</div>
+      <div><span style="display:block;color:#83d7cb;font-size:10px;font-weight:800;letter-spacing:.16em;margin-bottom:5px">FAMILY WEALTH MANAGEMENT</span><h1><b>WOOYOO</b> ASSET</h1><p>우리 가족의 자산·부동산·부채를 한눈에</p></div>
+    </div>
+    <div class="hero-tools">
+      <label>조회 연도<select id="yearSelect"></select></label>
+      <div class="portfolio-pill"><small>현재 포트폴리오</small><strong id="activeProfileName">-</strong></div>
+      <div class="fx-pill">
+        <small>USD/KRW 최신 환율</small>
+        <strong id="fxText">조회 중...</strong>
+        <em id="fxAt">인터넷 연결 시 자동 갱신</em>
+      </div>
+      <button class="btn secondary" onclick="refreshFx(true)">환율 새로고침</button>
+      <button class="btn lock-btn" onclick="switchPortfolio()">포트폴리오 전환</button>
+      <button class="btn lock-btn" onclick="lockApp()">잠금</button>
+    </div>
+  </header>
+
+  <nav id="nav"></nav>
+
+  <section id="dashboard" class="panel active">
+    <div class="sectionhead"><div><h2>대시보드</h2><p>선택 연도의 최신 자산·부채 현황입니다.</p></div></div>
+    <div class="cards">
+      <div class="card"><span>총자산</span><b id="sumAsset">₩0</b><small id="assetSub">현금·금융자산 + 부동산</small></div>
+      <div class="card"><span>총부채</span><b id="sumDebt">₩0</b><small id="debtSub">선택 연도 말 기준</small></div>
+      <div class="card"><span>순자산</span><b id="sumNet">₩0</b><small id="netSub">총자산 - 총부채</small></div>
+      <div class="card"><span>투자 평가손익</span><b id="sumProfit">₩0</b><small id="profitRate">0.00%</small></div>
+    </div>
+    <div class="grid2">
+      <div class="box chartbox"><canvas id="mainLineChart"></canvas></div>
+      <div class="box chartbox"><canvas id="mainPieChart"></canvas></div>
+    </div>
+    <div class="sectionhead" style="margin-top:18px"><div><h2 style="font-size:19px">보유 항목</h2><p>항목을 누르면 월별 원금·평가액과 누적 현황을 볼 수 있습니다.</p></div></div>
+    <div id="dashboardItems" class="asset-summary"></div>
+  </section>
+
+  <section id="portfolio" class="panel">
+    <div class="sectionhead"><div><h2>포트폴리오</h2><p>현금자산과 금융자산의 월별 원금·평가액을 기록합니다.</p></div><button class="btn primary" onclick="showPortfolioBatchForm()">＋ 입력</button></div>
+    <div class="tab-label">소유자</div>
+    <div id="portfolioOwnerTabs" class="tabs"></div>
+    <div class="tab-label">자산 구분</div>
+    <div id="portfolioGroupTabs" class="tabs"></div>
+    <div class="tab-label">세부 항목</div>
+    <div id="portfolioCatTabs" class="tabs"></div>
+
+    <div id="portfolioBatchForm" class="form" style="display:none">
+      <div class="sectionhead"><div><h2 style="font-size:18px">포트폴리오 입력</h2><p>한 번에 여러 건을 추가할 수 있습니다.</p></div><button class="btn secondary" onclick="addPortfolioBatchRow()">＋ 행</button></div>
+      <div id="portfolioBatchRows" class="batch-list"></div>
+      <div class="actions"><button class="btn soft" onclick="hidePortfolioBatchForm()">취소</button><button class="btn primary" onclick="savePortfolioBatch()">저장</button></div>
+    </div>
+
+    <p class="hint">달러 금액은 상단의 최신 USD/KRW 환율로 원화 환산되어 대시보드에 반영됩니다.</p>
+    <div class="selection-toolbar">
+      <div class="selection-left"><label><input id="portfolioSelectAllTop" type="checkbox" onchange="toggleAllVisiblePortfolio(this.checked)">현재 목록 전체 선택</label><span id="portfolioSelectionCount" class="selection-count">0건 선택</span></div>
+      <button id="deleteSelectedPortfolioBtn" class="btn danger" onclick="deleteSelectedPortfolio()" disabled>선택 삭제</button>
+    </div>
+    <div class="tablewrap"><table><thead><tr><th class="select-col"><input id="portfolioSelectAllHead" class="select-box" type="checkbox" onchange="toggleAllVisiblePortfolio(this.checked)" aria-label="현재 목록 전체 선택"></th><th>기준일</th><th>소유자</th><th>구분</th><th>항목</th><th>통화</th><th>원금</th><th>평가액</th><th>원화 평가액</th><th>손익</th><th>수익률</th><th>관리</th></tr></thead><tbody id="portfolioRows"></tbody></table></div>
+  </section>
+
+  <section id="realestate" class="panel">
+    <div class="sectionhead"><div><h2>부동산</h2><p>거래일별 실거래가를 기록하고, 가장 높은 실거래가를 자산 기준으로 사용합니다.</p></div><button class="btn primary" onclick="showPropertyForm()">＋ 자산</button></div>
+    <div id="propertyForm" class="form" style="display:none">
+      <div class="formgrid">
+        <label>소유자<select id="rOwner"></select></label>
+        <label>부동산명<input id="rName" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 아파트"></label>
+        <label>지역/주소<input id="rLocation" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 경기도 ○○시"></label>
+        <label>메모<input id="rMemo" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 공동명의"></label>
+      </div>
+      <div class="actions"><button class="btn soft" onclick="hidePropertyForm()">취소</button><button class="btn primary" onclick="saveProperty()">저장</button></div>
+    </div>
+    <div id="propertyCards" class="property-grid"></div>
+    <div id="propertyDetail" class="subpanel" style="display:none">
+      <div class="sectionhead"><div><h2 id="propertyDetailTitle" style="font-size:19px">실거래가 기록</h2><p id="propertyDetailMeta"></p></div><button class="btn primary" onclick="showTradeBatchForm()">＋ 거래</button></div>
+      <div id="tradeBatchForm" class="form" style="display:none">
+        <div class="sectionhead"><div><h2 style="font-size:18px">실거래가 입력</h2><p>같은 날 또는 서로 다른 날짜의 여러 거래도 한 번에 추가할 수 있습니다.</p></div><button class="btn secondary" onclick="addTradeBatchRow()">＋ 행</button></div>
+        <div id="tradeBatchRows" class="batch-list"></div>
+        <div class="actions"><button class="btn soft" onclick="hideTradeBatchForm()">취소</button><button class="btn primary" onclick="saveTradeBatch()">저장</button></div>
+      </div>
+      <div class="grid2"><div class="box chartbox"><canvas id="propertyChart"></canvas></div><div class="box" id="propertyStats"></div></div>
+      <div class="tablewrap" style="margin-top:16px"><table><thead><tr><th>거래일</th><th>실거래가</th><th>최고가 대비</th><th>메모</th><th>관리</th></tr></thead><tbody id="tradeRows"></tbody></table></div>
+    </div>
+  </section>
+
+  <section id="debt" class="panel">
+    <div class="sectionhead"><div><h2>부채</h2><p>대출 기본정보와 상환일별 내역을 따로 관리합니다.</p></div><button class="btn primary" onclick="showDebtForm()">＋ 대출</button></div>
+    <div id="debtForm" class="form" style="display:none">
+      <div class="formgrid">
+        <label>소유자<select id="dOwner"></select></label>
+        <label>부채 종류<select id="dType"><option>주택담보대출</option><option>신용대출</option><option>전세대출</option><option>자동차대출</option><option>학자금대출</option><option>기타</option></select></label>
+        <label>대출명<input id="dName" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 주택담보대출"></label>
+        <label>은행/금융기관<input id="dBank" class="ko-input" lang="ko" autocomplete="off" placeholder="예: ○○은행"></label>
+        <label>실행일<div class="date-combo"><input id="dStart" class="smart-date" inputmode="numeric" maxlength="10" placeholder="YYYYMMDD" title="8자리 입력 또는 마우스 휠로 월 이동"><button type="button" class="date-picker-btn" onclick="openDatePicker(this)" aria-label="달력 열기">📅</button><input type="date" class="native-date-picker" onchange="applyDatePicker(this)"><small class="date-preview">예: 20251025 → 2025년 10월 25일</small></div></label>
+        <label>만기일<div class="date-combo"><input id="dEnd" class="smart-date" inputmode="numeric" maxlength="10" placeholder="YYYYMMDD" title="8자리 입력 또는 마우스 휠로 월 이동"><button type="button" class="date-picker-btn" onclick="openDatePicker(this)" aria-label="달력 열기">📅</button><input type="date" class="native-date-picker" onchange="applyDatePicker(this)"><small class="date-preview">예: 20251025 → 2025년 10월 25일</small></div></label>
+        <label>대출금액<input id="dLoanAmount" class="money-input" inputmode="numeric" placeholder="0"></label>
+        <label>초기 적용금리 (%)<input id="dRate" inputmode="decimal" placeholder="0.00"></label>
+        <label>메모<input id="dMemo" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 원리금균등"></label>
+      </div>
+      <div class="actions"><button class="btn soft" onclick="hideDebtForm()">취소</button><button class="btn primary" onclick="saveDebt()">저장</button></div>
+    </div>
+    <div id="debtCards" class="debt-grid"></div>
+    <div id="debtDetail" class="subpanel" style="display:none">
+      <div class="sectionhead"><div><h2 id="debtDetailTitle" style="font-size:19px">상환 기록</h2><p id="debtDetailMeta"></p></div><button class="btn primary" onclick="showPaymentForm()">＋ 상환</button></div>
+      <div id="paymentForm" class="form" style="display:none">
+        <div class="formgrid">
+          <label>상환일<div class="date-combo"><input id="payMonth" class="smart-date" inputmode="numeric" maxlength="10" placeholder="YYYYMMDD" title="8자리 입력 또는 마우스 휠로 월 이동"><button type="button" class="date-picker-btn" onclick="openDatePicker(this)" aria-label="달력 열기">📅</button><input type="date" class="native-date-picker" onchange="applyDatePicker(this)"><small class="date-preview">예: 20251025 → 2025년 10월 25일</small></div></label>
+          <label>적용금리 (%)<input id="payRate" inputmode="decimal" placeholder="0.00"></label>
+          <label>상환원금<input id="payPrincipal" class="money-input" inputmode="numeric" placeholder="0"></label>
+          <label>상환이자<input id="payInterest" class="money-input" inputmode="numeric" placeholder="0"></label>
+          <label>원리금<input id="payTotal" class="money-input" inputmode="numeric" placeholder="자동 계산"></label>
+          <label>대출잔액<input id="payBalance" class="money-input readonly-money" inputmode="numeric" placeholder="자동 계산" readonly><small class="field-note">대출금액에서 누적 상환원금을 차감해 자동 계산합니다.</small></label>
+          <label>메모<input id="payMemo" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 중도상환 포함"></label>
+        </div>
+        <div class="actions"><button class="btn soft" onclick="hidePaymentForm()">취소</button><button class="btn primary" onclick="savePayment()">저장</button></div>
+      </div>
+      <div class="grid2"><div class="box chartbox"><canvas id="debtChart"></canvas></div><div class="box" id="debtStats"></div></div>
+      <div class="tablewrap" style="margin-top:16px"><table><thead><tr><th>상환일</th><th>적용금리</th><th>상환원금</th><th>상환이자</th><th>원리금</th><th>잔액</th><th>전월대비</th><th>실행일 대비</th><th>관리</th></tr></thead><tbody id="paymentRows"></tbody></table></div>
+    </div>
+  </section>
+
+
+  <section id="buytable" class="panel">
+    <div class="sectionhead"><div><h2>매수표</h2><p>투자 예산과 종목별 목표 비중을 입력하면 주문 가능 수량과 남는 예수금을 자동 계산합니다.</p></div></div>
+    <div class="form">
+      <div class="buy-controls">
+        <label>계좌/계획명<input id="buyAccount" class="ko-input" lang="ko" autocomplete="off" placeholder="예: ISA" oninput="updateBuyAccount(this.value)"></label>
+        <label>투자 예산<input id="buyBudget" class="money-input" inputmode="numeric" placeholder="예: 1,000,000" oninput="updateBuyBudget(this.value)"></label>
+        <button class="btn secondary" onclick="addBuyRow()">＋ 종목</button>
+        <button class="btn soft" onclick="resetBuyTable()">초기화</button>
+      </div>
+      <div id="buyWeightWarning" class="buy-warning"></div>
+      <div class="buy-summary">
+        <div><small>투자 예산</small><b id="buyBudgetSum">₩0</b></div>
+        <div><small>목표 비중 합계</small><b id="buyWeightSum">0.00%</b></div>
+        <div><small>총 주문금액</small><b id="buyOrderSum">₩0</b></div>
+        <div><small>남는 예수금</small><b id="buyCashLeft">₩0</b></div>
+      </div>
+      <div class="tablewrap buy-table"><table><thead><tr><th>종목명</th><th>목표 비중</th><th>현재가격</th><th>배정 투자금</th><th>주문 가능수량</th><th>실제 주문금액</th><th>종목별 잔액</th><th>관리</th></tr></thead><tbody id="buyRows"></tbody></table></div>
+      <div class="buy-example"><b>대표 입력 예시</b><span>ISA · 예산 1,000,000원 · TIGER 미국S&amp;P500 60% · KODEX 미국나스닥100 40%</span></div>
+      <div class="buy-note">배정금액은 예산과 목표 비중으로 계산하며, 매수수량은 현재가격 기준 정수 단위로 자동 산출합니다. 비중 합계가 100%보다 작으면 미배정 금액도 예수금에 포함됩니다.</div>
+    </div>
+  </section>
+
+  <section id="settings" class="panel">
+    <div class="sectionhead"><div><h2>설정</h2><p>이미지, 소유자, 포트폴리오 항목과 데이터를 관리합니다.</p></div></div>
+    <div class="grid2">
+      <div class="box">
+        <h3>대표 이미지</h3>
+        <div id="logoPreview" class="logo-preview">🐮</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><label class="btn secondary" style="cursor:pointer">이미지 변경<input id="logoFile" type="file" accept="image/*" style="display:none"></label><button class="btn soft" onclick="removeLogo()">기본 이미지로</button></div>
+        <p class="hint" style="margin-top:12px">상단 이미지는 3 × 3cm로 표시됩니다. 업로드 이미지는 정사각형으로 자동 맞춤됩니다.</p>
+      </div>
+      <div class="box"><h3>소유자 관리</h3><div class="inline"><input id="newOwner" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 가족 구성원"><button class="btn primary" onclick="addOwner()">추가</button></div><div id="ownerList" class="setting-list"></div></div>
+      <div class="box">
+        <h3>포트폴리오 항목 관리</h3>
+        <div class="inline"><select id="newCategoryGroup"><option>현금자산</option><option>금융자산</option></select><input id="newCategory" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 예금"><button class="btn primary" onclick="addCategory()">추가</button></div>
+        <div id="categoryList" class="setting-list"></div>
+      </div>
+      <div class="box">
+        <h3>포트폴리오 및 보안</h3>
+        <div class="profile-management">
+          <label>현재 포트폴리오 이름<input id="currentProfileName" class="ko-input" lang="ko" autocomplete="off" maxlength="30"></label>
+          <div class="security-row"><button class="btn secondary" onclick="renameCurrentProfile()">이름 변경</button><button class="btn secondary" onclick="changePin()">PIN 변경</button><button class="btn soft" onclick="switchPortfolio()">포트폴리오 전환</button></div>
+          <button class="btn danger" onclick="deleteCurrentProfile()">현재 포트폴리오 삭제</button>
+        </div>
+        <p class="hint" style="margin-top:12px">포트폴리오마다 이름, PIN, 자산 데이터가 따로 저장됩니다. 10분 동안 사용하지 않으면 자동 잠금됩니다.</p>
+        <p class="hint">주의: 현재 버전은 브라우저 화면 잠금 방식이며, 저장 데이터 자체를 암호화하는 은행 수준의 보안은 아닙니다.</p>
+      </div>
+      <div class="box">
+        <h3>데이터 관리</h3>
+        <div class="data-management-actions">
+          <div class="data-backup-row">
+            <button class="btn secondary" onclick="exportData()">백업 다운로드</button>
+            <label class="btn secondary" style="cursor:pointer">백업 불러오기<input id="importFile" type="file" accept="application/json" style="display:none"></label>
+          </div>
+          <div class="data-reset-row">
+            <label class="reset-year-field">초기화 연도<select id="resetYearSelect"></select></label>
+            <button id="resetYearBtn" class="btn danger" onclick="resetSelectedYear()">선택 연도 초기화</button>
+            <button class="btn danger" onclick="resetAll()">전체 초기화</button>
+          </div>
+        </div>
+        <p class="hint" style="margin-top:14px">초기화할 연도를 직접 선택할 수 있습니다. 선택한 연도의 포트폴리오, 부동산 실거래가, 대출 상환기록만 삭제하며 부동산·대출 기본정보는 유지합니다. 전체 초기화는 현재 선택한 포트폴리오의 앱 데이터만 삭제하며, 다른 포트폴리오는 유지합니다.</p>
+        <p class="hint">각 포트폴리오의 데이터는 현재 브라우저에 별도로 저장됩니다. 정기적으로 포트폴리오별 백업 파일을 내려받아 보관하세요.</p>
+        <p class="hint">날짜는 20251025처럼 8자리로 입력하면 자동으로 2025-10-25로 변환됩니다. 날짜 입력칸에 커서를 둔 뒤 마우스 휠 또는 PageUp/PageDown을 사용하면 한 달씩 빠르게 이동합니다.</p>
+        <p class="hint">텍스트 입력란은 한국어 입력 우선으로 설정되어 있습니다. 다만 브라우저 보안상 운영체제의 한/영 상태를 강제로 바꾸지는 못합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer"><a href="https://www.exchangerate-api.com" target="_blank" rel="noreferrer">Rates By Exchange Rate API</a> · 인터넷 연결이 없으면 마지막 저장 환율을 사용합니다.</div>
+</div>
+
+<div id="detailModal" class="modal" onclick="if(event.target===this)closeDetailModal()">
+  <div class="modal-card">
+    <div class="modal-head"><div><h2 id="detailTitle"></h2><p id="detailMeta"></p></div><button class="btn soft" onclick="closeDetailModal()">닫기</button></div>
+    <div id="detailStats" class="modal-stats"></div>
+    <div class="modal-chart"><canvas id="detailChart"></canvas></div>
+  </div>
+</div>
+
+<script>
+const LEGACY_KEY='wooyoo_assets_v11';
+const LEGACY_OLD_KEY='wooyoo_assets_v10';
+const LEGACY_LOCK_KEY='wooyoo_asset_lock_v1';
+const PROFILE_REGISTRY_KEY='wooyoo_asset_profiles_v1';
+const PROFILE_STATE_PREFIX='wooyoo_assets_profile_';
+const AUTO_LOCK_MS=10*60*1000;
+let KEY='';
+let activeProfileId=null;
+const currentYear=new Date().getFullYear();
+const DEFAULT_CATEGORIES=[
+  {name:'주택청약',group:'현금자산'},{name:'적금',group:'현금자산'},{name:'경조사비',group:'현금자산'},{name:'잔여현금',group:'현금자산'},
+  {name:'NASDAQ',group:'금융자산'},{name:'KOSPI',group:'금융자산'},{name:'ISA',group:'금융자산'},{name:'연금저축펀드',group:'금융자산'},{name:'퇴직연금',group:'금융자산'}
+];
+function normalizeDate(v){const s=String(v||'');return /^\d{4}-\d{2}$/.test(s)?`${s}-01`:s;}
+let state=defaultState();
+let activePortfolioOwner='전체',activePortfolioGroup='전체',activePortfolioCat='전체';
+let selectedPortfolioIds=new Set(),visiblePortfolioIds=[];
+let editPortfolioId=null,editPropertyId=null,editTradeId=null,editDebtId=null,editPaymentId=null;
+let selectedPropertyId=null,selectedDebtId=null;
+let portfolioBatchDraft=[],tradeBatchDraft=[];
+let mainLineChart,mainPieChart,detailChart,propertyChart,debtChart;
+let autoLockTimer=null;
+
+function defaultState(){return {owners:['소유자 1','소유자 2'],categories:DEFAULT_CATEGORIES.map(c=>({...c})),portfolio:[],properties:[],propertyTrades:[],debts:[],debtPayments:[],buyTable:{account:'',budget:0,rows:[{id:Date.now()+1,name:'',weight:0,price:0},{id:Date.now()+2,name:'',weight:0,price:0}]},fx:0,fxAt:null,logoData:''};}
+function profileStateKey(id){return `${PROFILE_STATE_PREFIX}${id}`;}
+function getProfiles(){try{const value=JSON.parse(localStorage.getItem(PROFILE_REGISTRY_KEY)||'[]');return Array.isArray(value)?value:[];}catch(e){return [];}}
+function saveProfiles(profiles){localStorage.setItem(PROFILE_REGISTRY_KEY,JSON.stringify(profiles));}
+function getActiveProfile(){return getProfiles().find(p=>p.id===activeProfileId)||null;}
+function updateProfile(id,changes){const profiles=getProfiles();const idx=profiles.findIndex(p=>p.id===id);if(idx<0)return null;profiles[idx]={...profiles[idx],...changes};saveProfiles(profiles);return profiles[idx];}
+function loadProfileState(id){
+  const key=profileStateKey(id);
+  try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved)return normalizeState({...defaultState(),...saved});}catch(e){}
+  return defaultState();
+}
+function migrateLegacyProfile(){
+  if(getProfiles().length)return;
+  let legacyLock=null;try{legacyLock=JSON.parse(localStorage.getItem(LEGACY_LOCK_KEY)||'null');}catch(e){}
+  const raw=localStorage.getItem(LEGACY_KEY)||localStorage.getItem(LEGACY_OLD_KEY);
+  if(!legacyLock?.hash)return;
+  const id=`p_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
+  saveProfiles([{id,name:'기존 포트폴리오',salt:legacyLock.salt,hash:legacyLock.hash,createdAt:legacyLock.createdAt||new Date().toISOString(),lastOpened:null}]);
+  if(raw)localStorage.setItem(profileStateKey(id),raw);else localStorage.setItem(profileStateKey(id),JSON.stringify(defaultState()));
+  [LEGACY_KEY,LEGACY_OLD_KEY,LEGACY_LOCK_KEY].forEach(k=>localStorage.removeItem(k));
+}
+function normalizeState(s){
+  s.categories=Array.isArray(s.categories)&&s.categories.length?s.categories:DEFAULT_CATEGORIES.map(c=>({...c}));
+  s.categories=s.categories.map(c=>typeof c==='string'?{name:c,group:'금융자산'}:c).filter(c=>c?.name);
+  s.portfolio=(s.portfolio||[]).map(x=>({...x,month:normalizeDate(x.month||x.date),cat:x.cat||'기타',currency:x.currency||'KRW'}));
+  s.propertyTrades=(s.propertyTrades||[]).map(x=>({...x,month:normalizeDate(x.month||x.date)}));
+  s.debtPayments=(s.debtPayments||[]).map(x=>({...x,month:normalizeDate(x.month||x.date)}));
+  s.buyTable=s.buyTable&&typeof s.buyTable==='object'?s.buyTable:{account:'',budget:0,rows:[]};
+  s.buyTable.rows=Array.isArray(s.buyTable.rows)&&s.buyTable.rows.length?s.buyTable.rows:[{id:Date.now()+1,name:'',weight:0,price:0},{id:Date.now()+2,name:'',weight:0,price:0}];
+  s.buyTable.rows=s.buyTable.rows.map((r,i)=>({id:r.id||Date.now()+i+1,name:r.name||'',weight:Number(r.weight||0),price:Number(r.price||0)}));
+  return s;
+}
+const $=id=>document.getElementById(id);
+const money=n=>'₩'+Math.round(Number(n||0)).toLocaleString('ko-KR');
+const num=n=>Number(n||0).toLocaleString('ko-KR',{maximumFractionDigits:2});
+const pct=n=>`${Math.abs(Number(n||0)).toFixed(2)}%`;
+const parseMoney=v=>Number(String(v??'').replace(/,/g,'').replace(/[^0-9.-]/g,''))||0;
+const dateLabel=v=>{const d=normalizeDate(v);if(!d)return '-';const [y,m,day]=d.split('-');return `${y}.${m}.${day}`;};
+const monthLabel=v=>{const d=normalizeDate(v);if(!d)return '';return `${Number(d.slice(5,7))}월 ${Number(d.slice(8,10))}일`;};
+const monthCutoff=(year,month)=>`${year}-${String(month).padStart(2,'0')}-31`;
+const yearEnd=year=>`${year}-12-31`;
+const selectedYearDate=()=>{const now=new Date(),y=Number($('yearSelect')?.value||now.getFullYear()),m=String(now.getMonth()+1).padStart(2,'0'),d=String(now.getDate()).padStart(2,'0');return `${y}-${m}-${d}`;};
+const getFx=()=>Number(state.fx||0)||1;
+const toKRW=(amount,currency)=>currency==='USD'?Number(amount||0)*getFx():Number(amount||0);
+const originalMoney=(amount,currency)=>currency==='USD'?`$${Number(amount||0).toLocaleString('en-US',{maximumFractionDigits:2})}`:money(amount);
+const categoryGroup=cat=>state.categories.find(c=>c.name===cat)?.group||'금융자산';
+function trend(value){const n=Number(value||0);return `<span class="${n>0?'pos':n<0?'neg':'neutral'}">${n>0?'▲':n<0?'▼':'－'} ${pct(n)}</span>`}
+function escapeHtml(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
+function saveState(){if(KEY)localStorage.setItem(KEY,JSON.stringify(state));renderAll();}
+function setMoneyInput(el,value){el.value=value===undefined||value===null||value===''?'':Number(value).toLocaleString('ko-KR',{maximumFractionDigits:2});}
+function bindMoneyInput(el){if(!el||el.dataset.bound)return;el.dataset.bound='1';el.addEventListener('input',()=>{const raw=el.value.replace(/,/g,'');if(!/^[-]?\d*(\.\d*)?$/.test(raw))return;const parts=raw.split('.');parts[0]=parts[0]?Number(parts[0]).toLocaleString('en-US'):'';el.value=parts.join('.');try{el.setSelectionRange(el.value.length,el.value.length)}catch(e){}});}
+function attachMoneyFormatting(){document.querySelectorAll('.money-input').forEach(bindMoneyInput);}
+function attachKoreanPreference(){document.querySelectorAll('.ko-input').forEach(el=>{el.lang='ko';el.setAttribute('autocapitalize','off');el.setAttribute('spellcheck','false');});}
+function optionList(el,arr,selected){if(!el)return;el.innerHTML=arr.map(x=>`<option value="${escapeHtml(x)}" ${x===selected?'selected':''}>${escapeHtml(x)}</option>`).join('');}
+function categoryOptions(selected){return ['현금자산','금융자산'].map(group=>`<optgroup label="${group}">${state.categories.filter(c=>c.group===group).map(c=>`<option value="${escapeHtml(c.name)}" ${c.name===selected?'selected':''}>${escapeHtml(c.name)}</option>`).join('')}</optgroup>`).join('');}
+function uniqueId(){return Date.now()+Math.floor(Math.random()*1000000);}
+function parseSmartDate(value){
+  const raw=String(value||'').trim();
+  const digits=raw.replace(/\D/g,'');
+  if(digits.length!==8)return normalizeDate(raw);
+  const y=Number(digits.slice(0,4)),m=Number(digits.slice(4,6)),d=Number(digits.slice(6,8));
+  const dt=new Date(y,m-1,d);
+  if(dt.getFullYear()!==y||dt.getMonth()!==m-1||dt.getDate()!==d)return '';
+  return `${String(y).padStart(4,'0')}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+function koreanDateText(value){const v=parseSmartDate(value);if(!/^\d{4}-\d{2}-\d{2}$/.test(v))return '8자리로 입력하세요. 예: 20251025';const [y,m,d]=v.split('-').map(Number);return `${y}년 ${m}월 ${d}일`;}
+function updateDatePreview(input){const wrap=input.closest('.date-combo');const preview=wrap?.querySelector('.date-preview');if(preview)preview.textContent=koreanDateText(input.value);}
+function smartDateInput(input){
+  const digits=input.value.replace(/\D/g,'');
+  if(digits.length===8){const parsed=parseSmartDate(digits);if(parsed){input.value=parsed;input.classList.remove('invalid');updateDatePreview(input);input.dispatchEvent(new Event('change',{bubbles:true}));}else input.classList.add('invalid');}
+  else{input.classList.remove('invalid');updateDatePreview(input);}
+}
+function smartDateCommit(input){const parsed=parseSmartDate(input.value);if(parsed){input.value=parsed;input.classList.remove('invalid');updateDatePreview(input);input.dispatchEvent(new Event('change',{bubbles:true}));}else if(input.value.trim()){input.classList.add('invalid');updateDatePreview(input);}else{input.classList.remove('invalid');updateDatePreview(input);}}
+function openDatePicker(btn){const wrap=btn.closest('.date-combo'),text=wrap.querySelector('.smart-date'),picker=wrap.querySelector('.native-date-picker');picker.value=parseSmartDate(text.value)||selectedYearDate();if(picker.showPicker)picker.showPicker();else picker.click();}
+function applyDatePicker(picker){const text=picker.closest('.date-combo').querySelector('.smart-date');text.value=picker.value;updateDatePreview(text);text.dispatchEvent(new Event('change',{bubbles:true}));}
+function shiftSmartDate(input,months){const base=parseSmartDate(input.value)||selectedYearDate();const [y,m,d]=base.split('-').map(Number),target=new Date(y,m-1+months,1),lastDay=new Date(target.getFullYear(),target.getMonth()+1,0).getDate();target.setDate(Math.min(d,lastDay));input.value=`${target.getFullYear()}-${String(target.getMonth()+1).padStart(2,'0')}-${String(target.getDate()).padStart(2,'0')}`;updateDatePreview(input);input.dispatchEvent(new Event('change',{bubbles:true}));}
+function attachSmartDates(){document.querySelectorAll('.smart-date').forEach(input=>{if(input.dataset.dateBound)return;input.dataset.dateBound='1';input.addEventListener('input',()=>smartDateInput(input));input.addEventListener('blur',()=>smartDateCommit(input));input.addEventListener('keydown',e=>{if(e.key==='PageUp'||e.key==='PageDown'){e.preventDefault();shiftSmartDate(input,e.key==='PageUp'?-1:1);}});input.addEventListener('wheel',e=>{if(document.activeElement!==input)return;e.preventDefault();shiftSmartDate(input,e.deltaY<0?-1:1);},{passive:false});updateDatePreview(input);});}
+
+
+function bytesToBase64(bytes){let binary='';bytes.forEach(b=>binary+=String.fromCharCode(b));return btoa(binary);}
+function base64ToBytes(value){const binary=atob(value);return Uint8Array.from(binary,c=>c.charCodeAt(0));}
+async function derivePinHash(pin,saltBytes){
+  if(window.crypto?.subtle){
+    const keyMaterial=await crypto.subtle.importKey('raw',new TextEncoder().encode(pin),'PBKDF2',false,['deriveBits']);
+    const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt:saltBytes,iterations:150000,hash:'SHA-256'},keyMaterial,256);
+    return bytesToBase64(new Uint8Array(bits));
+  }
+  let hash=2166136261;const text=pin+'|'+bytesToBase64(saltBytes);
+  for(let round=0;round<120000;round++)for(let i=0;i<text.length;i++){hash^=text.charCodeAt(i);hash=Math.imul(hash,16777619);}
+  return String(hash>>>0);
+}
+function setWelcomeError(message){const el=$('welcomeError');if(el)el.textContent=message||'';}
+function profileLogoHtml(profileId){try{const saved=JSON.parse(localStorage.getItem(profileStateKey(profileId))||'null');return saved?.logoData?`<img src="${saved.logoData}" alt="대표 이미지">`:'🐮';}catch(e){return '🐮';}}
+function profilePreviewStats(profileId){
+  let saved=null;try{saved=normalizeState({...defaultState(),...JSON.parse(localStorage.getItem(profileStateKey(profileId))||'null')});}catch(e){saved=defaultState();}
+  const fx=Number(saved.fx||0)||1,end='9999-12-31';
+  const latest={};(saved.portfolio||[]).filter(x=>normalizeDate(x.month)<=end).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month))).forEach(x=>{latest[`${x.owner}|${x.cat}`]=x;});
+  const portfolioValue=Object.values(latest).reduce((sum,x)=>sum+(x.currency==='USD'?Number(x.value||0)*fx:Number(x.value||0)),0);
+  const propertyValue=(saved.properties||[]).reduce((sum,p)=>{const prices=(saved.propertyTrades||[]).filter(t=>t.propertyId===p.id).map(t=>Number(t.price||0));return sum+(prices.length?Math.max(...prices):0);},0);
+  const debtValue=(saved.debts||[]).reduce((sum,d)=>{const payments=(saved.debtPayments||[]).filter(p=>p.debtId===d.id).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));const latestPay=payments[payments.length-1];return sum+Number(latestPay?.balance??d.loanAmount??0);},0);
+  const totalAssets=portfolioValue+propertyValue,net=totalAssets-debtValue;
+  return {totalAssets,net,recordCount:(saved.portfolio||[]).length+(saved.propertyTrades||[]).length+(saved.debtPayments||[]).length};
+}
+function focusFirstProfile(){const first=document.querySelector('.profile-card');if(first){first.scrollIntoView({behavior:'smooth',block:'center'});first.focus();}else showCreateProfile();}
+function syncPinDots(){const value=String($('unlockPin')?.value||'').replace(/\D/g,'').slice(0,6);if($('unlockPin')&&$('unlockPin').value!==value)$('unlockPin').value=value;document.querySelectorAll('#pinDots span').forEach((dot,i)=>dot.classList.toggle('filled',i<value.length));}
+function pressPinDigit(digit){const input=$('unlockPin');if(!input)return;input.value=(input.value.replace(/\D/g,'')+digit).slice(0,6);syncPinDots();if(input.value.length===6)setTimeout(unlockPortfolio,120);}
+function backspacePinInput(){const input=$('unlockPin');if(!input)return;input.value=input.value.slice(0,-1);syncPinDots();}
+function clearPinInput(){const input=$('unlockPin');if(!input)return;input.value='';syncPinDots();}
+function renderProfileList(){
+  const profiles=getProfiles();
+  const list=$('profileList');
+  if(!list)return;
+  list.innerHTML=profiles.length?profiles.map(p=>{const stats=profilePreviewStats(p.id);return `<div class="profile-row"><button class="profile-card" onclick='selectProfile(${JSON.stringify(p.id)})'><span class="profile-avatar">${profileLogoHtml(p.id)}</span><span class="profile-card-main"><b>${escapeHtml(p.name)}</b><small>${p.lastOpened?`최근 열람 ${new Date(p.lastOpened).toLocaleString('ko-KR')}`:`개설 ${new Date(p.createdAt).toLocaleDateString('ko-KR')}`}</small></span><span class="profile-stats"><div><small>총자산</small><strong>${money(stats.totalAssets)}</strong></div><div><small>순자산</small><strong>${money(stats.net)}</strong></div></span><span class="profile-open">PIN 입력 후 열기 ›</span></button><button class="profile-delete" onclick='deleteProfileFromList(${JSON.stringify(p.id)},event)' aria-label="${escapeHtml(p.name)} 삭제">포트폴리오 삭제</button></div>`}).join(''):'<div class="profile-empty">등록된 포트폴리오가 없습니다.<br>새 포트폴리오를 개설해 시작하세요.</div>';
+  $('welcomeCopy').textContent=profiles.length?'사용할 포트폴리오를 선택하거나 새 포트폴리오를 개설하세요.':'포트폴리오 이름과 6자리 PIN을 설정해 시작하세요.';
+}
+function initLockScreen(){
+  $('welcomeLogo').innerHTML='🐮';
+  $('profileListSection').style.display='block';
+  $('createProfilePanel').classList.remove('show');
+  $('unlockPinPanel').classList.remove('show');
+  $('welcomeScreen').classList.remove('hidden');
+  $('mainApp').classList.add('app-locked');
+  setWelcomeError('');
+  renderProfileList();
+}
+function showCreateProfile(){
+  $('profileListSection').style.display='none';$('unlockPinPanel').classList.remove('show');$('createProfilePanel').classList.add('show');setWelcomeError('');
+  $('newProfileName').value='';$('setupPin').value='';$('setupPinConfirm').value='';setTimeout(()=>$('newProfileName')?.focus(),50);
+}
+function cancelCreateProfile(){$('createProfilePanel').classList.remove('show');$('profileListSection').style.display='block';setWelcomeError('');renderProfileList();}
+async function createNewPortfolio(){
+  const name=$('newProfileName').value.trim(),pin=$('setupPin').value.trim(),confirmPin=$('setupPinConfirm').value.trim();
+  if(name.length<2)return setWelcomeError('포트폴리오 이름은 2자 이상 입력해 주세요.');
+  if(getProfiles().some(p=>p.name.toLowerCase()===name.toLowerCase()))return setWelcomeError('같은 이름의 포트폴리오가 이미 있습니다.');
+  if(!/^\d{6}$/.test(pin))return setWelcomeError('PIN은 숫자 6자리로 입력해 주세요.');
+  if(pin!==confirmPin)return setWelcomeError('PIN 확인 값이 일치하지 않습니다.');
+  const salt=crypto.getRandomValues(new Uint8Array(16)),hash=await derivePinHash(pin,salt),id=`p_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
+  const profilesBefore=getProfiles();
+  const profile={id,name,salt:bytesToBase64(salt),hash,createdAt:new Date().toISOString(),lastOpened:new Date().toISOString()};
+  saveProfiles([...profilesBefore,profile]);
+  activeProfileId=id;KEY=profileStateKey(id);
+  let initial=defaultState();
+  if(profilesBefore.length===0){
+    const legacyRaw=localStorage.getItem(LEGACY_KEY)||localStorage.getItem(LEGACY_OLD_KEY);
+    if(legacyRaw)try{initial=normalizeState({...defaultState(),...JSON.parse(legacyRaw)});}catch(e){}
+    [LEGACY_KEY,LEGACY_OLD_KEY,LEGACY_LOCK_KEY].forEach(k=>localStorage.removeItem(k));
+  }
+  state=initial;localStorage.setItem(KEY,JSON.stringify(state));
+  $('newProfileName').value='';$('setupPin').value='';$('setupPinConfirm').value='';openApp();
+}
+function selectProfile(id){
+  const profile=getProfiles().find(p=>p.id===id);if(!profile)return;
+  activeProfileId=id;KEY=profileStateKey(id);state=loadProfileState(id);clearRuntimeSelections();
+  $('profileListSection').style.display='none';$('createProfilePanel').classList.remove('show');$('unlockPinPanel').classList.add('show');$('selectedProfileName').textContent=profile.name;$('welcomeLogo').innerHTML=state.logoData?`<img src="${state.logoData}" alt="대표 이미지">`:'🐮';$('unlockPin').value='';syncPinDots();setWelcomeError('');setTimeout(()=>$('unlockPin')?.focus(),50);
+}
+function backToProfileList(){activeProfileId=null;KEY='';state=defaultState();$('unlockPinPanel').classList.remove('show');$('profileListSection').style.display='block';$('welcomeLogo').innerHTML='🐮';setWelcomeError('');renderProfileList();}
+async function deleteProfileFromList(id,event){
+  event?.stopPropagation();
+  const profile=getProfiles().find(p=>p.id===id);if(!profile)return;
+  const pin=prompt(`포트폴리오 "${profile.name}"의 6자리 PIN을 입력하세요.`);if(pin===null)return;
+  if(!/^\d{6}$/.test(pin.trim()))return alert('PIN은 숫자 6자리로 입력해 주세요.');
+  try{
+    const valid=await derivePinHash(pin.trim(),base64ToBytes(profile.salt))===profile.hash;
+    if(!valid)return alert('PIN이 올바르지 않습니다.');
+  }catch(e){return alert('PIN 확인 중 오류가 발생했습니다.');}
+  const answer=prompt(`이 포트폴리오와 모든 자산 데이터를 완전히 삭제합니다. 계속하려면 포트폴리오 이름 "${profile.name}"을 입력하세요.`);if(answer===null)return;
+  if(answer.trim()!==profile.name)return alert('포트폴리오 이름이 일치하지 않아 삭제를 취소했습니다.');
+  localStorage.removeItem(profileStateKey(profile.id));
+  saveProfiles(getProfiles().filter(p=>p.id!==profile.id));
+  if(activeProfileId===profile.id){activeProfileId=null;KEY='';state=defaultState();}
+  renderProfileList();
+  alert(`"${profile.name}" 포트폴리오를 삭제했습니다.`);
+}
+async function verifyPin(pin){
+  const profile=getActiveProfile();if(!profile?.hash)return false;
+  try{return await derivePinHash(pin,base64ToBytes(profile.salt))===profile.hash;}catch(e){return false;}
+}
+async function unlockPortfolio(){
+  if(!activeProfileId)return setWelcomeError('포트폴리오를 다시 선택해 주세요.');
+  const pin=$('unlockPin').value.trim();
+  if(!/^\d{6}$/.test(pin))return setWelcomeError('6자리 PIN을 입력해 주세요.');
+  if(!(await verifyPin(pin))){$('unlockPin').value='';syncPinDots();setWelcomeError('PIN이 올바르지 않습니다.');return;}
+  $('unlockPin').value='';syncPinDots();updateProfile(activeProfileId,{lastOpened:new Date().toISOString()});openApp();
+}
+function openApp(){
+  if(!activeProfileId)return initLockScreen();
+  KEY=profileStateKey(activeProfileId);state=loadProfileState(activeProfileId);clearRuntimeSelections();recalculateAllDebtBalances();
+  $('welcomeScreen').classList.add('hidden');$('mainApp').classList.remove('app-locked');setWelcomeError('');renderAll();refreshFx(false);resetAutoLock();
+}
+function lockApp(){clearTimeout(autoLockTimer);autoLockTimer=null;closeDetailModal();activeProfileId=null;KEY='';state=defaultState();initLockScreen();}
+function switchPortfolio(){lockApp();}
+function resetAutoLock(){if($('mainApp')?.classList.contains('app-locked'))return;clearTimeout(autoLockTimer);autoLockTimer=setTimeout(lockApp,AUTO_LOCK_MS);}
+async function changePin(){
+  const current=prompt('현재 6자리 PIN을 입력하세요.');if(current===null)return;
+  if(!(await verifyPin(current.trim())))return alert('현재 PIN이 올바르지 않습니다.');
+  const next=prompt('새 6자리 PIN을 입력하세요.');if(next===null)return;
+  if(!/^\d{6}$/.test(next.trim()))return alert('PIN은 숫자 6자리여야 합니다.');
+  const check=prompt('새 PIN을 한 번 더 입력하세요.');if(check===null)return;
+  if(next.trim()!==check.trim())return alert('새 PIN이 일치하지 않습니다.');
+  const salt=crypto.getRandomValues(new Uint8Array(16)),hash=await derivePinHash(next.trim(),salt);
+  updateProfile(activeProfileId,{salt:bytesToBase64(salt),hash});alert('PIN을 변경했습니다.');resetAutoLock();
+}
+function renameCurrentProfile(){
+  const input=$('currentProfileName'),name=input?.value.trim();if(!name||name.length<2)return alert('포트폴리오 이름은 2자 이상 입력해 주세요.');
+  if(getProfiles().some(p=>p.id!==activeProfileId&&p.name.toLowerCase()===name.toLowerCase()))return alert('같은 이름의 포트폴리오가 이미 있습니다.');
+  updateProfile(activeProfileId,{name});renderBrand();renderSettings();alert('포트폴리오 이름을 변경했습니다.');
+}
+function deleteCurrentProfile(){
+  const profile=getActiveProfile();if(!profile)return;
+  const answer=prompt(`현재 포트폴리오와 모든 데이터를 삭제합니다. 계속하려면 포트폴리오 이름 "${profile.name}"을 입력하세요.`);if(answer===null)return;
+  if(answer.trim()!==profile.name)return alert('포트폴리오 이름이 일치하지 않아 취소했습니다.');
+  localStorage.removeItem(profileStateKey(profile.id));saveProfiles(getProfiles().filter(p=>p.id!==profile.id));alert('포트폴리오를 삭제했습니다.');lockApp();
+}
+['click','keydown','mousemove','touchstart'].forEach(eventName=>document.addEventListener(eventName,()=>resetAutoLock(),{passive:true}));
+function recordYear(record){const value=normalizeDate(record?.month||record?.date||record?.recordDate||'');const match=value.match(/^(\d{4})/);return match?match[1]:'';}
+function clearRuntimeSelections(){selectedPortfolioIds.clear();visiblePortfolioIds=[];editPortfolioId=editPropertyId=editTradeId=editDebtId=editPaymentId=null;selectedPropertyId=selectedDebtId=null;portfolioBatchDraft=[];tradeBatchDraft=[];activePortfolioOwner='전체';activePortfolioGroup='전체';activePortfolioCat='전체';}
+
+function init(){
+  for(let y=2020;y<=currentYear+100;y++){
+    $('yearSelect').insertAdjacentHTML('beforeend',`<option value="${y}" ${y===currentYear?'selected':''}>${y}년</option>`);
+    $('resetYearSelect').insertAdjacentHTML('beforeend',`<option value="${y}" ${y===currentYear?'selected':''}>${y}년</option>`);
+  }
+  $('yearSelect').addEventListener('change',renderAll);
+  $('resetYearSelect').addEventListener('change',renderSettings);
+  const navs=[['dashboard','대시보드'],['portfolio','포트폴리오'],['realestate','부동산'],['debt','부채'],['buytable','매수표'],['settings','설정']];
+  $('nav').innerHTML=navs.map((x,i)=>`<button class="${i===0?'active':''}" onclick="openTab('${x[0]}',this)">${x[1]}</button>`).join('');
+  ['payPrincipal','payInterest'].forEach(id=>$(id).addEventListener('input',updatePaymentPreview));
+  $('payMonth').addEventListener('change',updatePaymentPreview);
+  $('importFile').addEventListener('change',importData);$('logoFile').addEventListener('change',handleLogoUpload);
+  attachMoneyFormatting();attachKoreanPreference();attachSmartDates();migrateLegacyProfile();setInterval(()=>{if(activeProfileId)refreshFx(false);},60*60*1000);
+}
+function openTab(id,btn){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');if(id==='realestate')renderProperties();if(id==='debt')renderDebts();if(id==='buytable')renderBuyTable();attachSmartDates();}
+function renderAll(){
+  ['rOwner','dOwner'].forEach(id=>optionList($(id),state.owners,$(id)?.value));
+  renderBrand();renderFx();renderPortfolioTabs();renderPortfolio();renderProperties();renderDebts();renderBuyTable();renderSettings();renderDashboard();attachMoneyFormatting();attachKoreanPreference();attachSmartDates();
+}
+function renderBrand(){const html=state.logoData?`<img src="${state.logoData}" alt="대표 이미지">`:'🐮';$('brandLogo').innerHTML=html;$('logoPreview').innerHTML=html;const profile=getActiveProfile();if($('activeProfileName'))$('activeProfileName').textContent=profile?.name||'-';}
+function renderFx(){$('fxText').textContent=state.fx?`₩${Number(state.fx).toLocaleString('ko-KR',{maximumFractionDigits:2})}`:'조회 실패';$('fxAt').textContent=state.fxAt?`갱신 ${new Date(state.fxAt).toLocaleString('ko-KR')}`:'저장된 환율 없음';}
+async function refreshFx(showAlert){
+  if(!activeProfileId||!KEY)return;
+  try{const r=await fetch('https://open.er-api.com/v6/latest/USD',{cache:'no-store'});if(!r.ok)throw new Error('fx');const j=await r.json();const rate=j?.rates?.KRW;if(!rate)throw new Error('rate');state.fx=rate;state.fxAt=new Date().toISOString();localStorage.setItem(KEY,JSON.stringify(state));renderAll();if(showAlert)alert('최신 환율을 반영했습니다.');}
+  catch(e){renderFx();if(showAlert)alert('환율 조회에 실패했습니다. 마지막 저장 환율을 사용합니다.');}
+}
+
+function setOwnerFilter(owner){activePortfolioOwner=owner;activePortfolioGroup='전체';activePortfolioCat='전체';renderPortfolioTabs();renderPortfolio();}
+function setGroupFilter(group){activePortfolioGroup=group;activePortfolioCat='전체';renderPortfolioTabs();renderPortfolio();}
+function setCatFilter(cat){activePortfolioCat=cat;renderPortfolioTabs();renderPortfolio();}
+function renderPortfolioTabs(){
+  $('portfolioOwnerTabs').innerHTML=['전체',...state.owners].map(x=>`<button class="${x===activePortfolioOwner?'active':''}" onclick='setOwnerFilter(${JSON.stringify(x)})'>${escapeHtml(x)}</button>`).join('');
+  $('portfolioGroupTabs').innerHTML=['전체','현금자산','금융자산'].map(x=>`<button class="${x===activePortfolioGroup?'active':''}" onclick='setGroupFilter(${JSON.stringify(x)})'>${escapeHtml(x)}</button>`).join('');
+  const cats=state.categories.filter(c=>activePortfolioGroup==='전체'||c.group===activePortfolioGroup).map(c=>c.name);
+  if(activePortfolioCat!=='전체'&&!cats.includes(activePortfolioCat))activePortfolioCat='전체';
+  $('portfolioCatTabs').innerHTML=['전체',...cats].map(x=>`<button class="${x===activePortfolioCat?'active':''}" onclick='setCatFilter(${JSON.stringify(x)})'>${escapeHtml(x)}</button>`).join('');
+}
+function blankPortfolioRow(){return {draftId:uniqueId(),month:selectedYearDate(),owner:activePortfolioOwner==='전체'?(state.owners[0]||''):activePortfolioOwner,cat:activePortfolioCat==='전체'?(state.categories.find(c=>activePortfolioGroup==='전체'||c.group===activePortfolioGroup)?.name||state.categories[0]?.name||''):activePortfolioCat,currency:'KRW',principal:'',value:'',memo:''};}
+function showPortfolioBatchForm(){editPortfolioId=null;portfolioBatchDraft=[blankPortfolioRow()];$('portfolioBatchForm').style.display='block';renderPortfolioBatchRows();window.scrollTo({top:$('portfolioBatchForm').offsetTop-120,behavior:'smooth'});}
+function hidePortfolioBatchForm(){$('portfolioBatchForm').style.display='none';portfolioBatchDraft=[];editPortfolioId=null;}
+function addPortfolioBatchRow(prefill){portfolioBatchDraft.push(prefill||blankPortfolioRow());renderPortfolioBatchRows();}
+function removePortfolioBatchRow(id){if(portfolioBatchDraft.length===1)return alert('입력줄은 최소 1개가 필요합니다.');portfolioBatchDraft=portfolioBatchDraft.filter(x=>x.draftId!==id);renderPortfolioBatchRows();}
+function updatePortfolioDraft(id,field,value){const row=portfolioBatchDraft.find(x=>x.draftId===id);if(row)row[field]=value;}
+function renderPortfolioBatchRows(){
+  $('portfolioBatchRows').innerHTML=portfolioBatchDraft.map((r,i)=>`<div class="batch-row"><div class="batch-head"><b>기록 ${i+1}</b><button class="row-remove" onclick="removePortfolioBatchRow(${r.draftId})">삭제</button></div><div class="batch-grid">
+    <label>기준일<div class="date-combo"><input class="smart-date" inputmode="numeric" maxlength="10" value="${escapeHtml(normalizeDate(r.month))}" placeholder="YYYYMMDD" title="8자리 입력 또는 마우스 휠로 월 이동" onchange="updatePortfolioDraft(${r.draftId},'month',parseSmartDate(this.value))"><button type="button" class="date-picker-btn" onclick="openDatePicker(this)" aria-label="달력 열기">📅</button><input type="date" class="native-date-picker" onchange="applyDatePicker(this)"><small class="date-preview"></small></div></label>
+    <label>소유자<select onchange="updatePortfolioDraft(${r.draftId},'owner',this.value)">${state.owners.map(x=>`<option ${x===r.owner?'selected':''}>${escapeHtml(x)}</option>`).join('')}</select></label>
+    <label>항목<select onchange="updatePortfolioDraft(${r.draftId},'cat',this.value)">${categoryOptions(r.cat)}</select></label>
+    <label>통화<select onchange="updatePortfolioDraft(${r.draftId},'currency',this.value)"><option value="KRW" ${r.currency==='KRW'?'selected':''}>원화</option><option value="USD" ${r.currency==='USD'?'selected':''}>달러</option></select></label>
+    <label>원금<input class="money-input" inputmode="numeric" value="${escapeHtml(r.principal)}" oninput="updatePortfolioDraft(${r.draftId},'principal',this.value)" placeholder="0"></label>
+    <label>평가액<input class="money-input" inputmode="numeric" value="${escapeHtml(r.value)}" oninput="updatePortfolioDraft(${r.draftId},'value',this.value)" placeholder="0"></label>
+    <label>메모<input class="ko-input" lang="ko" autocomplete="off" value="${escapeHtml(r.memo)}" oninput="updatePortfolioDraft(${r.draftId},'memo',this.value)" placeholder="예: 월말 기준"></label>
+  </div></div>`).join('');attachMoneyFormatting();attachKoreanPreference();attachSmartDates();
+}
+function savePortfolioBatch(){
+  if(!portfolioBatchDraft.length)return;
+  const invalid=portfolioBatchDraft.some(r=>!r.month||!r.owner||!r.cat);if(invalid)return alert('기준일, 소유자, 항목을 모두 선택해 주세요.');
+  const records=portfolioBatchDraft.map(r=>({id:r.recordId||uniqueId(),month:r.month,owner:r.owner,cat:r.cat,currency:r.currency||'KRW',principal:parseMoney(r.principal),value:parseMoney(r.value),memo:String(r.memo||'').trim()}));
+  if(editPortfolioId){const idx=state.portfolio.findIndex(x=>x.id===editPortfolioId);if(idx>=0)state.portfolio[idx]=records[0];}
+  else state.portfolio.push(...records);
+  hidePortfolioBatchForm();saveState();
+}
+function editPortfolio(id){const x=state.portfolio.find(v=>v.id===id);if(!x)return;editPortfolioId=id;portfolioBatchDraft=[{draftId:uniqueId(),recordId:id,month:x.month,owner:x.owner,cat:x.cat,currency:x.currency||'KRW',principal:x.principal,value:x.value,memo:x.memo||''}];$('portfolioBatchForm').style.display='block';renderPortfolioBatchRows();window.scrollTo({top:$('portfolioBatchForm').offsetTop-120,behavior:'smooth'});}
+function renderPortfolio(){
+  const y=$('yearSelect').value;const arr=state.portfolio.filter(x=>x.month.startsWith(y)&&(activePortfolioOwner==='전체'||x.owner===activePortfolioOwner)&&(activePortfolioGroup==='전체'||categoryGroup(x.cat)===activePortfolioGroup)&&(activePortfolioCat==='전체'||x.cat===activePortfolioCat)).sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month))||a.cat.localeCompare(b.cat));
+  visiblePortfolioIds=arr.map(x=>x.id);selectedPortfolioIds=new Set([...selectedPortfolioIds].filter(id=>visiblePortfolioIds.includes(id)));
+  $('portfolioRows').innerHTML=arr.map(x=>{const p=toKRW(x.principal,x.currency),v=toKRW(x.value,x.currency),d=v-p,r=p?d/p*100:0;const group=categoryGroup(x.cat);return `<tr><td class="select-col"><input class="select-box portfolio-row-check" type="checkbox" ${selectedPortfolioIds.has(x.id)?'checked':''} onchange="togglePortfolioSelection(${x.id},this.checked)" aria-label="${dateLabel(x.month)} ${escapeHtml(x.cat)} 선택"></td><td><b>${dateLabel(x.month)}</b><div class="muted">${escapeHtml(x.memo||'')}</div></td><td><span class="owner-dot"></span>${escapeHtml(x.owner)}</td><td><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span></td><td>${escapeHtml(x.cat)}</td><td>${x.currency}</td><td>${originalMoney(x.principal,x.currency)}</td><td>${originalMoney(x.value,x.currency)}</td><td>${money(v)}</td><td class="${d>0?'pos':d<0?'neg':'neutral'}">${d>0?'▲':d<0?'▼':'－'} ${money(Math.abs(d))}</td><td>${trend(r)}</td><td><button onclick="editPortfolio(${x.id})">수정</button> <button onclick="removeRecord('portfolio',${x.id})">삭제</button></td></tr>`}).join('')||'<tr><td colspan="12" class="empty">선택 연도의 포트폴리오 기록이 없습니다.</td></tr>';
+  updatePortfolioSelectionUI();
+}
+function togglePortfolioSelection(id,checked){checked?selectedPortfolioIds.add(id):selectedPortfolioIds.delete(id);updatePortfolioSelectionUI();}
+function toggleAllVisiblePortfolio(checked){visiblePortfolioIds.forEach(id=>checked?selectedPortfolioIds.add(id):selectedPortfolioIds.delete(id));document.querySelectorAll('.portfolio-row-check').forEach(el=>el.checked=checked);updatePortfolioSelectionUI();}
+function updatePortfolioSelectionUI(){
+  const count=[...selectedPortfolioIds].filter(id=>visiblePortfolioIds.includes(id)).length,total=visiblePortfolioIds.length;
+  const top=$('portfolioSelectAllTop'),head=$('portfolioSelectAllHead');[top,head].forEach(el=>{if(!el)return;el.checked=total>0&&count===total;el.indeterminate=count>0&&count<total;el.disabled=total===0;});
+  if($('portfolioSelectionCount'))$('portfolioSelectionCount').textContent=`${count}건 선택`;
+  if($('deleteSelectedPortfolioBtn'))$('deleteSelectedPortfolioBtn').disabled=count===0;
+}
+function deleteSelectedPortfolio(){
+  const ids=[...selectedPortfolioIds].filter(id=>visiblePortfolioIds.includes(id));if(!ids.length)return;
+  if(!confirm(`선택한 ${ids.length}건의 포트폴리오 기록을 삭제할까요?\n이 작업은 되돌릴 수 없습니다.`))return;
+  const set=new Set(ids);state.portfolio=state.portfolio.filter(x=>!set.has(x.id));selectedPortfolioIds.clear();saveState();
+}
+
+function showPropertyForm(){editPropertyId=null;$('propertyForm').style.display='block';$('rName').value=$('rLocation').value=$('rMemo').value='';}
+function hidePropertyForm(){$('propertyForm').style.display='none';editPropertyId=null;}
+function saveProperty(){if(!$('rName').value.trim())return alert('부동산명을 입력해 주세요.');const obj={id:editPropertyId||uniqueId(),owner:$('rOwner').value,name:$('rName').value.trim(),location:$('rLocation').value.trim(),memo:$('rMemo').value.trim()};const i=state.properties.findIndex(x=>x.id===editPropertyId);i>=0?state.properties[i]=obj:state.properties.push(obj);hidePropertyForm();selectedPropertyId=obj.id;saveState();}
+function editProperty(id){const x=state.properties.find(v=>v.id===id);editPropertyId=id;$('propertyForm').style.display='block';$('rOwner').value=x.owner;$('rName').value=x.name;$('rLocation').value=x.location||'';$('rMemo').value=x.memo||'';}
+function renderProperties(){
+  const y=Number($('yearSelect').value);$('propertyCards').innerHTML=state.properties.map(x=>{const trades=state.propertyTrades.filter(t=>t.propertyId===x.id&&Number(t.month.slice(0,4))<=y);const high=trades.length?Math.max(...trades.map(t=>t.price)):0;const latest=trades.slice().sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0];return `<article class="property-card ${selectedPropertyId===x.id?'selected':''}" onclick="selectProperty(${x.id})"><header><div><h3>${escapeHtml(x.name)}</h3><div class="muted">${escapeHtml(x.owner)} · ${escapeHtml(x.location||'지역 미입력')}</div></div><span class="tag">부동산</span></header><div class="meta"><div><small>자산 기준 최고 실거래가</small><b>${money(high)}</b></div><div><small>최근 기록</small><b>${latest?dateLabel(latest.month):'-'}</b></div></div><div class="card-actions"><button onclick="event.stopPropagation();editProperty(${x.id})">기본정보 수정</button><button onclick="event.stopPropagation();deleteProperty(${x.id})">삭제</button></div></article>`}).join('')||'<div class="box empty" style="grid-column:1/-1">등록된 부동산이 없습니다.</div>';
+  if(selectedPropertyId&&!state.properties.some(x=>x.id===selectedPropertyId))selectedPropertyId=null;if(selectedPropertyId)renderPropertyDetail();else $('propertyDetail').style.display='none';
+}
+function selectProperty(id){selectedPropertyId=id;renderProperties();$('propertyDetail').scrollIntoView({behavior:'smooth',block:'start'});}
+function deleteProperty(id){if(!confirm('부동산과 모든 실거래가 기록을 삭제할까요?'))return;state.properties=state.properties.filter(x=>x.id!==id);state.propertyTrades=state.propertyTrades.filter(x=>x.propertyId!==id);if(selectedPropertyId===id)selectedPropertyId=null;saveState();}
+function blankTradeRow(){return {draftId:uniqueId(),month:selectedYearDate(),price:'',memo:''};}
+function showTradeBatchForm(){if(!selectedPropertyId)return;editTradeId=null;tradeBatchDraft=[blankTradeRow()];$('tradeBatchForm').style.display='block';renderTradeBatchRows();}
+function hideTradeBatchForm(){$('tradeBatchForm').style.display='none';tradeBatchDraft=[];editTradeId=null;}
+function addTradeBatchRow(prefill){tradeBatchDraft.push(prefill||blankTradeRow());renderTradeBatchRows();}
+function removeTradeBatchRow(id){if(tradeBatchDraft.length===1)return alert('입력줄은 최소 1개가 필요합니다.');tradeBatchDraft=tradeBatchDraft.filter(x=>x.draftId!==id);renderTradeBatchRows();}
+function updateTradeDraft(id,field,value){const row=tradeBatchDraft.find(x=>x.draftId===id);if(row)row[field]=value;}
+function renderTradeBatchRows(){$('tradeBatchRows').innerHTML=tradeBatchDraft.map((r,i)=>`<div class="batch-row"><div class="batch-head"><b>실거래가 ${i+1}</b><button class="row-remove" onclick="removeTradeBatchRow(${r.draftId})">삭제</button></div><div class="formgrid"><label>거래일<div class="date-combo"><input class="smart-date" inputmode="numeric" maxlength="10" value="${escapeHtml(normalizeDate(r.month))}" placeholder="YYYYMMDD" title="8자리 입력 또는 마우스 휠로 월 이동" onchange="updateTradeDraft(${r.draftId},'month',parseSmartDate(this.value))"><button type="button" class="date-picker-btn" onclick="openDatePicker(this)" aria-label="달력 열기">📅</button><input type="date" class="native-date-picker" onchange="applyDatePicker(this)"><small class="date-preview"></small></div></label><label>실거래가<input class="money-input" inputmode="numeric" value="${escapeHtml(r.price)}" oninput="updateTradeDraft(${r.draftId},'price',this.value)" placeholder="0"></label><label>메모<input class="ko-input" lang="ko" autocomplete="off" value="${escapeHtml(r.memo)}" oninput="updateTradeDraft(${r.draftId},'memo',this.value)" placeholder="예: 동일 평형 거래"></label></div></div>`).join('');attachMoneyFormatting();attachKoreanPreference();attachSmartDates();}
+function saveTradeBatch(){if(!selectedPropertyId)return;if(tradeBatchDraft.some(r=>!r.month))return alert('거래일을 선택해 주세요.');const records=tradeBatchDraft.map(r=>({id:r.recordId||uniqueId(),propertyId:selectedPropertyId,month:r.month,price:parseMoney(r.price),memo:String(r.memo||'').trim()}));if(editTradeId){const idx=state.propertyTrades.findIndex(x=>x.id===editTradeId);if(idx>=0)state.propertyTrades[idx]=records[0];}else state.propertyTrades.push(...records);hideTradeBatchForm();saveState();}
+function editTrade(id){const x=state.propertyTrades.find(v=>v.id===id);if(!x)return;editTradeId=id;tradeBatchDraft=[{draftId:uniqueId(),recordId:id,month:x.month,price:x.price,memo:x.memo||''}];$('tradeBatchForm').style.display='block';renderTradeBatchRows();}
+function renderPropertyDetail(){
+  const prop=state.properties.find(x=>x.id===selectedPropertyId);if(!prop)return;$('propertyDetail').style.display='block';$('propertyDetailTitle').textContent=`${prop.name} 실거래가`;$('propertyDetailMeta').textContent=`${prop.owner} · ${prop.location||'지역 미입력'}`;
+  const y=$('yearSelect').value;const arr=state.propertyTrades.filter(x=>x.propertyId===prop.id&&normalizeDate(x.month).startsWith(y)).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));const allUntil=state.propertyTrades.filter(x=>x.propertyId===prop.id&&normalizeDate(x.month)<=yearEnd(y));const high=allUntil.length?Math.max(...allUntil.map(x=>x.price)):0;const latest=allUntil.slice().sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0];
+  $('propertyStats').innerHTML=`<h3>자산 기준</h3><div class="meta"><div><small>최고 실거래가</small><b>${money(high)}</b></div><div><small>최근 실거래가</small><b>${money(latest?.price||0)}</b></div><div><small>선택 연도 기록 수</small><b>${arr.length}건</b></div><div><small>최근 기록일</small><b>${latest?dateLabel(latest.month):'-'}</b></div></div><p class="hint" style="margin-top:14px">대시보드의 부동산 자산은 기록된 실거래가 중 가장 높은 금액을 기준으로 계산합니다.</p>`;
+  $('tradeRows').innerHTML=arr.slice().reverse().map(x=>{const diff=high?((x.price-high)/high*100):0;return `<tr><td>${dateLabel(x.month)}</td><td>${money(x.price)}</td><td>${trend(diff)}</td><td>${escapeHtml(x.memo||'')}</td><td><button onclick="editTrade(${x.id})">수정</button> <button onclick="removeRecord('propertyTrades',${x.id})">삭제</button></td></tr>`}).join('')||'<tr><td colspan="5" class="empty">선택 연도의 실거래가 기록이 없습니다.</td></tr>';
+  drawChart('propertyChart','propertyChart','line',{labels:arr.map(x=>monthLabel(x.month)),datasets:[{label:'실거래가',data:arr.map(x=>x.price),tension:.25,fill:false}]},chartOptions('거래일별 실거래가'));
+}
+
+function showDebtForm(){editDebtId=null;$('debtForm').style.display='block';['dName','dBank','dStart','dEnd','dRate','dMemo'].forEach(id=>$(id).value='');setMoneyInput($('dLoanAmount'),'');attachSmartDates();updateDatePreview($('dStart'));updateDatePreview($('dEnd'));}
+function hideDebtForm(){$('debtForm').style.display='none';editDebtId=null;}
+function saveDebt(){if(!$('dName').value.trim()||!$('dStart').value)return alert('대출명과 실행일을 입력해 주세요.');const obj={id:editDebtId||uniqueId(),owner:$('dOwner').value,type:$('dType').value,name:$('dName').value.trim(),bank:$('dBank').value.trim(),start:parseSmartDate($('dStart').value),end:parseSmartDate($('dEnd').value),loanAmount:parseMoney($('dLoanAmount').value),rate:parseMoney($('dRate').value),memo:$('dMemo').value.trim()};const i=state.debts.findIndex(x=>x.id===editDebtId);i>=0?state.debts[i]=obj:state.debts.push(obj);recalculateDebtBalances(obj.id);hideDebtForm();selectedDebtId=obj.id;saveState();}
+function editDebt(id){const x=state.debts.find(v=>v.id===id);editDebtId=id;$('debtForm').style.display='block';$('dOwner').value=x.owner;$('dType').value=x.type;$('dName').value=x.name;$('dBank').value=x.bank||'';$('dStart').value=x.start||'';$('dEnd').value=x.end||'';attachSmartDates();updateDatePreview($('dStart'));updateDatePreview($('dEnd'));setMoneyInput($('dLoanAmount'),x.loanAmount);$('dRate').value=x.rate||'';$('dMemo').value=x.memo||'';}
+function debtDuration(x){if(!x.start||!x.end)return '-';const a=new Date(x.start),b=new Date(x.end);let months=(b.getFullYear()-a.getFullYear())*12+(b.getMonth()-a.getMonth());return months>=12?`${Math.floor(months/12)}년 ${months%12}개월`:`${months}개월`;}
+function sortedDebtPayments(debtId){return state.debtPayments.filter(x=>x.debtId===debtId).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month))||Number(a.id)-Number(b.id));}
+function recalculateDebtBalances(debtId){const debt=state.debts.find(x=>x.id===debtId);if(!debt)return;let balance=Number(debt.loanAmount||0);sortedDebtPayments(debtId).forEach(p=>{balance=Math.max(0,balance-Number(p.principal||0));p.balance=balance;p.total=Number(p.total||0)||(Number(p.principal||0)+Number(p.interest||0));});}
+function recalculateAllDebtBalances(){state.debts.forEach(d=>recalculateDebtBalances(d.id));}
+function balanceBeforePayment(debt,date,excludeId){let balance=Number(debt.loanAmount||0);sortedDebtPayments(debt.id).filter(p=>p.id!==excludeId&&normalizeDate(p.month)<=normalizeDate(date)).forEach(p=>balance=Math.max(0,balance-Number(p.principal||0)));return balance;}
+function balanceAt(debt,cutoffDate){const payments=sortedDebtPayments(debt.id).filter(x=>normalizeDate(x.month)<=cutoffDate);return payments.length?payments[payments.length-1].balance:debt.loanAmount;}
+function latestPayment(debt,cutoffDate){const payments=sortedDebtPayments(debt.id).filter(x=>normalizeDate(x.month)<=cutoffDate);return payments[payments.length-1]||null;}
+function renderDebts(){
+  const cutoff=yearEnd($('yearSelect').value);$('debtCards').innerHTML=state.debts.map(x=>{const bal=balanceAt(x,cutoff),p=latestPayment(x,cutoff),execChange=x.loanAmount?(bal-x.loanAmount)/x.loanAmount*100:0;return `<article class="debt-card ${selectedDebtId===x.id?'selected':''}" onclick="selectDebt(${x.id})"><header><div><h3>${escapeHtml(x.name)}</h3><div class="muted">${escapeHtml(x.type)} · ${escapeHtml(x.bank||'금융기관 미입력')}</div></div><span class="tag">${escapeHtml(x.owner)}</span></header><div class="meta"><div><small>대출금액</small><b>${money(x.loanAmount)}</b></div><div><small>현재 잔액</small><b>${money(bal)}</b></div><div><small>적용금리</small><b>${num(p?.rate??x.rate)}%</b></div><div><small>실행일 대비</small><b>${trend(execChange)}</b></div><div><small>실행일</small><b>${x.start||'-'}</b></div><div><small>기간</small><b>${debtDuration(x)}</b></div></div><div class="card-actions"><button onclick="event.stopPropagation();editDebt(${x.id})">기본정보 수정</button><button onclick="event.stopPropagation();deleteDebt(${x.id})">삭제</button></div></article>`}).join('')||'<div class="box empty" style="grid-column:1/-1">등록된 대출이 없습니다.</div>';
+  if(selectedDebtId&&!state.debts.some(x=>x.id===selectedDebtId))selectedDebtId=null;if(selectedDebtId)renderDebtDetail();else $('debtDetail').style.display='none';
+}
+function selectDebt(id){selectedDebtId=id;renderDebts();$('debtDetail').scrollIntoView({behavior:'smooth',block:'start'});}
+function deleteDebt(id){if(!confirm('대출과 모든 상환 기록을 삭제할까요?'))return;state.debts=state.debts.filter(x=>x.id!==id);state.debtPayments=state.debtPayments.filter(x=>x.debtId!==id);if(selectedDebtId===id)selectedDebtId=null;saveState();}
+function showPaymentForm(){editPaymentId=null;$('paymentForm').style.display='block';$('payMonth').value=selectedYearDate();attachSmartDates();updateDatePreview($('payMonth'));['payRate','payMemo'].forEach(id=>$(id).value='');['payPrincipal','payInterest','payTotal','payBalance'].forEach(id=>setMoneyInput($(id),''));const debt=state.debts.find(x=>x.id===selectedDebtId);if(debt)$('payRate').value=latestPayment(debt,$('payMonth').value)?.rate??debt.rate;updatePaymentPreview();}
+function hidePaymentForm(){$('paymentForm').style.display='none';editPaymentId=null;}
+function updatePaymentPreview(){const principal=parseMoney($('payPrincipal').value),interest=parseMoney($('payInterest').value);setMoneyInput($('payTotal'),principal+interest);const debt=state.debts.find(x=>x.id===selectedDebtId),date=$('payMonth').value;if(!debt||!date){setMoneyInput($('payBalance'),'');return;}const before=balanceBeforePayment(debt,date,editPaymentId);setMoneyInput($('payBalance'),Math.max(0,before-principal));}
+function savePayment(){if(!selectedDebtId||!$('payMonth').value)return alert('상환일을 선택해 주세요.');const debt=state.debts.find(x=>x.id===selectedDebtId),principal=parseMoney($('payPrincipal').value),interest=parseMoney($('payInterest').value);if(principal<0||interest<0)return alert('상환금액은 0 이상으로 입력해 주세요.');const available=balanceBeforePayment(debt,$('payMonth').value,editPaymentId);if(principal>available&&!confirm('상환원금이 해당 시점의 대출잔액보다 큽니다. 잔액을 0원으로 처리할까요?'))return;const obj={id:editPaymentId||uniqueId(),debtId:selectedDebtId,month:parseSmartDate($('payMonth').value),rate:parseMoney($('payRate').value),principal:Math.min(principal,available),interest,total:Math.min(principal,available)+interest,balance:0,memo:$('payMemo').value.trim()};const i=state.debtPayments.findIndex(x=>x.id===editPaymentId);i>=0?state.debtPayments[i]=obj:state.debtPayments.push(obj);recalculateDebtBalances(selectedDebtId);hidePaymentForm();saveState();}
+function editPayment(id){const x=state.debtPayments.find(v=>v.id===id);editPaymentId=id;$('paymentForm').style.display='block';$('payMonth').value=normalizeDate(x.month);updateDatePreview($('payMonth'));$('payRate').value=x.rate;setMoneyInput($('payPrincipal'),x.principal);setMoneyInput($('payInterest'),x.interest);setMoneyInput($('payTotal'),x.total);$('payMemo').value=x.memo||'';updatePaymentPreview();}
+function renderDebtDetail(){
+  const debt=state.debts.find(x=>x.id===selectedDebtId);if(!debt)return;$('debtDetail').style.display='block';$('debtDetailTitle').textContent=`${debt.name} 상환 기록`;$('debtDetailMeta').textContent=`${debt.owner} · ${debt.bank||'금융기관 미입력'} · ${debt.start||'-'} ~ ${debt.end||'-'}`;
+  const y=$('yearSelect').value;const arr=state.debtPayments.filter(x=>x.debtId===debt.id&&normalizeDate(x.month).startsWith(y)).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));const all=state.debtPayments.filter(x=>x.debtId===debt.id&&normalizeDate(x.month)<=yearEnd(y)).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));const latest=all[all.length-1],balance=latest?.balance??debt.loanAmount,totalPrincipal=all.reduce((s,x)=>s+x.principal,0),totalInterest=all.reduce((s,x)=>s+x.interest,0),totalPayment=all.reduce((s,x)=>s+x.total,0),execChange=debt.loanAmount?(balance-debt.loanAmount)/debt.loanAmount*100:0;
+  $('debtStats').innerHTML=`<h3>대출 현황</h3><div class="meta"><div><small>현재 잔액</small><b>${money(balance)}</b></div><div><small>누적 상환원금</small><b>${money(totalPrincipal)}</b></div><div><small>누적 상환이자</small><b>${money(totalInterest)}</b></div><div><small>누적 원리금</small><b>${money(totalPayment)}</b></div><div><small>실행일 대비 잔액 증감</small><b>${trend(execChange)}</b></div></div>`;
+  $('paymentRows').innerHTML=arr.slice().reverse().map(x=>{const full=sortedDebtPayments(debt.id),ci=full.findIndex(v=>v.id===x.id);const prev=ci>0?full[ci-1].balance:debt.loanAmount;const mom=prev?(x.balance-prev)/prev*100:0;const fromStart=debt.loanAmount?(x.balance-debt.loanAmount)/debt.loanAmount*100:0;return `<tr><td><b>${dateLabel(x.month)}</b><div class="muted">${escapeHtml(x.memo||'')}</div></td><td>${num(x.rate)}%</td><td>${money(x.principal)}</td><td>${money(x.interest)}</td><td>${money(x.total)}</td><td>${money(x.balance)}</td><td>${trend(mom)}</td><td>${trend(fromStart)}</td><td><button onclick="editPayment(${x.id})">수정</button> <button onclick="removeRecord('debtPayments',${x.id})">삭제</button></td></tr>`}).join('')||'<tr><td colspan="9" class="empty">선택 연도의 상환 기록이 없습니다.</td></tr>';
+  drawChart('debtChart','debtChart','line',{labels:arr.map(x=>monthLabel(x.month)),datasets:[{label:'대출 잔액',data:arr.map(x=>x.balance),tension:.25},{label:'원리금',data:arr.map(x=>x.total),tension:.25}]},chartOptions('대출 잔액 및 원리금'));
+}
+
+function getLatestPortfolioItems(cutoffMonth){const map={};state.portfolio.filter(x=>normalizeDate(x.month)<=cutoffMonth).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month))).forEach(x=>{map[`${x.owner}|${x.cat}`]=x;});return Object.values(map);}
+function getPropertyAssetAt(cutoffMonth){return state.properties.reduce((sum,p)=>{const prices=state.propertyTrades.filter(t=>t.propertyId===p.id&&normalizeDate(t.month)<=cutoffMonth).map(t=>t.price);return sum+(prices.length?Math.max(...prices):0);},0);}
+function getDebtAt(cutoffMonth){return state.debts.reduce((sum,d)=>{const execDate=d.start||'9999-99-99';if(execDate>cutoffMonth)return sum;return sum+balanceAt(d,cutoffMonth);},0);}
+function dashboardSnapshot(cutoffMonth){const items=getLatestPortfolioItems(cutoffMonth);const portfolioValue=items.reduce((s,x)=>s+toKRW(x.value,x.currency),0);const portfolioPrincipal=items.reduce((s,x)=>s+toKRW(x.principal,x.currency),0);const property=getPropertyAssetAt(cutoffMonth);const debt=getDebtAt(cutoffMonth);return {items,portfolioValue,portfolioPrincipal,property,debt,assets:portfolioValue+property,net:portfolioValue+property-debt};}
+function renderDashboard(){
+  const y=$('yearSelect').value;const snap=dashboardSnapshot(yearEnd(y));const profit=snap.portfolioValue-snap.portfolioPrincipal,rate=snap.portfolioPrincipal?profit/snap.portfolioPrincipal*100:0;$('sumAsset').textContent=money(snap.assets);$('sumDebt').textContent=money(snap.debt);$('sumNet').textContent=money(snap.net);$('sumProfit').textContent=money(profit);$('sumProfit').className=profit>0?'pos':profit<0?'neg':'';$('profitRate').innerHTML=trend(rate);
+  const portfolioCards=snap.items.sort((a,b)=>toKRW(b.value,b.currency)-toKRW(a.value,a.currency)).map(x=>{const p=toKRW(x.principal,x.currency),v=toKRW(x.value,x.currency),r=p?(v-p)/p*100:0,group=categoryGroup(x.cat);return `<article class="asset-card" onclick='openPortfolioDetail(${JSON.stringify(x.owner)},${JSON.stringify(x.cat)})'><div class="topline"><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span><small>${escapeHtml(x.owner)}</small></div><h4>${escapeHtml(x.cat)}</h4><p>최근 기록 ${dateLabel(x.month)}</p><strong>${money(v)}</strong><div class="sub"><span>원금 ${money(p)}</span>${trend(r)}</div></article>`;}).join('');
+  const propertyCards=state.properties.map(p=>{const trades=state.propertyTrades.filter(t=>t.propertyId===p.id&&normalizeDate(t.month)<=yearEnd(y));const high=trades.length?Math.max(...trades.map(t=>t.price)):0;if(!high)return '';return `<article class="asset-card" onclick="openPropertyDetailModal(${p.id})"><div class="topline"><span class="tag">부동산</span><small>${escapeHtml(p.owner)}</small></div><h4>${escapeHtml(p.name)}</h4><p>${escapeHtml(p.location||'지역 미입력')}</p><strong>${money(high)}</strong><div class="sub"><span>최고 실거래가 기준</span><span>상세보기 →</span></div></article>`;}).join('');
+  $('dashboardItems').innerHTML=portfolioCards+propertyCards||'<div class="box empty" style="grid-column:1/-1">표시할 자산 기록이 없습니다.</div>';drawDashboardCharts(y);
+}
+function drawDashboardCharts(y){
+  const rows=Array.from({length:12},(_,i)=>{const m=monthCutoff(y,i+1);return {label:`${i+1}월`,...dashboardSnapshot(m)};});
+  drawChart('mainLineChart','mainLineChart','line',{labels:rows.map(x=>x.label),datasets:[{label:'총자산',data:rows.map(x=>x.assets),tension:.25},{label:'총부채',data:rows.map(x=>x.debt),tension:.25},{label:'순자산',data:rows.map(x=>x.net),tension:.25}]},chartOptions('월별 자산·부채·순자산'));
+  const end=rows[11];const byCat={};end.items.forEach(x=>byCat[x.cat]=(byCat[x.cat]||0)+toKRW(x.value,x.currency));byCat['부동산']=end.property;const labels=Object.keys(byCat).filter(k=>byCat[k]>0),data=labels.map(k=>byCat[k]);drawChart('mainPieChart','mainPieChart','doughnut',{labels,datasets:[{data}]},{responsive:true,maintainAspectRatio:false,plugins:{title:{display:true,text:'자산 항목별 비중'},legend:{position:'bottom'},tooltip:{callbacks:{label:c=>`${c.label}: ${money(c.raw)} (${((c.raw/(data.reduce((a,b)=>a+b,0)||1))*100).toFixed(1)}%)`}}}});
+}
+function chartOptions(title){return {responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{title:{display:true,text:title},legend:{position:'bottom'},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`}}},scales:{y:{ticks:{callback:v=>Number(v).toLocaleString('ko-KR')}}}};}
+function drawChart(holderKey,canvasId,type,data,options){if(typeof Chart==='undefined')return;const old=window[holderKey];if(old?.destroy)old.destroy();window[holderKey]=new Chart($(canvasId),{type,data,options});}
+function openPortfolioDetail(owner,cat){
+  const y=$('yearSelect').value;const latest=getLatestPortfolioItems(yearEnd(y)).find(x=>x.owner===owner&&x.cat===cat);$('detailTitle').textContent=cat;$('detailMeta').textContent=`${owner} · ${categoryGroup(cat)} · ${y}년`;
+  const lp=latest?toKRW(latest.principal,latest.currency):0,lv=latest?toKRW(latest.value,latest.currency):0,profit=lv-lp,rate=lp?profit/lp*100:0;$('detailStats').innerHTML=`<div><small>최근 원금</small><b>${money(lp)}</b></div><div><small>최근 평가액</small><b>${money(lv)}</b></div><div><small>평가손익</small><b class="${profit>0?'pos':profit<0?'neg':''}">${money(profit)}</b></div><div><small>수익률</small><b>${trend(rate)}</b></div>`;
+  const monthly=Array.from({length:12},(_,i)=>{const month=monthCutoff(y,i+1);const x=state.portfolio.filter(v=>v.owner===owner&&v.cat===cat&&v.month<=month).sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0];return {month:`${i+1}월`,principal:x?toKRW(x.principal,x.currency):null,value:x?toKRW(x.value,x.currency):null};});showDetailModal();if(typeof Chart!=='undefined'){if(detailChart)detailChart.destroy();detailChart=new Chart($('detailChart'),{type:'line',data:{labels:monthly.map(x=>x.month),datasets:[{label:'원금',data:monthly.map(x=>x.principal),tension:.25},{label:'평가액',data:monthly.map(x=>x.value),tension:.25}]},options:chartOptions(`${cat} 월별 현황`)});}
+}
+function openPropertyDetailModal(id){const p=state.properties.find(x=>x.id===id),y=$('yearSelect').value;const arr=state.propertyTrades.filter(x=>x.propertyId===id&&normalizeDate(x.month).startsWith(y)).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));const all=state.propertyTrades.filter(x=>x.propertyId===id&&normalizeDate(x.month)<=yearEnd(y));const high=all.length?Math.max(...all.map(x=>x.price)):0,latest=all.slice().sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0];$('detailTitle').textContent=p.name;$('detailMeta').textContent=`${p.owner} · ${p.location||'지역 미입력'} · ${y}년`;$('detailStats').innerHTML=`<div><small>자산 기준 최고가</small><b>${money(high)}</b></div><div><small>최근 실거래가</small><b>${money(latest?.price||0)}</b></div><div><small>선택 연도 기록</small><b>${arr.length}건</b></div><div><small>최근 기록일</small><b>${latest?dateLabel(latest.month):'-'}</b></div>`;showDetailModal();if(typeof Chart!=='undefined'){if(detailChart)detailChart.destroy();detailChart=new Chart($('detailChart'),{type:'line',data:{labels:arr.map(x=>monthLabel(x.month)),datasets:[{label:'실거래가',data:arr.map(x=>x.price),tension:.25}]},options:chartOptions(`${p.name} 실거래가`)});}}
+function showDetailModal(){$('detailModal').classList.add('show');}function closeDetailModal(){$('detailModal').classList.remove('show');}
+
+function persistState(){if(KEY)localStorage.setItem(KEY,JSON.stringify(state));}
+function updateBuyAccount(value){state.buyTable.account=value;persistState();}
+function updateBuyBudget(value){state.buyTable.budget=parseMoney(value);persistState();calculateBuyTable();}
+function updateBuyRow(id,field,value){const row=state.buyTable.rows.find(r=>r.id===id);if(!row)return;row[field]=field==='name'?value:parseMoney(value);persistState();calculateBuyTable();}
+function addBuyRow(){state.buyTable.rows.push({id:uniqueId(),name:'',weight:0,price:0});persistState();renderBuyTable();}
+function removeBuyRow(id){if(state.buyTable.rows.length===1)return alert('종목은 최소 1개가 필요합니다.');state.buyTable.rows=state.buyTable.rows.filter(r=>r.id!==id);persistState();renderBuyTable();}
+function resetBuyTable(){if(!confirm('매수표 입력값을 모두 초기화할까요?'))return;state.buyTable={account:'',budget:0,rows:[{id:uniqueId(),name:'',weight:0,price:0},{id:uniqueId(),name:'',weight:0,price:0}]};persistState();renderBuyTable();}
+function renderBuyTable(){
+  if(!$('buyRows'))return;
+  $('buyAccount').value=state.buyTable.account||'';setMoneyInput($('buyBudget'),state.buyTable.budget||'');
+  $('buyRows').innerHTML=state.buyTable.rows.map((r,i)=>`<tr><td><input class="ko-input" lang="ko" autocomplete="off" value="${escapeHtml(r.name)}" placeholder="${i===0?'예: TIGER 미국S&P500':i===1?'예: KODEX 미국나스닥100':'예: 종목명'}" oninput="updateBuyRow(${r.id},'name',this.value)"></td><td><div class="inline"><input inputmode="decimal" value="${r.weight?num(r.weight):''}" placeholder="예: ${i===0?'60':i===1?'40':'20'}" oninput="updateBuyRow(${r.id},'weight',this.value)" style="min-width:90px"><span>%</span></div></td><td><input class="money-input" inputmode="numeric" value="${r.price?Number(r.price).toLocaleString('ko-KR'):''}" placeholder="예: 20,000" oninput="updateBuyRow(${r.id},'price',this.value)"></td><td id="buyAlloc-${r.id}">₩0</td><td><span id="buyQty-${r.id}" class="qty-badge">0</span></td><td id="buyOrder-${r.id}">₩0</td><td id="buyLeft-${r.id}">₩0</td><td><button onclick="removeBuyRow(${r.id})">삭제</button></td></tr>`).join('');
+  attachMoneyFormatting();attachKoreanPreference();calculateBuyTable();
+}
+function calculateBuyTable(){
+  if(!$('buyRows'))return;
+  const budget=Number(state.buyTable.budget||0);let totalWeight=0,totalOrder=0;
+  state.buyTable.rows.forEach(r=>{const weight=Number(r.weight||0),price=Number(r.price||0),allocated=budget*weight/100,qty=price>0?Math.floor(allocated/price):0,order=qty*price,left=Math.max(0,allocated-order);totalWeight+=weight;totalOrder+=order;const a=$(`buyAlloc-${r.id}`),q=$(`buyQty-${r.id}`),o=$(`buyOrder-${r.id}`),l=$(`buyLeft-${r.id}`);if(a)a.textContent=money(allocated);if(q)q.textContent=num(qty);if(o)o.textContent=money(order);if(l)l.textContent=money(left);});
+  const cash=Math.max(0,budget-totalOrder);$('buyBudgetSum').textContent=money(budget);$('buyWeightSum').textContent=`${totalWeight.toFixed(2)}%`;$('buyOrderSum').textContent=money(totalOrder);$('buyCashLeft').textContent=money(cash);
+  const warning=$('buyWeightWarning');if(totalWeight>100){warning.textContent=`목표 비중이 100%를 ${(totalWeight-100).toFixed(2)}% 초과했습니다. 주문 가능수량은 입력 비중대로 계산되지만 총 배정금액이 예산을 넘을 수 있습니다.`;warning.classList.add('show');}else if(totalWeight<100){warning.textContent=`목표 비중이 100%보다 ${(100-totalWeight).toFixed(2)}% 부족합니다. 미배정 금액은 남는 예수금에 포함됩니다.`;warning.classList.add('show');}else warning.classList.remove('show');
+}
+
+function removeRecord(key,id){if(confirm('이 기록을 삭제할까요?')){const old=state[key]?.find(x=>x.id===id);state[key]=state[key].filter(x=>x.id!==id);if(key==='debtPayments'&&old)recalculateDebtBalances(old.debtId);saveState();}}
+function addOwner(){const n=$('newOwner').value.trim();if(!n)return;if(state.owners.includes(n))return alert('이미 등록된 소유자입니다.');state.owners.push(n);$('newOwner').value='';saveState();}
+function removeOwner(name){const used=state.portfolio.some(x=>x.owner===name)||state.properties.some(x=>x.owner===name)||state.debts.some(x=>x.owner===name);if(used)return alert('해당 소유자의 기록을 먼저 삭제하거나 변경해 주세요.');state.owners=state.owners.filter(x=>x!==name);if(activePortfolioOwner===name)activePortfolioOwner='전체';saveState();}
+function addCategory(){const name=$('newCategory').value.trim(),group=$('newCategoryGroup').value;if(!name)return;if(state.categories.some(c=>c.name===name))return alert('이미 등록된 항목입니다.');state.categories.push({name,group});$('newCategory').value='';saveState();}
+function removeCategory(name){if(state.portfolio.some(x=>x.cat===name))return alert('해당 항목의 기록을 먼저 삭제하거나 다른 항목으로 변경해 주세요.');state.categories=state.categories.filter(c=>c.name!==name);if(activePortfolioCat===name)activePortfolioCat='전체';saveState();}
+function renderSettings(){
+  const profile=getActiveProfile();if($('currentProfileName'))$('currentProfileName').value=profile?.name||'';
+  if($('resetYearBtn')&&$('resetYearSelect'))$('resetYearBtn').textContent=`${$('resetYearSelect').value}년 기록 초기화`;
+  $('ownerList').innerHTML=state.owners.map(x=>`<div class="setting-item"><div class="left"><span>${escapeHtml(x)}</span></div><button onclick='removeOwner(${JSON.stringify(x)})'>삭제</button></div>`).join('');
+  $('categoryList').innerHTML=['현금자산','금융자산'].map(group=>`<div style="margin-top:14px"><b>${group}</b>${state.categories.filter(c=>c.group===group).map(c=>`<div class="setting-item"><div class="left"><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span><span>${escapeHtml(c.name)}</span></div><button onclick='removeCategory(${JSON.stringify(c.name)})'>삭제</button></div>`).join('')||'<div class="muted" style="padding:8px 0">등록된 항목이 없습니다.</div>'}</div>`).join('');
+}
+function handleLogoUpload(e){const file=e.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{const img=new Image();img.onload=()=>{const size=360,canvas=document.createElement('canvas');canvas.width=canvas.height=size;const ctx=canvas.getContext('2d');const scale=Math.max(size/img.width,size/img.height);const w=img.width*scale,h=img.height*scale;ctx.drawImage(img,(size-w)/2,(size-h)/2,w,h);state.logoData=canvas.toDataURL('image/jpeg',.88);saveState();};img.src=reader.result;};reader.readAsDataURL(file);e.target.value='';}
+function removeLogo(){state.logoData='';saveState();}
+function exportData(){const profile=getActiveProfile(),safe=(profile?.name||'portfolio').replace(/[^0-9A-Za-z가-힣_-]+/g,'_');const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${safe}_backup_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{state=normalizeState({...defaultState(),...JSON.parse(r.result)});saveState();alert('백업 데이터를 불러왔습니다.');}catch(err){alert('올바른 백업 파일이 아닙니다.');}};r.readAsText(f);e.target.value='';}
+function resetSelectedYear(){
+  const y=String($('resetYearSelect')?.value||$('yearSelect').value);
+  const counts={portfolio:state.portfolio.filter(x=>recordYear(x)===y).length,trades:state.propertyTrades.filter(x=>recordYear(x)===y).length,payments:state.debtPayments.filter(x=>recordYear(x)===y).length};
+  const total=counts.portfolio+counts.trades+counts.payments;
+  if(!total)return alert(`${y}년에 작성된 기록이 없습니다.`);
+  const msg=`${y}년 작성내역 ${total}건을 모두 초기화할까요?
+
+· 포트폴리오 ${counts.portfolio}건
+· 부동산 실거래가 ${counts.trades}건
+· 대출 상환기록 ${counts.payments}건
+
+부동산·대출 기본정보는 유지되며, 이 작업은 되돌릴 수 없습니다.`;
+  if(!confirm(msg))return;
+  state.portfolio=state.portfolio.filter(x=>recordYear(x)!==y);
+  state.propertyTrades=state.propertyTrades.filter(x=>recordYear(x)!==y);
+  state.debtPayments=state.debtPayments.filter(x=>recordYear(x)!==y);
+  clearRuntimeSelections();recalculateAllDebtBalances();localStorage.setItem(KEY,JSON.stringify(state));renderAll();
+  const remaining=state.portfolio.filter(x=>recordYear(x)===y).length+state.propertyTrades.filter(x=>recordYear(x)===y).length+state.debtPayments.filter(x=>recordYear(x)===y).length;
+  alert(remaining===0?`${y}년 작성내역 ${total}건을 초기화했습니다.`:'일부 기록이 남아 있습니다. 백업 후 다시 시도해 주세요.');
+}
+function resetAll(){
+  const profile=getActiveProfile();if(!profile)return;
+  const answer=prompt(`현재 포트폴리오 "${profile.name}"의 자산·부동산·부채·매수표·설정 데이터를 모두 삭제합니다. 계속하려면 "전체초기화"를 입력하세요.`);
+  if(answer===null)return;if(answer.trim()!=='전체초기화')return alert('입력 문구가 일치하지 않아 취소했습니다.');
+  state=defaultState();clearRuntimeSelections();recalculateAllDebtBalances();localStorage.setItem(KEY,JSON.stringify(state));
+  if($('yearSelect'))$('yearSelect').value=String(currentYear);if($('resetYearSelect'))$('resetYearSelect').value=String(currentYear);
+  renderAll();alert('현재 포트폴리오의 전체 데이터를 초기화했습니다. 포트폴리오 이름과 PIN은 유지됩니다.');
+}
+
+init();
+initLockScreen();
+</script>
+</body>
+</html>
