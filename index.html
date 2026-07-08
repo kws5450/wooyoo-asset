@@ -496,6 +496,194 @@ tbody tr:hover{background:#f4faf8}
   .hero-tools>*,.hero-tools label,.portfolio-pill,.fx-pill,.hero-tools .btn{height:58px;min-height:58px}
 }
 
+
+/* WOOYOO ASSET — compact desktop header final adjustment */
+@media (min-width: 1081px){
+  .hero{
+    display:grid !important;
+    grid-template-columns:minmax(285px, 330px) minmax(0, 1fr) !important;
+    gap:20px !important;
+    align-items:center !important;
+    padding:18px 22px !important;
+    min-height:142px !important;
+  }
+  .brand{
+    gap:14px !important;
+    min-width:0 !important;
+    align-items:center !important;
+  }
+  .logo{
+    width:88px !important;
+    height:88px !important;
+    min-width:88px !important;
+    min-height:88px !important;
+    border-radius:17px !important;
+  }
+  .brand h1{
+    font-size:26px !important;
+    line-height:1.05 !important;
+    letter-spacing:.075em !important;
+    white-space:nowrap !important;
+  }
+  .brand p{
+    margin-top:7px !important;
+    font-size:11.5px !important;
+    line-height:1.35 !important;
+    white-space:nowrap !important;
+  }
+  .brand>div:last-child>span{
+    font-size:9px !important;
+    line-height:1.25 !important;
+    white-space:nowrap !important;
+  }
+  .hero-tools{
+    width:100% !important;
+    min-width:0 !important;
+    display:grid !important;
+    grid-template-columns:
+      minmax(105px, .85fr)
+      minmax(125px, 1fr)
+      minmax(155px, 1.25fr)
+      minmax(92px, .78fr)
+      minmax(100px, .86fr)
+      minmax(72px, .62fr)
+      minmax(82px, .70fr) !important;
+    gap:8px !important;
+    align-items:stretch !important;
+    justify-content:stretch !important;
+  }
+  .hero-tools>*,
+  .hero-tools label,
+  .portfolio-pill,
+  .fx-pill,
+  .hero-tools .btn{
+    width:100% !important;
+    min-width:0 !important;
+    height:62px !important;
+    min-height:62px !important;
+    max-width:none !important;
+    margin:0 !important;
+    border-radius:10px !important;
+  }
+  .hero-tools label{
+    padding:6px 8px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:center !important;
+    font-size:9.5px !important;
+    line-height:1.1 !important;
+    text-align:center !important;
+    white-space:nowrap !important;
+  }
+  .hero-tools label select{
+    height:31px !important;
+    min-height:31px !important;
+    margin-top:4px !important;
+    padding:3px 7px !important;
+    font-size:12px !important;
+    line-height:1 !important;
+    text-align:center !important;
+  }
+  .portfolio-pill,.fx-pill{
+    padding:6px 8px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    justify-content:center !important;
+    align-items:center !important;
+    text-align:center !important;
+    overflow:hidden !important;
+  }
+  .portfolio-pill small,.fx-pill small{
+    font-size:9px !important;
+    line-height:1.1 !important;
+    white-space:nowrap !important;
+  }
+  .portfolio-pill strong{
+    width:100% !important;
+    margin-top:4px !important;
+    font-size:13px !important;
+    line-height:1.1 !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+  .fx-pill strong{
+    margin-top:2px !important;
+    font-size:17px !important;
+    line-height:1.05 !important;
+    white-space:nowrap !important;
+  }
+  .fx-pill em{
+    max-width:100% !important;
+    margin-top:3px !important;
+    font-size:8px !important;
+    line-height:1.05 !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+  .hero-tools .btn{
+    padding:6px 7px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    font-size:11px !important;
+    line-height:1 !important;
+    font-weight:800 !important;
+    text-align:center !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+  }
+}
+@media (min-width: 901px) and (max-width: 1080px){
+  .hero{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    gap:15px !important;
+    padding:18px 20px !important;
+  }
+  .brand p,.brand h1,.brand>div:last-child>span{
+    white-space:nowrap !important;
+  }
+  .hero-tools{
+    width:100% !important;
+    display:grid !important;
+    grid-template-columns:repeat(7,minmax(0,1fr)) !important;
+    gap:7px !important;
+  }
+  .hero-tools>*,
+  .hero-tools label,
+  .portfolio-pill,
+  .fx-pill,
+  .hero-tools .btn{
+    min-width:0 !important;
+    width:100% !important;
+    height:58px !important;
+    min-height:58px !important;
+  }
+  .hero-tools .btn{
+    padding:5px 4px !important;
+    font-size:10px !important;
+    white-space:nowrap !important;
+  }
+  .hero-tools label{
+    padding:5px 6px !important;
+    font-size:9px !important;
+  }
+  .hero-tools label select{
+    min-width:0 !important;
+    height:29px !important;
+    min-height:29px !important;
+    padding:2px 5px !important;
+    font-size:11px !important;
+  }
+  .portfolio-pill small,.fx-pill small{font-size:8.5px !important}
+  .portfolio-pill strong{font-size:12px !important}
+  .fx-pill strong{font-size:15px !important}
+  .fx-pill em{font-size:7.5px !important}
+}
+
 </style>
 </head>
 <body class="auth-pending">
