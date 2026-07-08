@@ -395,6 +395,107 @@ tbody tr:hover{background:#f4faf8}
   th,td{height:46px;padding:9px 10px}
 }
 
+
+
+/* WOOYOO ASSET header control alignment */
+.hero{
+  display:grid;
+  grid-template-columns:minmax(320px,1fr) auto;
+  align-items:center;
+}
+.hero-tools{
+  display:grid;
+  grid-template-columns:130px 152px 190px repeat(4,108px);
+  gap:10px;
+  align-items:stretch;
+  justify-content:end;
+}
+.hero-tools>*{
+  width:100%;
+  height:64px;
+  min-height:64px;
+  margin:0;
+}
+.hero-tools label{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:7px 9px;
+  border-radius:11px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.14);
+  color:#cbd5e1;
+  text-align:center;
+}
+.hero-tools label select{
+  width:100%;
+  min-width:0;
+  height:34px;
+  min-height:34px;
+  margin-top:4px;
+  padding:5px 8px;
+  border-radius:8px;
+  text-align:center;
+}
+.portfolio-pill,.fx-pill{
+  min-width:0;
+  max-width:none;
+  height:64px;
+  min-height:64px;
+  padding:8px 10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  border-radius:11px;
+}
+.portfolio-pill small,.fx-pill small{
+  margin:0;
+  font-size:10px;
+  line-height:1.2;
+}
+.portfolio-pill strong{
+  max-width:100%;
+  margin-top:4px;
+  font-size:13px;
+  line-height:1.2;
+}
+.fx-pill strong{
+  margin-top:2px;
+  font-size:17px;
+  line-height:1.15;
+}
+.fx-pill em{
+  margin-top:2px;
+  font-size:9px;
+  line-height:1.15;
+  white-space:nowrap;
+}
+.hero-tools .btn{
+  width:100%;
+  height:64px;
+  min-height:64px;
+  padding:8px 10px;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  white-space:normal;
+  line-height:1.25;
+}
+@media(max-width:1320px){
+  .hero{grid-template-columns:1fr;align-items:start}
+  .hero-tools{width:100%;grid-template-columns:repeat(4,minmax(0,1fr));justify-content:stretch}
+}
+@media(max-width:860px){
+  .hero-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:520px){
+  .hero-tools{grid-template-columns:1fr}
+  .hero-tools>*,.hero-tools label,.portfolio-pill,.fx-pill,.hero-tools .btn{height:58px;min-height:58px}
+}
+
 </style>
 </head>
 <body class="auth-pending">
