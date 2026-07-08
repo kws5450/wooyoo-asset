@@ -684,6 +684,47 @@ tbody tr:hover{background:#f4faf8}
   .fx-pill em{font-size:7.5px !important}
 }
 
+
+/* WOOYOO ASSET — header overlap hotfix */
+@media (min-width: 1081px){
+  .hero{
+    grid-template-columns:minmax(345px, 370px) minmax(0, 1fr) !important;
+    gap:28px !important;
+  }
+
+  .brand{
+    width:100% !important;
+    min-width:0 !important;
+    overflow:hidden !important;
+  }
+
+  .brand>div:last-child{
+    min-width:0 !important;
+    overflow:hidden !important;
+  }
+
+  .brand h1{
+    max-width:100% !important;
+    font-size:24px !important;
+    letter-spacing:.055em !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:clip !important;
+  }
+
+  .brand p{
+    max-width:100% !important;
+    font-size:11px !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+  }
+
+  .hero-tools{
+    min-width:0 !important;
+  }
+}
+
 </style>
 </head>
 <body class="auth-pending">
