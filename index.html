@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WOOYOO ASSET V1.0</title>
+<title>WOOYOO ASSET V1.1.0</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -247,6 +247,14 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
 .auth-pending #welcomeScreen,.auth-pending #mainApp{display:none!important}
 @media(max-width:520px){.auth-card{padding:24px 18px;border-radius:20px}.auth-actions{grid-template-columns:1fr}.auth-screen{padding:14px}}
 
+
+/* WOOYOO ASSET v1.1.0 — account bar on portfolio selection */
+.welcome-account-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:-6px 0 18px;padding:11px 12px;border:1px solid #e7edf5;border-radius:14px;background:#f8fafc}
+.welcome-account-info{min-width:0}.welcome-account-info small{display:block;color:var(--muted);font-size:10.5px;font-weight:800;letter-spacing:.04em}.welcome-account-info b{display:block;margin-top:2px;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#172033}
+.welcome-account-actions{display:flex;gap:7px;flex:0 0 auto}.welcome-account-actions .btn{min-height:34px;padding:8px 11px;font-size:11.5px}
+.version-chip{display:inline-flex;align-items:center;justify-content:center;margin-left:7px;padding:3px 7px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:10px;font-weight:900;vertical-align:middle}
+@media(max-width:720px){.welcome-account-bar{align-items:stretch;flex-direction:column}.welcome-account-actions{display:grid;grid-template-columns:1fr}.welcome-account-actions .btn{width:100%}}
+
 </style>
 </head>
 <body class="auth-pending">
@@ -274,7 +282,13 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET</h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip">v1.1.0</span></h1><p>Private family wealth dashboard</p></div>
+    </div>
+    <div class="welcome-account-bar">
+      <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
+      <div class="welcome-account-actions">
+        <button class="btn soft" onclick="signOutUser()">로그아웃</button>
+      </div>
     </div>
     <div class="security-badge">🔒 포트폴리오별 PIN 잠금</div>
     <p id="welcomeCopy" class="welcome-copy">사용할 포트폴리오를 선택하거나 새 포트폴리오를 개설하세요.</p>
@@ -862,9 +876,18 @@ function showAuthScreen(){
   $('authScreen')?.classList.remove('hidden');
   $('welcomeScreen')?.classList.add('hidden');
   $('mainApp')?.classList.add('app-locked');
+  const acc=$('welcomeAccountEmail');if(acc)acc.textContent='-';
 }
+
+function updateWelcomeAccount(){
+  const email=currentUser?.email||'-';
+  const el=$('welcomeAccountEmail');
+  if(el)el.textContent=email;
+}
+
 async function startAuthedApp(user){
   currentUser=user;
+  updateWelcomeAccount();
   setAuthStorageNamespace(user.id);
   await loadCloudDataForUser();
   document.body.classList.remove('auth-pending');
