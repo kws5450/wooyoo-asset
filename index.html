@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WOOYOO ASSET v18</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
   --bg:#f3f6fb;--card:#fff;--line:#dfe5ef;--text:#172033;--muted:#697386;
@@ -236,9 +237,38 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
 .welcome-menu-single{grid-template-columns:1fr}.welcome-menu-single .welcome-menu-card{min-height:118px}
 .welcome-card{width:min(720px,100%);padding:30px}.welcome-menu{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0 20px}.welcome-menu-card{border:1px solid #e1e7f0;background:linear-gradient(180deg,#fff,#f8fafc);border-radius:18px;padding:18px;text-align:left;cursor:pointer;box-shadow:0 8px 24px rgba(16,36,62,.07);transition:.16s}.welcome-menu-card:hover{transform:translateY(-2px);border-color:#b8d9d5;box-shadow:0 14px 34px rgba(16,36,62,.12)}.welcome-menu-card span{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:#eef2ff;font-size:22px;margin-bottom:12px}.welcome-menu-card.create span{background:#e7f6f3;color:#075e58}.welcome-menu-card b{display:block;font-size:15px;color:#172033}.welcome-menu-card small{display:block;margin-top:5px;color:#697386;line-height:1.45}.portfolio-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.profile-row{display:block}.profile-card{min-height:178px;display:grid;grid-template-columns:auto 1fr;align-items:start;padding:16px}.profile-card .profile-open{grid-column:1/-1;justify-self:end;margin-top:8px}.profile-card-main b{font-size:16px}.profile-stats{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.profile-stats div{background:#f8fafc;border:1px solid #edf1f7;border-radius:12px;padding:10px;text-align:center}.profile-stats small{display:block;color:#697386;font-size:10.5px}.profile-stats strong{display:block;margin-top:3px;font-size:13px;color:#172033}.profile-delete{width:100%;min-height:40px;margin-top:8px}.create-panel-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}.create-panel-head b{display:block;font-size:16px}.create-panel-head small{display:block;color:var(--muted);font-size:11px}.unlock-panel-v18 .pin-grid{max-width:360px;margin:0 auto}.sr-only{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(1px,1px,1px,1px)!important}.pin-dots{display:flex;justify-content:center;gap:10px;margin:12px 0 16px}.pin-dots span{width:16px;height:16px;border-radius:99px;border:2px solid #cbd5e1;background:#fff;transition:.12s}.pin-dots span.filled{background:#172033;border-color:#172033;box-shadow:0 0 0 4px rgba(23,32,51,.08)}.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}.pin-keypad button{min-height:52px;border:1px solid #e1e7f0;border-radius:16px;background:#fff;font-weight:850;font-size:18px;cursor:pointer;box-shadow:0 5px 14px rgba(16,36,62,.06);transition:.12s}.pin-keypad button:hover{background:#f8fafc;transform:translateY(-1px)}.pin-keypad button:active{transform:translateY(1px);box-shadow:none}.data-management-actions{background:#f8fafc;border:1px solid #edf1f7;border-radius:14px;padding:14px}.data-reset-row{background:#fff7f7;border:1px solid #fecaca;border-radius:12px;padding:14px}.data-backup-row{background:#f8fffd;border:1px solid #d1ebe6;border-radius:12px;padding:14px}@media(max-width:720px){.welcome-menu,.portfolio-card-grid{grid-template-columns:1fr}.welcome-card{width:min(560px,100%)}.profile-stats{grid-template-columns:1fr}.pin-keypad button{min-height:50px}}
 
+
+/* Supabase email authentication gate */
+.auth-screen{min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 15% 10%,#e9efff 0,transparent 36%),radial-gradient(circle at 90% 85%,#dff8ef 0,transparent 34%),linear-gradient(135deg,#eef2f8,#f8fafc)}
+.auth-screen.hidden{display:none}
+.auth-card{width:min(480px,100%);background:#fff;border:1px solid #e1e7f0;border-radius:26px;padding:30px;box-shadow:0 28px 80px rgba(23,32,51,.16)}
+.auth-brand{display:flex;align-items:center;gap:14px;margin-bottom:22px}.auth-logo{width:62px;height:62px;border-radius:18px;background:#c5f24a;display:grid;place-items:center;font-size:31px}.auth-brand h1{margin:0;font-size:23px;letter-spacing:.06em}.auth-brand h1 b{color:#5662e8}.auth-brand p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.auth-card label{display:block;font-size:12px;color:var(--muted);font-weight:750;margin-top:12px}.auth-card input{font-size:14px}.auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}.auth-actions .btn{width:100%;min-height:45px}.auth-message{min-height:20px;margin-top:12px;font-size:12px;text-align:center;color:#b42318;line-height:1.55}.auth-message.ok{color:#067647}.auth-note{margin-top:16px;padding:12px 13px;border-radius:12px;background:#f8fafc;color:#64748b;font-size:11px;line-height:1.55}
+.auth-pending #welcomeScreen,.auth-pending #mainApp{display:none!important}
+@media(max-width:520px){.auth-card{padding:24px 18px;border-radius:20px}.auth-actions{grid-template-columns:1fr}.auth-screen{padding:14px}}
+
 </style>
 </head>
-<body>
+<body class="auth-pending">
+
+
+<div id="authScreen" class="auth-screen">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="auth-logo">🐮</div>
+      <div><h1><b>WOOYOO</b> ASSET</h1><p>로그인 후 자산관리 화면을 이용하세요</p></div>
+    </div>
+    <label>이메일<input id="authEmail" type="email" autocomplete="email" placeholder="example@email.com"></label>
+    <label>비밀번호<input id="authPassword" type="password" autocomplete="current-password" placeholder="비밀번호"></label>
+    <div class="auth-actions">
+      <button class="btn primary" onclick="signInWithEmail()">로그인</button>
+      <button class="btn secondary" onclick="signUpWithEmail()">회원가입</button>
+    </div>
+    <button class="btn soft" style="width:100%;margin-top:9px" onclick="resetPasswordByEmail()">비밀번호 재설정 메일</button>
+    <div id="authMessage" class="auth-message"></div>
+    <div class="auth-note">처음 가입하면 Supabase 설정에 따라 이메일 인증이 필요할 수 있습니다. 인증 후 다시 로그인하세요.</div>
+  </div>
+</div>
 
 <div id="welcomeScreen" class="welcome-screen">
   <div class="welcome-card">
@@ -306,6 +336,7 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
       <button class="btn secondary" onclick="refreshFx(true)">환율 새로고침</button>
       <button class="btn lock-btn" onclick="switchPortfolio()">포트폴리오 전환</button>
       <button class="btn lock-btn" onclick="lockApp()">잠금</button>
+      <button class="btn lock-btn" onclick="signOutUser()">로그아웃</button>
     </div>
   </header>
 
@@ -494,9 +525,15 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
 const LEGACY_KEY='wooyoo_assets_v11';
 const LEGACY_OLD_KEY='wooyoo_assets_v10';
 const LEGACY_LOCK_KEY='wooyoo_asset_lock_v1';
-const PROFILE_REGISTRY_KEY='wooyoo_asset_profiles_v1';
-const PROFILE_STATE_PREFIX='wooyoo_assets_profile_';
+const PROFILE_REGISTRY_BASE_KEY='wooyoo_asset_profiles_v1';
+const PROFILE_STATE_BASE_PREFIX='wooyoo_assets_profile_';
+let PROFILE_REGISTRY_KEY=PROFILE_REGISTRY_BASE_KEY;
+let PROFILE_STATE_PREFIX=PROFILE_STATE_BASE_PREFIX;
 const AUTO_LOCK_MS=10*60*1000;
+
+// Supabase 연결 정보: 아래 2개 값을 Supabase Project Settings > Data API 또는 API Keys 화면에서 복사해 넣으세요.
+const SUPABASE_URL='https://ptudkfhhwtgyrqsjhtzd.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_k8RLRIYv9Vnq5SMhfhs-Vw_50Qupwdg';
 let KEY='';
 let activeProfileId=null;
 const currentYear=new Date().getFullYear();
@@ -513,6 +550,13 @@ let selectedPropertyId=null,selectedDebtId=null;
 let portfolioBatchDraft=[],tradeBatchDraft=[];
 let mainLineChart,mainPieChart,detailChart,propertyChart,debtChart;
 let autoLockTimer=null;
+let supabaseClient=null,currentUser=null,appBooted=false;
+
+function setAuthStorageNamespace(userId){
+  const safe=String(userId||'guest').replace(/[^a-zA-Z0-9_-]/g,'_');
+  PROFILE_REGISTRY_KEY=`${PROFILE_REGISTRY_BASE_KEY}_${safe}`;
+  PROFILE_STATE_PREFIX=`${PROFILE_STATE_BASE_PREFIX}${safe}_`;
+}
 
 function defaultState(){return {owners:['소유자 1','소유자 2'],categories:DEFAULT_CATEGORIES.map(c=>({...c})),portfolio:[],properties:[],propertyTrades:[],debts:[],debtPayments:[],buyTable:{account:'',budget:0,rows:[{id:Date.now()+1,name:'',weight:0,price:0},{id:Date.now()+2,name:'',weight:0,price:0}]},fx:0,fxAt:null,logoData:''};}
 function profileStateKey(id){return `${PROFILE_STATE_PREFIX}${id}`;}
@@ -730,6 +774,77 @@ function deleteCurrentProfile(){
 ['click','keydown','mousemove','touchstart'].forEach(eventName=>document.addEventListener(eventName,()=>resetAutoLock(),{passive:true}));
 function recordYear(record){const value=normalizeDate(record?.month||record?.date||record?.recordDate||'');const match=value.match(/^(\d{4})/);return match?match[1]:'';}
 function clearRuntimeSelections(){selectedPortfolioIds.clear();visiblePortfolioIds=[];editPortfolioId=editPropertyId=editTradeId=editDebtId=editPaymentId=null;selectedPropertyId=selectedDebtId=null;portfolioBatchDraft=[];tradeBatchDraft=[];activePortfolioOwner='전체';activePortfolioGroup='전체';activePortfolioCat='전체';}
+
+
+function isSupabaseConfigured(){
+  return SUPABASE_URL.startsWith('https://') && SUPABASE_ANON_KEY.length>30 && !SUPABASE_URL.includes('여기에_') && !SUPABASE_ANON_KEY.includes('여기에_');
+}
+function setAuthMessage(msg,type='error'){
+  const el=$('authMessage');if(!el)return;
+  el.textContent=msg||'';el.classList.toggle('ok',type==='ok');
+}
+function showAuthScreen(){
+  document.body.classList.add('auth-pending');
+  $('authScreen')?.classList.remove('hidden');
+  $('welcomeScreen')?.classList.add('hidden');
+  $('mainApp')?.classList.add('app-locked');
+}
+function startAuthedApp(user){
+  currentUser=user;
+  setAuthStorageNamespace(user.id);
+  document.body.classList.remove('auth-pending');
+  $('authScreen')?.classList.add('hidden');
+  if(!appBooted){
+    init();
+    initLockScreen();
+    appBooted=true;
+  }else{
+    initLockScreen();
+  }
+}
+async function bootAuth(){
+  showAuthScreen();
+  if(!isSupabaseConfigured()){
+    setAuthMessage('Supabase URL과 anon public key를 index.html 안에 먼저 입력해 주세요.');
+    return;
+  }
+  supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+  const {data:{session}}=await supabaseClient.auth.getSession();
+  supabaseClient.auth.onAuthStateChange((event,session)=>{
+    if(session?.user)startAuthedApp(session.user);
+    else showAuthScreen();
+  });
+  if(session?.user)startAuthedApp(session.user);
+}
+async function signUpWithEmail(){
+  if(!supabaseClient)return bootAuth();
+  const email=$('authEmail').value.trim(),password=$('authPassword').value;
+  if(!email||!password)return setAuthMessage('이메일과 비밀번호를 입력해 주세요.');
+  if(password.length<6)return setAuthMessage('비밀번호는 최소 6자 이상 입력해 주세요.');
+  const {error}=await supabaseClient.auth.signUp({email,password,options:{emailRedirectTo:location.origin}});
+  if(error)return setAuthMessage(error.message);
+  setAuthMessage('회원가입 메일을 보냈습니다. 이메일 인증 후 로그인해 주세요.','ok');
+}
+async function signInWithEmail(){
+  if(!supabaseClient)return bootAuth();
+  const email=$('authEmail').value.trim(),password=$('authPassword').value;
+  if(!email||!password)return setAuthMessage('이메일과 비밀번호를 입력해 주세요.');
+  const {error}=await supabaseClient.auth.signInWithPassword({email,password});
+  if(error)return setAuthMessage(error.message);
+  setAuthMessage('로그인되었습니다.','ok');
+}
+async function resetPasswordByEmail(){
+  if(!supabaseClient)return bootAuth();
+  const email=$('authEmail').value.trim();
+  if(!email)return setAuthMessage('비밀번호 재설정 메일을 받을 이메일을 입력해 주세요.');
+  const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:location.origin});
+  if(error)return setAuthMessage(error.message);
+  setAuthMessage('비밀번호 재설정 메일을 보냈습니다.','ok');
+}
+async function signOutUser(){
+  try{await supabaseClient?.auth.signOut();}catch(e){}
+  location.reload();
+}
 
 function init(){
   for(let y=2020;y<=currentYear+100;y++){
@@ -961,8 +1076,7 @@ function resetAll(){
   renderAll();alert('현재 포트폴리오의 전체 데이터를 초기화했습니다. 포트폴리오 이름과 PIN은 유지됩니다.');
 }
 
-init();
-initLockScreen();
+bootAuth();
 </script>
 </body>
 </html>
