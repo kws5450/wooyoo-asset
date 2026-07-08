@@ -298,6 +298,15 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
   .developer-actions .btn{width:100%}
 }
 
+/* Account withdrawal */
+.withdraw-box{border:1px solid #fecaca;background:linear-gradient(180deg,#fff,#fff8f8)}
+.withdraw-box h3{color:#991b1b}
+.withdraw-warning{margin:10px 0 14px;padding:12px 13px;border-radius:10px;background:#fff1f2;color:#9f1239;font-size:11.5px;line-height:1.6;border:1px solid #fecdd3}
+.withdraw-grid{display:grid;gap:10px}
+.withdraw-grid label{display:block;font-size:12px;font-weight:750;color:#7f1d1d}
+.withdraw-grid .danger{width:100%;margin-top:3px}
+.withdraw-grid input:focus{border-color:#dc2626;box-shadow:0 0 0 3px rgba(220,38,38,.1)}
+
 </style>
 </head>
 <body class="auth-pending">
@@ -604,6 +613,17 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
           <button class="btn secondary" onclick="updateMyPassword()">비밀번호 변경</button>
         </div>
         <p class="hint" style="margin-top:12px">회원가입 시 닉네임은 필수입니다. 실명은 받지 않으며, 게시판과 댓글에는 닉네임만 표시됩니다.</p>
+      </div>
+      <div class="box withdraw-box">
+        <h3>회원탈퇴</h3>
+        <div class="withdraw-warning">
+          탈퇴하면 로그인 계정, 닉네임, 포트폴리오와 클라우드 자산 데이터가 영구 삭제됩니다. 게시판과 댓글은 커뮤니티 기록 유지를 위해 작성자가 ‘탈퇴한 사용자’로 익명 처리되어 남습니다. 이 작업은 되돌릴 수 없습니다.
+        </div>
+        <div class="withdraw-grid">
+          <label>현재 비밀번호<input id="withdrawPassword" type="password" autocomplete="current-password" placeholder="현재 비밀번호"></label>
+          <label>확인 문구<input id="withdrawConfirmText" autocomplete="off" placeholder="회원탈퇴 입력"></label>
+          <button id="withdrawAccountBtn" class="btn danger" onclick="deleteMyAccount()">회원탈퇴 진행</button>
+        </div>
       </div>
       <div class="box">
         <h3>대표 이미지</h3>
@@ -1380,6 +1400,40 @@ async function updateMyPassword(){
   const {error}=await supabaseClient.auth.updateUser({password:pw});
   if(error)return alert(error.message);
   $('profileNewPassword').value='';alert('비밀번호를 변경했습니다.');
+}
+function clearCurrentUserLocalData(userId){
+  const safe=String(userId||'').replace(/[^a-zA-Z0-9_-]/g,'_');
+  const registryKey=`${PROFILE_REGISTRY_BASE_KEY}_${safe}`;
+  const statePrefix=`${PROFILE_STATE_BASE_PREFIX}${safe}_`;
+  localStorage.removeItem(registryKey);
+  Object.keys(localStorage).filter(key=>key.startsWith(statePrefix)).forEach(key=>localStorage.removeItem(key));
+  localStorage.removeItem('wooyoo_developer_mode');
+}
+async function deleteMyAccount(){
+  if(!supabaseClient||!currentUser?.id||!currentUser?.email)return alert('로그인 정보를 확인할 수 없습니다. 다시 로그인해 주세요.');
+  const password=$('withdrawPassword')?.value||'';
+  const confirmText=($('withdrawConfirmText')?.value||'').trim();
+  if(!password)return alert('본인 확인을 위해 현재 비밀번호를 입력해 주세요.');
+  if(confirmText!=='회원탈퇴')return alert('확인 문구에 “회원탈퇴”를 정확히 입력해 주세요.');
+  const devWarning=isDeveloper?'\n\n주의: 현재 계정은 개발자 계정입니다. 탈퇴하면 개발자 권한도 함께 삭제됩니다.':'';
+  if(!confirm(`회원탈퇴 후 계정과 모든 포트폴리오 데이터는 복구할 수 없습니다.${devWarning}\n\n정말 탈퇴할까요?`))return;
+  const btn=$('withdrawAccountBtn');
+  if(btn){btn.disabled=true;btn.textContent='본인 확인 중...';}
+  try{
+    const {error:reauthError}=await supabaseClient.auth.signInWithPassword({email:currentUser.email,password});
+    if(reauthError)throw new Error('현재 비밀번호가 일치하지 않습니다.');
+    if(btn)btn.textContent='계정 삭제 중...';
+    const userId=currentUser.id;
+    const {error}=await supabaseClient.rpc('delete_my_account');
+    if(error)throw error;
+    clearCurrentUserLocalData(userId);
+    try{await supabaseClient.auth.signOut({scope:'local'});}catch(e){}
+    alert('회원탈퇴가 완료되었습니다. 그동안 WOOYOO ASSET을 이용해 주셔서 감사합니다.');
+    location.href=location.origin;
+  }catch(error){
+    alert(`회원탈퇴를 처리하지 못했습니다.\n${error?.message||error}`);
+    if(btn){btn.disabled=false;btn.textContent='회원탈퇴 진행';}
+  }
 }
 async function sha256Text(text){
   const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));
