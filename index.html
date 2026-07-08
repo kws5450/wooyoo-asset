@@ -270,12 +270,15 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
       <div class="auth-logo">🐮</div>
       <div><h1><b>WOOYOO</b> ASSET</h1><p>로그인 후 자산관리 화면을 이용하세요</p></div>
     </div>
+    <div class="auth-mode-tabs" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+      <button id="authLoginTab" class="btn primary" type="button" onclick="setAuthMode('login')">로그인</button>
+      <button id="authSignupTab" class="btn soft" type="button" onclick="setAuthMode('signup')">회원가입</button>
+    </div>
     <label>이메일<input id="authEmail" type="email" autocomplete="email" placeholder="example@email.com"></label>
-    <label>닉네임<input id="authNickname" class="ko-input" lang="ko" autocomplete="nickname" maxlength="20" placeholder="실명 대신 사용할 닉네임"></label>
+    <label id="authNicknameWrap" style="display:none">닉네임<input id="authNickname" class="ko-input" lang="ko" autocomplete="nickname" maxlength="20" placeholder="실명 대신 사용할 닉네임"></label>
     <label>비밀번호<input id="authPassword" type="password" autocomplete="current-password" placeholder="비밀번호"></label>
-    <div class="auth-actions">
-      <button class="btn primary" onclick="signInWithEmail()">로그인</button>
-      <button class="btn secondary" onclick="signUpWithEmail()">회원가입</button>
+    <div class="auth-actions" style="grid-template-columns:1fr">
+      <button id="authSubmitBtn" class="btn primary" onclick="submitAuthForm()">로그인</button>
     </div>
     <button class="btn soft" style="width:100%;margin-top:9px" onclick="resetPasswordByEmail()">비밀번호 재설정 메일</button>
     <div id="authMessage" class="auth-message"></div>
@@ -519,12 +522,13 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
       <div class="box">
         <h3>개인정보 수정</h3>
         <div class="profile-edit-grid">
+          <label>로그인 이메일<input id="profileEmail" type="email" readonly class="readonly-money" placeholder="로그인 이메일"></label>
           <label>닉네임<input id="profileNickname" class="ko-input" lang="ko" maxlength="20" placeholder="닉네임"></label>
           <button class="btn primary" onclick="updateNickname()">닉네임 변경</button>
           <label>새 비밀번호<input id="profileNewPassword" type="password" autocomplete="new-password" placeholder="6자 이상"></label>
           <button class="btn secondary" onclick="updateMyPassword()">비밀번호 변경</button>
         </div>
-        <p class="hint" style="margin-top:12px">실명은 받지 않습니다. 게시판과 댓글에는 닉네임만 표시됩니다.</p>
+        <p class="hint" style="margin-top:12px">회원가입 시 닉네임은 필수입니다. 실명은 받지 않으며, 게시판과 댓글에는 닉네임만 표시됩니다.</p>
       </div>
       <div class="box developer-box admin-only">
         <h3>개발자 모드</h3>
@@ -921,6 +925,18 @@ async function saveCloudDataNow(){
 window.addEventListener('beforeunload',()=>{try{if(cloudSyncTimer)saveCloudDataNow();}catch(e){}});
 
 
+let authMode='login';
+function setAuthMode(mode){
+  authMode=mode==='signup'?'signup':'login';
+  const isSignup=authMode==='signup';
+  if($('authNicknameWrap'))$('authNicknameWrap').style.display=isSignup?'block':'none';
+  if($('authSubmitBtn'))$('authSubmitBtn').textContent=isSignup?'회원가입':'로그인';
+  if($('authLoginTab')){ $('authLoginTab').className=isSignup?'btn soft':'btn primary'; }
+  if($('authSignupTab')){ $('authSignupTab').className=isSignup?'btn primary':'btn soft'; }
+  setAuthMessage('');
+}
+function submitAuthForm(){return authMode==='signup'?signUpWithEmail():signInWithEmail();}
+
 function isSupabaseConfigured(){
   return SUPABASE_URL.startsWith('https://') && SUPABASE_ANON_KEY.length>30 && !SUPABASE_URL.includes('여기에_') && !SUPABASE_ANON_KEY.includes('여기에_');
 }
@@ -934,6 +950,7 @@ function showAuthScreen(){
   $('welcomeScreen')?.classList.add('hidden');
   $('mainApp')?.classList.add('app-locked');
   const acc=$('welcomeAccountEmail');if(acc)acc.textContent='-';
+  setAuthMode('login');
 }
 
 function updateWelcomeAccount(){
@@ -941,6 +958,7 @@ function updateWelcomeAccount(){
   const el=$('welcomeAccountEmail');
   if(el)el.textContent=label;
   if($('profileNickname'))$('profileNickname').value=currentNickname||'';
+  if($('profileEmail'))$('profileEmail').value=currentUser?.email||'';
   document.body.classList.toggle('is-admin',!!isDeveloper);
   developerMode=localStorage.getItem('wooyoo_developer_mode')==='1';
   document.body.classList.toggle('dev-disabled',!developerMode);
