@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WOOYOO ASSET V1.1.0</title>
+<title>WOOYOO ASSET V1.0.0</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -248,12 +248,16 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
 @media(max-width:520px){.auth-card{padding:24px 18px;border-radius:20px}.auth-actions{grid-template-columns:1fr}.auth-screen{padding:14px}}
 
 
-/* WOOYOO ASSET v1.1.0 — account bar on portfolio selection */
+/* WOOYOO ASSET v1.0.0 — account bar on portfolio selection */
 .welcome-account-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:-6px 0 18px;padding:11px 12px;border:1px solid #e7edf5;border-radius:14px;background:#f8fafc}
 .welcome-account-info{min-width:0}.welcome-account-info small{display:block;color:var(--muted);font-size:10.5px;font-weight:800;letter-spacing:.04em}.welcome-account-info b{display:block;margin-top:2px;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#172033}
 .welcome-account-actions{display:flex;gap:7px;flex:0 0 auto}.welcome-account-actions .btn{min-height:34px;padding:8px 11px;font-size:11.5px}
 .version-chip{display:inline-flex;align-items:center;justify-content:center;margin-left:7px;padding:3px 7px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:10px;font-weight:900;vertical-align:middle}
 @media(max-width:720px){.welcome-account-bar{align-items:stretch;flex-direction:column}.welcome-account-actions{display:grid;grid-template-columns:1fr}.welcome-account-actions .btn{width:100%}}
+
+
+/* WOOYOO ASSET v1.0.0 — profile, community, developer, donation */
+.community-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.community-list{display:grid;gap:10px}.community-card{border:1px solid #e3e8ee;background:#fff;border-radius:14px;padding:14px;box-shadow:0 4px 14px rgba(16,36,62,.05)}.community-card header{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.community-card h3,.community-card h4{margin:0 0 6px}.community-card small{color:var(--muted)}.community-card p{white-space:pre-wrap;line-height:1.6}.donation-banner{margin:14px 0;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,#fff7ed,#eef8f6);border:1px solid #f5d7aa;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.donation-banner b{color:#172033}.donation-banner span{font-size:12px;color:#475569}.developer-box{border:1px solid #c7d2fe;background:#f8faff}.admin-only{display:none}.is-admin .admin-only{display:block}.dev-disabled .dev-tools{display:none!important}.comment-box{margin-top:10px;border-top:1px solid #edf1f7;padding-top:10px}.comment-row{padding:8px 0;border-bottom:1px solid #f1f5f9}.comment-row small{display:block;color:var(--muted);margin-bottom:3px}.profile-edit-grid{display:grid;gap:12px}.mini-pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;background:#eef2ff;color:#3730a3;padding:4px 8px;font-size:10.5px;font-weight:900}.danger-text{color:#b42318;font-size:11px;line-height:1.5}.wide-textarea{min-height:110px}.dev-data-list{max-height:360px;overflow:auto;display:grid;gap:10px}.dev-data-item{background:#fff;border:1px solid #e3e8ee;border-radius:12px;padding:12px}.dev-data-item pre{white-space:pre-wrap;word-break:break-word;max-height:180px;overflow:auto;background:#0f172a;color:#e2e8f0;padding:10px;border-radius:8px;font-size:11px}@media(max-width:900px){.community-grid{grid-template-columns:1fr}.donation-banner{align-items:flex-start;flex-direction:column}}
 
 </style>
 </head>
@@ -267,6 +271,7 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
       <div><h1><b>WOOYOO</b> ASSET</h1><p>로그인 후 자산관리 화면을 이용하세요</p></div>
     </div>
     <label>이메일<input id="authEmail" type="email" autocomplete="email" placeholder="example@email.com"></label>
+    <label>닉네임<input id="authNickname" class="ko-input" lang="ko" autocomplete="nickname" maxlength="20" placeholder="실명 대신 사용할 닉네임"></label>
     <label>비밀번호<input id="authPassword" type="password" autocomplete="current-password" placeholder="비밀번호"></label>
     <div class="auth-actions">
       <button class="btn primary" onclick="signInWithEmail()">로그인</button>
@@ -282,7 +287,7 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip">v1.1.0</span></h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip">v1.0.0</span></h1><p>Private family wealth dashboard</p></div>
     </div>
     <div class="welcome-account-bar">
       <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
@@ -290,6 +295,7 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
         <button class="btn soft" onclick="signOutUser()">로그아웃</button>
       </div>
     </div>
+    <div class="donation-banner"><div><b>☕ WOOYOO ASSET 후원</b><br><span>카카오뱅크 3333-01-1766453 · 예금주 김우성</span></div></div>
     <div class="security-badge">🔒 포트폴리오별 PIN 잠금</div>
     <p id="welcomeCopy" class="welcome-copy">사용할 포트폴리오를 선택하거나 새 포트폴리오를 개설하세요.</p>
 
@@ -478,9 +484,59 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
     </div>
   </section>
 
+
+  <section id="community" class="panel">
+    <div class="sectionhead"><div><h2>공지함 · 자유게시판</h2><p>가입회원 전용 공간입니다. 공지사항과 개선 의견을 확인하고 작성할 수 있습니다.</p></div></div>
+    <div class="donation-banner"><div><b>☕ 개발자 후원</b><br><span>카카오뱅크 3333-01-1766453 · 예금주 김우성</span></div><button class="btn secondary" onclick="copyDonationAccount()">계좌번호 복사</button></div>
+    <div class="community-grid">
+      <div class="box">
+        <h3>공지함 <span class="mini-pill">가입회원 공개</span></h3>
+        <div id="noticeWriteBox" class="admin-only dev-tools" style="margin-bottom:14px">
+          <div class="formgrid" style="grid-template-columns:1fr 120px"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" placeholder="예: v1.0.0 업데이트"></label><label>버전<input id="noticeVersion" placeholder="v1.0.0"></label></div>
+          <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="noticeContent" class="ko-input wide-textarea" lang="ko" placeholder="업데이트 내용 또는 공지사항"></textarea></label>
+          <div class="actions"><button class="btn primary" onclick="createNotice()">공지 등록</button></div>
+        </div>
+        <div id="noticeList" class="community-list"></div>
+      </div>
+      <div class="box">
+        <h3>자유게시판 <span class="mini-pill">닉네임 노출</span></h3>
+        <div style="margin-bottom:14px">
+          <label style="font-size:12px;color:var(--muted);font-weight:750">제목<input id="postTitle" class="ko-input" lang="ko" placeholder="개선사항, 오류, 의견"></label>
+          <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="postContent" class="ko-input wide-textarea" lang="ko" placeholder="자유롭게 작성하세요"></textarea></label>
+          <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">삭제 비밀번호<input id="postDeletePassword" type="password" maxlength="20" placeholder="글 삭제 시 확인용"></label>
+          <p class="hint">작성자는 닉네임으로 표시됩니다. 글 삭제는 작성 계정 또는 개발자 권한에서 가능하며, 화면에서는 삭제 비밀번호 확인을 거칩니다.</p>
+          <div class="actions"><button class="btn primary" onclick="createPost()">글 등록</button></div>
+        </div>
+        <div id="postList" class="community-list"></div>
+      </div>
+    </div>
+  </section>
+
   <section id="settings" class="panel">
     <div class="sectionhead"><div><h2>설정</h2><p>이미지, 소유자, 포트폴리오 항목과 데이터를 관리합니다.</p></div></div>
     <div class="grid2">
+
+      <div class="box">
+        <h3>개인정보 수정</h3>
+        <div class="profile-edit-grid">
+          <label>닉네임<input id="profileNickname" class="ko-input" lang="ko" maxlength="20" placeholder="닉네임"></label>
+          <button class="btn primary" onclick="updateNickname()">닉네임 변경</button>
+          <label>새 비밀번호<input id="profileNewPassword" type="password" autocomplete="new-password" placeholder="6자 이상"></label>
+          <button class="btn secondary" onclick="updateMyPassword()">비밀번호 변경</button>
+        </div>
+        <p class="hint" style="margin-top:12px">실명은 받지 않습니다. 게시판과 댓글에는 닉네임만 표시됩니다.</p>
+      </div>
+      <div class="box developer-box admin-only">
+        <h3>개발자 모드</h3>
+        <p class="hint">개발자 계정에서만 보입니다. 기능 개발, 공지 작성, 회원 데이터 확인용입니다.</p>
+        <label style="display:flex;align-items:center;gap:8px"><input id="developerModeToggle" type="checkbox" style="width:18px;height:18px;margin:0" onchange="toggleDeveloperMode(this.checked)"> 개발자 모드 ON</label>
+        <div class="dev-tools" style="margin-top:14px">
+          <div class="actions" style="justify-content:flex-start"><button class="btn secondary" onclick="loadDeveloperData()">회원/포트폴리오 데이터 조회</button></div>
+          <p class="danger-text">주의: 회원의 자산 데이터는 민감정보입니다. 실제 운영 시 이용약관·개인정보처리방침에 관리자 접근 가능 범위를 명확히 고지해야 합니다.</p>
+          <div id="developerDataList" class="dev-data-list"></div>
+        </div>
+      </div>
+
       <div class="box">
         <h3>대표 이미지</h3>
         <div id="logoPreview" class="logo-preview">🐮</div>
@@ -565,6 +621,7 @@ let portfolioBatchDraft=[],tradeBatchDraft=[];
 let mainLineChart,mainPieChart,detailChart,propertyChart,debtChart;
 let autoLockTimer=null;
 let supabaseClient=null,currentUser=null,appBooted=false;
+let currentNickname='익명',isDeveloper=false,developerMode=false;
 let cloudSyncReady=false,cloudSyncTimer=null,cloudSyncInProgress=false,cloudSavePending=false;
 
 
@@ -880,13 +937,31 @@ function showAuthScreen(){
 }
 
 function updateWelcomeAccount(){
-  const email=currentUser?.email||'-';
+  const label=currentNickname&&currentNickname!=='익명'?`${currentNickname} (${currentUser?.email||'-'})`:(currentUser?.email||'-');
   const el=$('welcomeAccountEmail');
-  if(el)el.textContent=email;
+  if(el)el.textContent=label;
+  if($('profileNickname'))$('profileNickname').value=currentNickname||'';
+  document.body.classList.toggle('is-admin',!!isDeveloper);
+  developerMode=localStorage.getItem('wooyoo_developer_mode')==='1';
+  document.body.classList.toggle('dev-disabled',!developerMode);
+  if($('developerModeToggle'))$('developerModeToggle').checked=developerMode;
+}
+async function ensureUserProfile(){
+  if(!supabaseClient||!currentUser?.id)return;
+  const metaNick=currentUser.user_metadata?.nickname||currentUser.email?.split('@')[0]||'익명';
+  let {data}=await supabaseClient.from('app_profiles').select('nickname').eq('user_id',currentUser.id).maybeSingle();
+  if(!data){
+    await supabaseClient.from('app_profiles').insert({user_id:currentUser.id,nickname:metaNick});
+    data={nickname:metaNick};
+  }
+  currentNickname=data?.nickname||metaNick||'익명';
+  const {data:adminRows}=await supabaseClient.from('app_admins').select('user_id').eq('user_id',currentUser.id).maybeSingle();
+  isDeveloper=!!adminRows;
 }
 
 async function startAuthedApp(user){
   currentUser=user;
+  await ensureUserProfile();
   updateWelcomeAccount();
   setAuthStorageNamespace(user.id);
   await loadCloudDataForUser();
@@ -916,12 +991,16 @@ async function bootAuth(){
 }
 async function signUpWithEmail(){
   if(!supabaseClient)return bootAuth();
-  const email=$('authEmail').value.trim(),password=$('authPassword').value;
-  if(!email||!password)return setAuthMessage('이메일과 비밀번호를 입력해 주세요.');
+  const email=$('authEmail').value.trim(),password=$('authPassword').value,nickname=($('authNickname')?.value||'').trim();
+  if(!email||!password||!nickname)return setAuthMessage('이메일, 닉네임, 비밀번호를 모두 입력해 주세요.');
+  if(nickname.length<2)return setAuthMessage('닉네임은 2자 이상 입력해 주세요.');
   if(password.length<6)return setAuthMessage('비밀번호는 최소 6자 이상 입력해 주세요.');
-  const {error}=await supabaseClient.auth.signUp({email,password,options:{emailRedirectTo:location.origin}});
+  const {data,error}=await supabaseClient.auth.signUp({email,password,options:{emailRedirectTo:location.origin,data:{nickname}}});
   if(error)return setAuthMessage(error.message);
-  setAuthMessage('회원가입 메일을 보냈습니다. 이메일 인증 후 로그인해 주세요.','ok');
+  if(data?.user?.id){
+    await supabaseClient.from('app_profiles').upsert({user_id:data.user.id,nickname},{onConflict:'user_id'});
+  }
+  setAuthMessage('회원가입이 완료되었습니다. 이메일 인증 설정이 켜져 있다면 인증 후 로그인하세요.','ok');
 }
 async function signInWithEmail(){
   if(!supabaseClient)return bootAuth();
@@ -951,17 +1030,17 @@ function init(){
   }
   $('yearSelect').addEventListener('change',renderAll);
   $('resetYearSelect').addEventListener('change',renderSettings);
-  const navs=[['dashboard','대시보드'],['portfolio','포트폴리오'],['realestate','부동산'],['debt','부채'],['buytable','매수표'],['settings','설정']];
+  const navs=[['dashboard','대시보드'],['portfolio','포트폴리오'],['realestate','부동산'],['debt','부채'],['buytable','매수표'],['community','공지/게시판'],['settings','설정']];
   $('nav').innerHTML=navs.map((x,i)=>`<button class="${i===0?'active':''}" onclick="openTab('${x[0]}',this)">${x[1]}</button>`).join('');
   ['payPrincipal','payInterest'].forEach(id=>$(id).addEventListener('input',updatePaymentPreview));
   $('payMonth').addEventListener('change',updatePaymentPreview);
   $('importFile').addEventListener('change',importData);$('logoFile').addEventListener('change',handleLogoUpload);
   attachMoneyFormatting();attachKoreanPreference();attachSmartDates();migrateLegacyProfile();setInterval(()=>{if(activeProfileId)refreshFx(false);},60*60*1000);
 }
-function openTab(id,btn){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');if(id==='realestate')renderProperties();if(id==='debt')renderDebts();if(id==='buytable')renderBuyTable();attachSmartDates();}
+function openTab(id,btn){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');if(id==='realestate')renderProperties();if(id==='debt')renderDebts();if(id==='buytable')renderBuyTable();if(id==='community')loadCommunity();attachSmartDates();}
 function renderAll(){
   ['rOwner','dOwner'].forEach(id=>optionList($(id),state.owners,$(id)?.value));
-  renderBrand();renderFx();renderPortfolioTabs();renderPortfolio();renderProperties();renderDebts();renderBuyTable();renderSettings();renderDashboard();attachMoneyFormatting();attachKoreanPreference();attachSmartDates();
+  renderBrand();renderFx();renderPortfolioTabs();renderPortfolio();renderProperties();renderDebts();renderBuyTable();renderSettings();renderDashboard();updateWelcomeAccount();attachMoneyFormatting();attachKoreanPreference();attachSmartDates();
 }
 function renderBrand(){const html=state.logoData?`<img src="${state.logoData}" alt="대표 이미지">`:'🐮';$('brandLogo').innerHTML=html;$('logoPreview').innerHTML=html;const profile=getActiveProfile();if($('activeProfileName'))$('activeProfileName').textContent=profile?.name||'-';}
 function renderFx(){$('fxText').textContent=state.fx?`₩${Number(state.fx).toLocaleString('ko-KR',{maximumFractionDigits:2})}`:'조회 실패';$('fxAt').textContent=state.fxAt?`갱신 ${new Date(state.fxAt).toLocaleString('ko-KR')}`:'저장된 환율 없음';}
@@ -1138,6 +1217,8 @@ function removeCategory(name){if(state.portfolio.some(x=>x.cat===name))return al
 function renderSettings(){
   const profile=getActiveProfile();if($('currentProfileName'))$('currentProfileName').value=profile?.name||'';
   if($('resetYearBtn')&&$('resetYearSelect'))$('resetYearBtn').textContent=`${$('resetYearSelect').value}년 기록 초기화`;
+  if($('profileNickname'))$('profileNickname').value=currentNickname||'';
+  updateWelcomeAccount();
   $('ownerList').innerHTML=state.owners.map(x=>`<div class="setting-item"><div class="left"><span>${escapeHtml(x)}</span></div><button onclick='removeOwner(${JSON.stringify(x)})'>삭제</button></div>`).join('');
   $('categoryList').innerHTML=['현금자산','금융자산'].map(group=>`<div style="margin-top:14px"><b>${group}</b>${state.categories.filter(c=>c.group===group).map(c=>`<div class="setting-item"><div class="left"><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span><span>${escapeHtml(c.name)}</span></div><button onclick='removeCategory(${JSON.stringify(c.name)})'>삭제</button></div>`).join('')||'<div class="muted" style="padding:8px 0">등록된 항목이 없습니다.</div>'}</div>`).join('');
 }
@@ -1172,6 +1253,95 @@ function resetAll(){
   state=defaultState();clearRuntimeSelections();recalculateAllDebtBalances();
   if($('yearSelect'))$('yearSelect').value=String(currentYear);if($('resetYearSelect'))$('resetYearSelect').value=String(currentYear);
   saveState();alert('현재 포트폴리오의 전체 데이터를 초기화했습니다. 포트폴리오 이름과 PIN은 유지됩니다.');
+}
+
+
+// WOOYOO ASSET v1.0.0 — profile/community/developer
+function copyDonationAccount(){navigator.clipboard?.writeText('카카오뱅크 3333-01-1766453 김우성');alert('후원 계좌번호를 복사했습니다.');}
+function toggleDeveloperMode(on){developerMode=!!on;localStorage.setItem('wooyoo_developer_mode',developerMode?'1':'0');document.body.classList.toggle('dev-disabled',!developerMode);}
+async function updateNickname(){
+  const nickname=($('profileNickname')?.value||'').trim();
+  if(nickname.length<2)return alert('닉네임은 2자 이상 입력해 주세요.');
+  const {error}=await supabaseClient.from('app_profiles').upsert({user_id:currentUser.id,nickname,updated_at:new Date().toISOString()},{onConflict:'user_id'});
+  if(error)return alert(error.message);
+  currentNickname=nickname;updateWelcomeAccount();renderSettings();alert('닉네임을 변경했습니다.');
+}
+async function updateMyPassword(){
+  const pw=$('profileNewPassword')?.value||'';
+  if(pw.length<6)return alert('새 비밀번호는 6자 이상 입력해 주세요.');
+  const {error}=await supabaseClient.auth.updateUser({password:pw});
+  if(error)return alert(error.message);
+  $('profileNewPassword').value='';alert('비밀번호를 변경했습니다.');
+}
+async function sha256Text(text){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function makeDeleteHash(password,salt){return sha256Text(`${salt}|${password}`);}
+async function loadCommunity(){await Promise.all([loadNotices(),loadPosts()]);}
+async function createNotice(){
+  if(!isDeveloper)return alert('개발자만 공지를 작성할 수 있습니다.');
+  const title=$('noticeTitle').value.trim(),content=$('noticeContent').value.trim(),version=$('noticeVersion').value.trim();
+  if(!title||!content)return alert('공지 제목과 내용을 입력해 주세요.');
+  const {error}=await supabaseClient.from('notices').insert({user_id:currentUser.id,title,content,version});
+  if(error)return alert(error.message);
+  $('noticeTitle').value=$('noticeContent').value=$('noticeVersion').value='';loadNotices();
+}
+async function loadNotices(){
+  if(!$('noticeList')||!supabaseClient)return;
+  const {data,error}=await supabaseClient.from('notices').select('*').order('created_at',{ascending:false}).limit(20);
+  if(error){$('noticeList').innerHTML=`<div class="empty">공지함을 불러오지 못했습니다. SQL 적용 여부를 확인해 주세요.<br>${escapeHtml(error.message)}</div>`;return;}
+  $('noticeList').innerHTML=(data||[]).map(n=>`<article class="community-card"><header><div><h4>${escapeHtml(n.title)}</h4><small>${escapeHtml(n.version||'공지')} · ${new Date(n.created_at).toLocaleString('ko-KR')}</small></div>${isDeveloper?`<button onclick="deleteNotice('${n.id}')">삭제</button>`:''}</header><p>${escapeHtml(n.content)}</p></article>`).join('')||'<div class="empty">등록된 공지가 없습니다.</div>';
+}
+async function deleteNotice(id){if(!confirm('공지사항을 삭제할까요?'))return;const {error}=await supabaseClient.from('notices').delete().eq('id',id);if(error)return alert(error.message);loadNotices();}
+async function createPost(){
+  const title=$('postTitle').value.trim(),content=$('postContent').value.trim(),pw=$('postDeletePassword').value;
+  if(!title||!content||!pw)return alert('제목, 내용, 삭제 비밀번호를 입력해 주세요.');
+  const salt=crypto.getRandomValues(new Uint32Array(4)).join('-'),delete_hash=await makeDeleteHash(pw,salt);
+  const {error}=await supabaseClient.from('board_posts').insert({user_id:currentUser.id,nickname:currentNickname||'익명',title,content,delete_salt:salt,delete_hash});
+  if(error)return alert(error.message);
+  $('postTitle').value=$('postContent').value=$('postDeletePassword').value='';loadPosts();
+}
+async function loadPosts(){
+  if(!$('postList')||!supabaseClient)return;
+  const {data:posts,error}=await supabaseClient.from('board_posts').select('*').order('created_at',{ascending:false}).limit(30);
+  if(error){$('postList').innerHTML=`<div class="empty">게시판을 불러오지 못했습니다. SQL 적용 여부를 확인해 주세요.<br>${escapeHtml(error.message)}</div>`;return;}
+  const ids=(posts||[]).map(p=>p.id);let comments=[];
+  if(ids.length){const res=await supabaseClient.from('board_comments').select('*').in('post_id',ids).order('created_at',{ascending:true});comments=res.data||[];}
+  $('postList').innerHTML=(posts||[]).map(p=>{
+    const cs=comments.filter(c=>c.post_id===p.id);
+    return `<article class="community-card"><header><div><h4>${escapeHtml(p.title)}</h4><small>${escapeHtml(p.nickname||'익명')} · ${new Date(p.created_at).toLocaleString('ko-KR')}</small></div><button onclick="deletePost('${p.id}')">삭제</button></header><p>${escapeHtml(p.content)}</p><div class="comment-box">${cs.map(c=>`<div class="comment-row"><small>${escapeHtml(c.nickname||'익명')} · ${new Date(c.created_at).toLocaleString('ko-KR')}</small>${escapeHtml(c.content)}</div>`).join('')||'<div class="muted" style="font-size:12px">댓글이 없습니다.</div>'}<div class="inline" style="margin-top:10px"><input id="comment-${p.id}" class="ko-input" lang="ko" placeholder="댓글 작성"><button class="btn secondary" onclick="createComment('${p.id}')">댓글</button></div></div></article>`;
+  }).join('')||'<div class="empty">등록된 글이 없습니다.</div>';
+}
+async function createComment(postId){
+  const el=$(`comment-${postId}`),content=(el?.value||'').trim();
+  if(!content)return alert('댓글 내용을 입력해 주세요.');
+  const {error}=await supabaseClient.from('board_comments').insert({post_id:postId,user_id:currentUser.id,nickname:currentNickname||'익명',content});
+  if(error)return alert(error.message);
+  el.value='';loadPosts();
+}
+async function deletePost(id){
+  const pw=prompt('글 삭제 비밀번호를 입력해 주세요. 개발자는 비밀번호 없이 확인만 누르면 삭제됩니다.');
+  if(pw===null)return;
+  const {data:p,error:e}=await supabaseClient.from('board_posts').select('user_id,delete_salt,delete_hash').eq('id',id).single();
+  if(e)return alert(e.message);
+  if(!isDeveloper){
+    const hash=await makeDeleteHash(pw,p.delete_salt||'');
+    if(hash!==p.delete_hash)return alert('삭제 비밀번호가 일치하지 않습니다.');
+  }
+  const {error}=await supabaseClient.from('board_posts').delete().eq('id',id);
+  if(error)return alert(error.message);
+  loadPosts();
+}
+async function loadDeveloperData(){
+  if(!isDeveloper)return alert('개발자만 접근할 수 있습니다.');
+  const box=$('developerDataList');box.innerHTML='<div class="empty">불러오는 중...</div>';
+  const [{data:profiles,error:pe},{data:assets,error:ae}]=await Promise.all([
+    supabaseClient.from('app_profiles').select('*').order('created_at',{ascending:false}),
+    supabaseClient.from('user_asset_data').select('*').order('updated_at',{ascending:false})
+  ]);
+  if(pe||ae){box.innerHTML=`<div class="empty">개발자 데이터 조회 실패<br>${escapeHtml((pe||ae).message)}</div>`;return;}
+  box.innerHTML=(assets||[]).map(a=>{const prof=(profiles||[]).find(p=>p.user_id===a.user_id);return `<div class="dev-data-item"><b>${escapeHtml(prof?.nickname||'닉네임 없음')}</b><small> · ${escapeHtml(a.user_id)} · ${new Date(a.updated_at).toLocaleString('ko-KR')}</small><pre>${escapeHtml(JSON.stringify(a.data,null,2).slice(0,6000))}</pre></div>`}).join('')||'<div class="empty">저장된 회원 데이터가 없습니다.</div>';
 }
 
 bootAuth();
