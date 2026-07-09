@@ -248,6 +248,7 @@ td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align
 .auth-card{width:min(480px,100%);background:#fff;border:1px solid #e1e7f0;border-radius:26px;padding:30px;box-shadow:0 28px 80px rgba(23,32,51,.16)}
 .auth-brand{display:flex;align-items:center;gap:14px;margin-bottom:22px}.auth-logo{width:62px;height:62px;border-radius:18px;background:#c5f24a;display:grid;place-items:center;font-size:31px}.auth-brand h1{margin:0;font-size:23px;letter-spacing:.06em}.auth-brand h1 b{color:#5662e8}.auth-brand p{margin:5px 0 0;color:var(--muted);font-size:12px}
 .auth-card label{display:block;font-size:12px;color:var(--muted);font-weight:750;margin-top:12px}.auth-card input{font-size:14px}.auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:16px}.auth-actions .btn{width:100%;min-height:45px}.auth-message{min-height:20px;margin-top:12px;font-size:12px;text-align:center;color:#b42318;line-height:1.55}.auth-message.ok{color:#067647}.auth-note{margin-top:16px;padding:12px 13px;border-radius:12px;background:#f8fafc;color:#64748b;font-size:11px;line-height:1.55}
+.signup-guide{margin-top:18px;padding:16px 17px;border:1px solid #dbe7e5;border-radius:14px;background:linear-gradient(180deg,#f8fffd,#f8fafc);color:#475569}.signup-guide h3{margin:0 0 10px;color:#0f172a;font-size:14px}.signup-guide ol{margin:0;padding-left:20px;display:grid;gap:6px}.signup-guide li{font-size:11.5px;line-height:1.55}.signup-guide strong{color:#0f766e}.signup-guide p{margin:10px 0 0;padding-top:9px;border-top:1px solid #e4eceb;color:#64748b;font-size:10.5px;line-height:1.55}
 .auth-pending #welcomeScreen,.auth-pending #mainApp{display:none!important}
 @media(max-width:520px){.auth-card{padding:24px 18px;border-radius:20px}.auth-actions{grid-template-columns:1fr}.auth-screen{padding:14px}}
 
@@ -869,7 +870,16 @@ nav button.active .nav-update-dot{display:none}
     </div>
     <button class="btn soft" style="width:100%;margin-top:9px" onclick="resetPasswordByEmail()">비밀번호 재설정 메일</button>
     <div id="authMessage" class="auth-message"></div>
-    <div class="auth-note">처음 가입하면 Supabase 설정에 따라 이메일 인증이 필요할 수 있습니다. 인증 후 다시 로그인하세요.</div>
+    <div class="signup-guide" aria-label="회원가입 방법 안내">
+      <h3>처음 이용하시나요? 회원가입 방법</h3>
+      <ol>
+        <li>상단의 <strong>회원가입</strong> 탭을 선택하세요.</li>
+        <li>사용할 <strong>이메일, 닉네임, 비밀번호</strong>를 입력하세요.</li>
+        <li><strong>회원가입</strong> 버튼을 누른 뒤 로그인 탭으로 돌아오세요.</li>
+        <li>가입한 이메일과 비밀번호로 로그인한 후 새 포트폴리오를 만들면 됩니다.</li>
+      </ol>
+      <p>비밀번호는 6자 이상이어야 합니다. 이메일 인증이 설정된 경우에는 받은 메일의 인증 링크를 먼저 확인하세요.</p>
+    </div>
   </div>
 </div>
 
