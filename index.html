@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WOOYOO ASSET V1.0.1</title>
+<meta name="application-name" content="WOOYOO ASSET V1.0.1">
+<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.0.1">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -778,7 +780,7 @@ tbody tr:hover{background:#f4faf8}
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip">v1.0.1</span></h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.0.1</span></h1><p>Private family wealth dashboard</p></div>
     </div>
     <div class="welcome-account-bar">
       <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
@@ -1122,6 +1124,8 @@ tbody tr:hover{background:#f4faf8}
 </div>
 
 <script>
+const APP_VERSION='1.0.1';
+const APP_TITLE='WOOYOO ASSET';
 const LEGACY_KEY='wooyoo_assets_v11';
 const LEGACY_OLD_KEY='wooyoo_assets_v10';
 const LEGACY_LOCK_KEY='wooyoo_asset_lock_v1';
@@ -1202,7 +1206,14 @@ function normalizeState(s){
   return s;
 }
 const $=id=>document.getElementById(id);
-const UI_DRAFT_FIELD_IDS=['rOwner','rName','rLocation','rMemo','dOwner','dType','dName','dBank','dStart','dEnd','dLoanAmount','dRate','dMemo','payMonth','payRate','payPrincipal','payInterest','payTotal','payBalance','payMemo','noticeTitle','noticeVersion','noticeContent','postTitle','postContent','newOwner','newCategoryGroup','newCategory'];
+function applyAppVersion(){
+  const fullTitle=`${APP_TITLE} V${APP_VERSION}`;
+  document.title=fullTitle;
+  document.querySelectorAll('[data-app-version]').forEach(el=>{el.textContent=`v${APP_VERSION}`;});
+  document.querySelectorAll('meta[name="application-name"],meta[name="apple-mobile-web-app-title"]').forEach(el=>el.setAttribute('content',fullTitle));
+}
+applyAppVersion();
+const UI_DRAFT_FIELD_IDS=['rOwner','rName','rLocation','rMemo','dOwner','dType','dName','dBank','dStart','dEnd','dLoanAmount','dRate','dMemo','payMonth','payRate','payPrincipal','payInterest','payTotal','payBalance','payMemo','buyAccount','buyBudget','noticeTitle','noticeVersion','noticeContent','postTitle','postContent','profileNickname','currentProfileName','newOwner','newCategoryGroup','newCategory','resetYearSelect'];
 const UI_FORM_IDS=['portfolioBatchForm','propertyForm','tradeBatchForm','debtForm','paymentForm','noticeWriteBox'];
 function togglePasswordVisibility(inputId,button){
   const input=$(inputId);if(!input)return;
@@ -1403,7 +1414,14 @@ function openApp(){
 }
 function lockApp(){saveUiSessionState();clearTimeout(autoLockTimer);autoLockTimer=null;closeDetailModal();activeProfileId=null;KEY='';state=defaultState();initLockScreen();}
 function switchPortfolio(){lockApp();}
-function resetAutoLock(){if($('mainApp')?.classList.contains('app-locked'))return;clearTimeout(autoLockTimer);autoLockTimer=setTimeout(lockApp,AUTO_LOCK_MS);}
+function isMainAppOpen(){return !!activeProfileId&&!$('mainApp')?.classList.contains('app-locked');}
+function hasOpenWorkForm(){return UI_FORM_IDS.some(id=>{const el=$(id);return el&&el.style.display!=='none';});}
+function isWorkInProgress(){return isMainAppOpen()&&(hasOpenWorkForm()||portfolioBatchDraft.length>0||tradeBatchDraft.length>0);}
+function pauseAutoLock(){clearTimeout(autoLockTimer);autoLockTimer=null;}
+function resetAutoLock(){
+  if(!isMainAppOpen()||document.hidden||!document.hasFocus())return pauseAutoLock();
+  clearTimeout(autoLockTimer);autoLockTimer=setTimeout(lockApp,AUTO_LOCK_MS);
+}
 async function changePin(){
   const current=prompt('현재 6자리 PIN을 입력하세요.');if(current===null)return;
   if(!(await verifyPin(current.trim())))return alert('현재 PIN이 올바르지 않습니다.');
@@ -1624,12 +1642,26 @@ async function pullCloudUpdates(showAlert=false){
     const cloudUpdatedAt=data.updated_at||data.data.updatedAt||'';
     const cloudTime=Date.parse(cloudUpdatedAt)||0,lastCloudTime=Date.parse(meta.cloudUpdatedAt||0)||0;
     if(cloudTime>lastCloudTime){
+      // 작성 중에는 클라우드 새로고침으로 현재 화면과 입력값을 덮어쓰지 않습니다.
+      if(isWorkInProgress()){
+        saveUiSessionState();
+        setCloudSyncStatus('작성 중 · 화면 유지 후 자동 동기화','ok');
+        return true;
+      }
       const openProfileId=activeProfileId;
+      const wasOpen=isMainAppOpen();
+      if(wasOpen)saveUiSessionState();
       applyCloudState(data.data,cloudUpdatedAt);
       if(openProfileId&&getProfiles().some(p=>p.id===openProfileId)){
-        activeProfileId=openProfileId;KEY=profileStateKey(openProfileId);state=loadProfileState(openProfileId);recalculateAllDebtBalances();renderAll();
-      }else if(openProfileId){lockApp();}
-      else renderProfileList();
+        activeProfileId=openProfileId;KEY=profileStateKey(openProfileId);state=loadProfileState(openProfileId);recalculateAllDebtBalances();
+        if(!restoreUiSessionState())renderAll();
+      }else if(openProfileId){
+        // 사용 중인 화면을 갑자기 잠금 화면으로 보내지 않고 현재 로컬 작업을 우선 보존합니다.
+        setCloudSyncMeta({dirty:true});
+        setCloudSyncStatus('현재 작업 보존 · 클라우드 재저장 예정','ok');
+        queueCloudSave();
+        return true;
+      }else renderProfileList();
       if(showAlert)alert('다른 기기에서 저장한 최신 데이터를 불러왔습니다.');
       return true;
     }
@@ -1644,14 +1676,33 @@ async function pullCloudUpdates(showAlert=false){
     return false;
   }
 }
-window.addEventListener('online',()=>{setCloudSyncStatus('인터넷 연결됨 · 동기화 확인 중');const meta=getCloudSyncMeta();meta.dirty?saveCloudDataNow({force:true}):pullCloudUpdates(false);});
+window.addEventListener('online',()=>{
+  setCloudSyncStatus('인터넷 연결됨 · 동기화 확인 중');
+  const meta=getCloudSyncMeta();
+  if(meta.dirty)saveCloudDataNow({force:true});
+  else if(!isWorkInProgress())pullCloudUpdates(false);
+});
 window.addEventListener('offline',()=>setCloudSyncStatus('오프라인 · 연결 후 자동 저장','error'));
 document.addEventListener('visibilitychange',()=>{
   saveUiSessionState();
-  if(document.visibilityState==='hidden'){if(getCloudSyncMeta().dirty)saveCloudDataNow({force:true});}
-  else{clearTimeout(cloudResumeTimer);cloudResumeTimer=setTimeout(()=>{const meta=getCloudSyncMeta();meta.dirty?saveCloudDataNow({force:true}):pullCloudUpdates(false);},500);}
+  if(document.visibilityState==='hidden'){
+    pauseAutoLock();
+    if(getCloudSyncMeta().dirty)saveCloudDataNow({force:true});
+    return;
+  }
+  if(isMainAppOpen()){restoreUiSessionState();resetAutoLock();}
+  clearTimeout(cloudResumeTimer);
+  cloudResumeTimer=setTimeout(()=>{
+    const meta=getCloudSyncMeta();
+    if(meta.dirty)saveCloudDataNow({force:true});
+    else if(!isWorkInProgress())pullCloudUpdates(false);
+  },1200);
 });
-window.addEventListener('pagehide',()=>{saveUiSessionState();if(getCloudSyncMeta().dirty)saveCloudDataNow({force:true});});
+window.addEventListener('blur',()=>{saveUiSessionState();pauseAutoLock();});
+window.addEventListener('focus',()=>{
+  if(isMainAppOpen()){restoreUiSessionState();resetAutoLock();}
+});
+window.addEventListener('pagehide',()=>{saveUiSessionState();pauseAutoLock();if(getCloudSyncMeta().dirty)saveCloudDataNow({force:true});});
 
 
 let authMode='login';
@@ -1782,6 +1833,7 @@ async function signOutUser(){
 }
 
 function init(){
+  applyAppVersion();
   for(let y=2020;y<=currentYear+100;y++){
     $('yearSelect').insertAdjacentHTML('beforeend',`<option value="${y}" ${y===currentYear?'selected':''}>${y}년</option>`);
     $('resetYearSelect').insertAdjacentHTML('beforeend',`<option value="${y}" ${y===currentYear?'selected':''}>${y}년</option>`);
@@ -1796,8 +1848,7 @@ function init(){
   $('importFile').addEventListener('change',importData);$('logoFile').addEventListener('change',handleLogoUpload);
   attachMoneyFormatting();attachKoreanPreference();attachSmartDates();migrateLegacyProfile();
   document.addEventListener('input',scheduleUiSessionSave,true);document.addEventListener('change',scheduleUiSessionSave,true);
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)saveUiSessionState();});
-  window.addEventListener('pagehide',saveUiSessionState);window.addEventListener('scroll',scheduleUiSessionSave,{passive:true});
+  window.addEventListener('scroll',scheduleUiSessionSave,{passive:true});
   setInterval(()=>{if(activeProfileId)refreshFx(false);},60*60*1000);
 }
 function openTab(id,btn){
