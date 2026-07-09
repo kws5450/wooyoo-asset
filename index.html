@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WOOYOO ASSET V1.0.0</title>
+<title>WOOYOO ASSET V1.0.1</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -725,6 +725,28 @@ tbody tr:hover{background:#f4faf8}
   }
 }
 
+
+/* WOOYOO ASSET v1.0.1 — password toggle, home button and work-state retention */
+.password-field{position:relative;margin-top:6px}
+.password-field input{margin-top:0;padding-right:58px}
+.password-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);min-width:44px;height:30px;border:1px solid #d7dee7;border-radius:7px;background:#f8fafc;color:#475569;font-size:11px;font-weight:800;cursor:pointer}
+.password-toggle:hover{background:#eef2f6;color:#0f172a}
+.password-toggle:focus-visible{outline:none;box-shadow:var(--focus)}
+.pin-password-field{max-width:260px}
+.pin-password-field .pin-4-input{max-width:none;width:100%}
+.home-btn{background:#dff8f2!important;color:#075e58!important;border:1px solid #a7ded3!important}
+.home-btn:hover{background:#ccefe7!important}
+@media (min-width:1081px){
+  .hero-tools{grid-template-columns:minmax(62px,.5fr) minmax(92px,.75fr) minmax(112px,.9fr) minmax(145px,1.18fr) minmax(78px,.66fr) minmax(88px,.74fr) minmax(58px,.52fr) minmax(68px,.58fr)!important}
+}
+@media (min-width:901px) and (max-width:1080px){
+  .hero-tools{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+@media (min-width:521px) and (max-width:900px){
+  .hero-tools{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:520px){.pin-password-field{max-width:none}}
+
 </style>
 </head>
 <body class="auth-pending">
@@ -742,7 +764,7 @@ tbody tr:hover{background:#f4faf8}
     </div>
     <label>이메일<input id="authEmail" type="email" autocomplete="email" placeholder="example@email.com"></label>
     <label id="authNicknameWrap" style="display:none">닉네임<input id="authNickname" class="ko-input" lang="ko" autocomplete="nickname" maxlength="20" placeholder="실명 대신 사용할 닉네임"></label>
-    <label>비밀번호<input id="authPassword" type="password" autocomplete="current-password" placeholder="비밀번호"></label>
+    <label>비밀번호<div class="password-field"><input id="authPassword" type="password" autocomplete="current-password" placeholder="비밀번호"><button type="button" class="password-toggle" onclick="togglePasswordVisibility('authPassword',this)" aria-label="비밀번호 표시">보기</button></div></label>
     <div class="auth-actions" style="grid-template-columns:1fr">
       <button id="authSubmitBtn" class="btn primary" onclick="submitAuthForm()">로그인</button>
     </div>
@@ -756,7 +778,7 @@ tbody tr:hover{background:#f4faf8}
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip">v1.0.0</span></h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip">v1.0.1</span></h1><p>Private family wealth dashboard</p></div>
     </div>
     <div class="welcome-account-bar">
       <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
@@ -783,8 +805,8 @@ tbody tr:hover{background:#f4faf8}
       <div class="create-panel-head"><button class="btn soft" onclick="cancelCreateProfile()">← 목록으로</button><div><b>새 포트폴리오 개설</b><small>포트폴리오 이름과 6자리 PIN을 설정하세요.</small></div></div>
       <div class="pin-grid">
         <label>포트폴리오 이름<input id="newProfileName" class="ko-input" lang="ko" autocomplete="off" maxlength="30" placeholder="예: 우리 가족 자산"></label>
-        <label>6자리 PIN<input id="setupPin" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="••••••"></label>
-        <label>PIN 확인<input id="setupPinConfirm" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="••••••"></label>
+        <label>6자리 PIN<div class="password-field"><input id="setupPin" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="••••••"><button type="button" class="password-toggle" onclick="togglePasswordVisibility('setupPin',this)" aria-label="PIN 표시">보기</button></div></label>
+        <label>PIN 확인<div class="password-field"><input id="setupPinConfirm" type="password" inputmode="numeric" maxlength="6" autocomplete="new-password" placeholder="••••••"><button type="button" class="password-toggle" onclick="togglePasswordVisibility('setupPinConfirm',this)" aria-label="PIN 확인 표시">보기</button></div></label>
         <button class="btn primary" onclick="createNewPortfolio()">포트폴리오 개설</button>
       </div>
     </div>
@@ -815,6 +837,7 @@ tbody tr:hover{background:#f4faf8}
       <div><span style="display:block;color:#83d7cb;font-size:10px;font-weight:800;letter-spacing:.16em;margin-bottom:5px">FAMILY WEALTH MANAGEMENT</span><h1><b>WOOYOO</b> ASSET</h1><p>우리 가족의 자산·부동산·부채를 한눈에</p></div>
     </div>
     <div class="hero-tools">
+      <button class="btn home-btn" type="button" onclick="goHome()" aria-label="대시보드 홈으로 이동">홈</button>
       <label>조회 연도<select id="yearSelect"></select></label>
       <div class="portfolio-pill"><small>현재 포트폴리오</small><strong id="activeProfileName">-</strong></div>
       <div class="fx-pill">
@@ -963,7 +986,7 @@ tbody tr:hover{background:#f4faf8}
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span id="noticeCountLabel" class="selection-count">0건</span><button id="noticeWriteToggleBtn" class="btn primary admin-only dev-tools" onclick="toggleNoticeForm(true)">＋ 공지 작성</button></div>
         </div>
         <div id="noticeWriteBox" class="notice-admin-form admin-only dev-tools" style="display:none">
-          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.0.0 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.0.0"></label></div>
+          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.0.1 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.0.1"></label></div>
           <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="noticeContent" class="ko-input wide-textarea" lang="ko" maxlength="10000" placeholder="업데이트 내용 또는 공지사항"></textarea></label>
           <div class="actions"><button class="btn soft" onclick="cancelNoticeEdit()">취소</button><button id="noticeSubmitBtn" class="btn primary" onclick="saveNotice()">공지 등록</button></div>
         </div>
@@ -982,7 +1005,7 @@ tbody tr:hover{background:#f4faf8}
         <div class="board-write-form">
           <label style="font-size:12px;color:var(--muted);font-weight:750">제목<input id="postTitle" class="ko-input" lang="ko" maxlength="120" placeholder="개선사항, 오류, 의견"></label>
           <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="postContent" class="ko-input wide-textarea" lang="ko" maxlength="10000" placeholder="자유롭게 작성하세요"></textarea></label>
-          <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">삭제 PIN<input id="postDeletePassword" class="pin-4-input" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="new-password" placeholder="숫자 4자리" oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)"></label>
+          <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">삭제 PIN<div class="password-field pin-password-field"><input id="postDeletePassword" class="pin-4-input" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="new-password" placeholder="숫자 4자리" oninput="this.value=this.value.replace(/\D/g,'').slice(0,4)"><button type="button" class="password-toggle" onclick="togglePasswordVisibility('postDeletePassword',this)" aria-label="삭제 PIN 표시">보기</button></div></label>
           <p class="hint">작성자는 닉네임으로 표시됩니다. 본인이 작성한 글은 설정한 4자리 삭제 PIN으로 삭제할 수 있으며, 개발자는 개발자 모드에서 관리 삭제할 수 있습니다.</p>
           <div class="actions"><button class="btn primary" onclick="createPost()">글 등록</button></div>
         </div>
@@ -1028,7 +1051,7 @@ tbody tr:hover{background:#f4faf8}
           <label>로그인 이메일<input id="profileEmail" type="email" readonly class="readonly-money" placeholder="로그인 이메일"></label>
           <label>닉네임<input id="profileNickname" class="ko-input" lang="ko" maxlength="20" placeholder="닉네임"></label>
           <button class="btn primary" onclick="updateNickname()">닉네임 변경</button>
-          <label>새 비밀번호<input id="profileNewPassword" type="password" autocomplete="new-password" placeholder="6자 이상"></label>
+          <label>새 비밀번호<div class="password-field"><input id="profileNewPassword" type="password" autocomplete="new-password" placeholder="6자 이상"><button type="button" class="password-toggle" onclick="togglePasswordVisibility('profileNewPassword',this)" aria-label="새 비밀번호 표시">보기</button></div></label>
           <button class="btn secondary" onclick="updateMyPassword()">비밀번호 변경</button>
         </div>
         <p class="hint" style="margin-top:12px">회원가입 시 닉네임은 필수입니다. 실명은 받지 않으며, 게시판과 댓글에는 닉네임만 표시됩니다.</p>
@@ -1039,7 +1062,7 @@ tbody tr:hover{background:#f4faf8}
           탈퇴하면 로그인 계정, 닉네임, 포트폴리오와 클라우드 자산 데이터가 영구 삭제됩니다. 게시판과 댓글은 커뮤니티 기록 유지를 위해 작성자가 ‘탈퇴한 사용자’로 익명 처리되어 남습니다. 이 작업은 되돌릴 수 없습니다.
         </div>
         <div class="withdraw-grid">
-          <label>현재 비밀번호<input id="withdrawPassword" type="password" autocomplete="current-password" placeholder="현재 비밀번호"></label>
+          <label>현재 비밀번호<div class="password-field"><input id="withdrawPassword" type="password" autocomplete="current-password" placeholder="현재 비밀번호"><button type="button" class="password-toggle" onclick="togglePasswordVisibility('withdrawPassword',this)" aria-label="현재 비밀번호 표시">보기</button></div></label>
           <label>확인 문구<input id="withdrawConfirmText" autocomplete="off" placeholder="회원탈퇴 입력"></label>
           <button id="withdrawAccountBtn" class="btn danger" onclick="deleteMyAccount()">회원탈퇴 진행</button>
         </div>
@@ -1080,14 +1103,14 @@ tbody tr:hover{background:#f4faf8}
           </div>
         </div>
         <p class="hint" style="margin-top:14px">초기화할 연도를 직접 선택할 수 있습니다. 선택한 연도의 포트폴리오, 부동산 실거래가, 대출 상환기록만 삭제하며 부동산·대출 기본정보는 유지합니다. 전체 초기화는 현재 선택한 포트폴리오의 앱 데이터만 삭제하며, 다른 포트폴리오는 유지합니다.</p>
-        <p class="hint">각 포트폴리오의 데이터는 현재 브라우저에 별도로 저장됩니다. 정기적으로 포트폴리오별 백업 파일을 내려받아 보관하세요.</p>
+        <p class="hint">포트폴리오 데이터는 로그인한 계정의 Supabase 클라우드에 자동 저장되며, 다른 기기에서 같은 이메일로 로그인하면 자동으로 불러옵니다. 별도 동기화 버튼은 필요하지 않습니다. 중요한 데이터는 정기적으로 백업 파일도 내려받아 보관하세요.</p>
         <p class="hint">날짜는 20251025처럼 8자리로 입력하면 자동으로 2025-10-25로 변환됩니다. 날짜 입력칸에 커서를 둔 뒤 마우스 휠 또는 PageUp/PageDown을 사용하면 한 달씩 빠르게 이동합니다.</p>
         <p class="hint">텍스트 입력란은 한국어 입력 우선으로 설정되어 있습니다. 다만 브라우저 보안상 운영체제의 한/영 상태를 강제로 바꾸지는 못합니다.</p>
       </div>
     </div>
   </section>
 
-  <div class="footer"><a href="https://www.exchangerate-api.com" target="_blank" rel="noreferrer">Rates By Exchange Rate API</a> · 인터넷 연결이 없으면 마지막 저장 환율을 사용합니다.</div>
+  <div class="footer"><a href="https://www.exchangerate-api.com" target="_blank" rel="noreferrer">Rates By Exchange Rate API</a> · 인터넷 연결이 없으면 마지막 저장 환율을 사용합니다. · <span id="cloudSyncStatus">클라우드 자동 저장 준비 중</span></div>
 </div>
 
 <div id="detailModal" class="modal" onclick="if(event.target===this)closeDetailModal()">
@@ -1104,9 +1127,12 @@ const LEGACY_OLD_KEY='wooyoo_assets_v10';
 const LEGACY_LOCK_KEY='wooyoo_asset_lock_v1';
 const PROFILE_REGISTRY_BASE_KEY='wooyoo_asset_profiles_v1';
 const PROFILE_STATE_BASE_PREFIX='wooyoo_assets_profile_';
+const CLOUD_SYNC_META_BASE_KEY='wooyoo_cloud_sync_meta_v1';
 let PROFILE_REGISTRY_KEY=PROFILE_REGISTRY_BASE_KEY;
 let PROFILE_STATE_PREFIX=PROFILE_STATE_BASE_PREFIX;
+let CLOUD_SYNC_META_KEY=CLOUD_SYNC_META_BASE_KEY;
 const AUTO_LOCK_MS=10*60*1000;
+const UI_SESSION_BASE_PREFIX='wooyoo_asset_ui_v101_';
 
 // Supabase 연결 정보: 아래 2개 값을 Supabase Project Settings > Data API 또는 API Keys 화면에서 복사해 넣으세요.
 const SUPABASE_URL='https://ptudkfhhwtgyrqsjhtzd.supabase.co';
@@ -1132,13 +1158,15 @@ let currentNickname='익명',isDeveloper=false,developerMode=false;
 let noticeEditingId=null,noticeCache=[];
 let noticeCurrentPage=1,noticePageSize=10,noticeTotalCount=0;
 let boardCurrentPage=1,boardPageSize=10,boardTotalCount=0;
-let cloudSyncReady=false,cloudSyncTimer=null,cloudSyncInProgress=false,cloudSavePending=false;
+let cloudSyncReady=false,cloudSyncTimer=null,cloudSyncInProgress=false,cloudSavePending=false,cloudRetryTimer=null,cloudResumeTimer=null;
+let uiSessionSaveTimer=null,authStartInProgress=false;
 
 
 function setAuthStorageNamespace(userId){
   const safe=String(userId||'guest').replace(/[^a-zA-Z0-9_-]/g,'_');
   PROFILE_REGISTRY_KEY=`${PROFILE_REGISTRY_BASE_KEY}_${safe}`;
   PROFILE_STATE_PREFIX=`${PROFILE_STATE_BASE_PREFIX}${safe}_`;
+  CLOUD_SYNC_META_KEY=`${CLOUD_SYNC_META_BASE_KEY}_${safe}`;
 }
 
 function defaultState(){return {owners:['소유자 1','소유자 2'],categories:DEFAULT_CATEGORIES.map(c=>({...c})),portfolio:[],properties:[],propertyTrades:[],debts:[],debtPayments:[],buyTable:{account:'',budget:0,rows:[{id:Date.now()+1,name:'',weight:0,price:0},{id:Date.now()+2,name:'',weight:0,price:0}]},fx:0,fxAt:null,logoData:''};}
@@ -1174,6 +1202,46 @@ function normalizeState(s){
   return s;
 }
 const $=id=>document.getElementById(id);
+const UI_DRAFT_FIELD_IDS=['rOwner','rName','rLocation','rMemo','dOwner','dType','dName','dBank','dStart','dEnd','dLoanAmount','dRate','dMemo','payMonth','payRate','payPrincipal','payInterest','payTotal','payBalance','payMemo','noticeTitle','noticeVersion','noticeContent','postTitle','postContent','newOwner','newCategoryGroup','newCategory'];
+const UI_FORM_IDS=['portfolioBatchForm','propertyForm','tradeBatchForm','debtForm','paymentForm','noticeWriteBox'];
+function togglePasswordVisibility(inputId,button){
+  const input=$(inputId);if(!input)return;
+  const show=input.type==='password';input.type=show?'text':'password';
+  if(button){button.textContent=show?'숨김':'보기';button.setAttribute('aria-label',show?'비밀번호 숨기기':'비밀번호 표시');button.setAttribute('aria-pressed',show?'true':'false');}
+  input.focus({preventScroll:true});
+}
+function uiSessionKey(){return currentUser?.id&&activeProfileId?`${UI_SESSION_BASE_PREFIX}${currentUser.id}_${activeProfileId}`:'';}
+function collectUiDraftValues(){const values={};UI_DRAFT_FIELD_IDS.forEach(id=>{const el=$(id);if(el&&el.type!=='password'&&el.type!=='file')values[id]=el.value;});return values;}
+function saveUiSessionState(){
+  const key=uiSessionKey();if(!key||$('mainApp')?.classList.contains('app-locked'))return;
+  const activePanel=document.querySelector('.panel.active')?.id||'dashboard';
+  const forms={};UI_FORM_IDS.forEach(id=>{const el=$(id);if(el)forms[id]=el.style.display!=='none';});
+  const data={activePanel,year:$('yearSelect')?.value||String(currentYear),scrollY:window.scrollY||0,selectedPropertyId,selectedDebtId,activePortfolioOwner,activePortfolioGroup,activePortfolioCat,editPortfolioId,editPropertyId,editTradeId,editDebtId,editPaymentId,portfolioBatchDraft,tradeBatchDraft,forms,values:collectUiDraftValues(),savedAt:Date.now()};
+  try{sessionStorage.setItem(key,JSON.stringify(data));}catch(e){console.warn('UI session save failed',e);}
+}
+function scheduleUiSessionSave(){clearTimeout(uiSessionSaveTimer);uiSessionSaveTimer=setTimeout(saveUiSessionState,180);}
+function loadUiSessionState(){const key=uiSessionKey();if(!key)return null;try{return JSON.parse(sessionStorage.getItem(key)||'null');}catch(e){return null;}}
+function restoreUiSessionState(){
+  const saved=loadUiSessionState();if(!saved)return false;
+  if(saved.year&&$('yearSelect')?.querySelector(`option[value="${saved.year}"]`))$('yearSelect').value=saved.year;
+  selectedPropertyId=saved.selectedPropertyId??null;selectedDebtId=saved.selectedDebtId??null;
+  activePortfolioOwner=saved.activePortfolioOwner||'전체';activePortfolioGroup=saved.activePortfolioGroup||'전체';activePortfolioCat=saved.activePortfolioCat||'전체';
+  editPortfolioId=saved.editPortfolioId??null;editPropertyId=saved.editPropertyId??null;editTradeId=saved.editTradeId??null;editDebtId=saved.editDebtId??null;editPaymentId=saved.editPaymentId??null;
+  portfolioBatchDraft=Array.isArray(saved.portfolioBatchDraft)?saved.portfolioBatchDraft:[];tradeBatchDraft=Array.isArray(saved.tradeBatchDraft)?saved.tradeBatchDraft:[];
+  renderAll();
+  const panelId=$(saved.activePanel)?saved.activePanel:'dashboard';openPanelById(panelId);
+  if(saved.forms){UI_FORM_IDS.forEach(id=>{const el=$(id);if(el)el.style.display=saved.forms[id]?'block':'none';});}
+  if(portfolioBatchDraft.length&&saved.forms?.portfolioBatchForm)renderPortfolioBatchRows();
+  if(tradeBatchDraft.length&&saved.forms?.tradeBatchForm)renderTradeBatchRows();
+  if(saved.values){Object.entries(saved.values).forEach(([id,value])=>{const el=$(id);if(el&&el.type!=='password'&&el.type!=='file')el.value=value??'';});}
+  attachMoneyFormatting();attachKoreanPreference();attachSmartDates();
+  if($('payMonth'))updateDatePreview($('payMonth'));if($('dStart'))updateDatePreview($('dStart'));if($('dEnd'))updateDatePreview($('dEnd'));
+  requestAnimationFrame(()=>window.scrollTo({top:Number(saved.scrollY||0),behavior:'auto'}));
+  return true;
+}
+function clearUiSessionState(profileId=activeProfileId){if(!currentUser?.id||!profileId)return;try{sessionStorage.removeItem(`${UI_SESSION_BASE_PREFIX}${currentUser.id}_${profileId}`);}catch(e){}}
+function goHome(){openPanelById('dashboard');window.scrollTo({top:$('dashboard')?.offsetTop?Math.max(0,$('dashboard').offsetTop-90):0,behavior:'smooth'});saveUiSessionState();}
+
 const money=n=>'₩'+Math.round(Number(n||0)).toLocaleString('ko-KR');
 const num=n=>Number(n||0).toLocaleString('ko-KR',{maximumFractionDigits:2});
 const pct=n=>`${Math.abs(Number(n||0)).toFixed(2)}%`;
@@ -1308,6 +1376,7 @@ async function deleteProfileFromList(id,event){
   }catch(e){return alert('PIN 확인 중 오류가 발생했습니다.');}
   const answer=prompt(`이 포트폴리오와 모든 자산 데이터를 완전히 삭제합니다. 계속하려면 포트폴리오 이름 "${profile.name}"을 입력하세요.`);if(answer===null)return;
   if(answer.trim()!==profile.name)return alert('포트폴리오 이름이 일치하지 않아 삭제를 취소했습니다.');
+  clearUiSessionState(profile.id);
   localStorage.removeItem(profileStateKey(profile.id));
   saveProfiles(getProfiles().filter(p=>p.id!==profile.id));
   if(activeProfileId===profile.id){activeProfileId=null;KEY='';state=defaultState();}
@@ -1328,9 +1397,11 @@ async function unlockPortfolio(){
 function openApp(){
   if(!activeProfileId)return initLockScreen();
   KEY=profileStateKey(activeProfileId);state=loadProfileState(activeProfileId);clearRuntimeSelections();recalculateAllDebtBalances();
-  $('welcomeScreen').classList.add('hidden');$('mainApp').classList.remove('app-locked');setWelcomeError('');renderAll();refreshFx(false);resetAutoLock();
+  $('welcomeScreen').classList.add('hidden');$('mainApp').classList.remove('app-locked');setWelcomeError('');
+  if(!restoreUiSessionState())renderAll();
+  refreshFx(false);resetAutoLock();
 }
-function lockApp(){clearTimeout(autoLockTimer);autoLockTimer=null;closeDetailModal();activeProfileId=null;KEY='';state=defaultState();initLockScreen();}
+function lockApp(){saveUiSessionState();clearTimeout(autoLockTimer);autoLockTimer=null;closeDetailModal();activeProfileId=null;KEY='';state=defaultState();initLockScreen();}
 function switchPortfolio(){lockApp();}
 function resetAutoLock(){if($('mainApp')?.classList.contains('app-locked'))return;clearTimeout(autoLockTimer);autoLockTimer=setTimeout(lockApp,AUTO_LOCK_MS);}
 async function changePin(){
@@ -1352,83 +1423,235 @@ function deleteCurrentProfile(){
   const profile=getActiveProfile();if(!profile)return;
   const answer=prompt(`현재 포트폴리오와 모든 데이터를 삭제합니다. 계속하려면 포트폴리오 이름 "${profile.name}"을 입력하세요.`);if(answer===null)return;
   if(answer.trim()!==profile.name)return alert('포트폴리오 이름이 일치하지 않아 취소했습니다.');
-  localStorage.removeItem(profileStateKey(profile.id));saveProfiles(getProfiles().filter(p=>p.id!==profile.id));alert('포트폴리오를 삭제했습니다.');lockApp();
+  clearUiSessionState(profile.id);localStorage.removeItem(profileStateKey(profile.id));saveProfiles(getProfiles().filter(p=>p.id!==profile.id));alert('포트폴리오를 삭제했습니다.');lockApp();
 }
 ['click','keydown','mousemove','touchstart'].forEach(eventName=>document.addEventListener(eventName,()=>resetAutoLock(),{passive:true}));
 function recordYear(record){const value=normalizeDate(record?.month||record?.date||record?.recordDate||'');const match=value.match(/^(\d{4})/);return match?match[1]:'';}
 function clearRuntimeSelections(){selectedPortfolioIds.clear();visiblePortfolioIds=[];editPortfolioId=editPropertyId=editTradeId=editDebtId=editPaymentId=null;selectedPropertyId=selectedDebtId=null;portfolioBatchDraft=[];tradeBatchDraft=[];activePortfolioOwner='전체';activePortfolioGroup='전체';activePortfolioCat='전체';}
 
 
-function currentCloudState(){
+function getCloudSyncMeta(){
+  try{return {...{dirty:false,localUpdatedAt:null,lastSyncedAt:null,cloudUpdatedAt:null},...JSON.parse(localStorage.getItem(CLOUD_SYNC_META_KEY)||'{}')};}
+  catch(e){return {dirty:false,localUpdatedAt:null,lastSyncedAt:null,cloudUpdatedAt:null};}
+}
+function setCloudSyncMeta(changes){
+  const next={...getCloudSyncMeta(),...changes};
+  localStorage.setItem(CLOUD_SYNC_META_KEY,JSON.stringify(next));
+  return next;
+}
+function setCloudSyncStatus(message,type='idle'){
+  const el=$('cloudSyncStatus');
+  if(!el)return;
+  el.textContent=message;
+  el.style.color=type==='error'?'#b42318':type==='ok'?'#067647':'';
+}
+function markLocalDirty(){
+  setCloudSyncMeta({dirty:true,localUpdatedAt:new Date().toISOString()});
+  setCloudSyncStatus(navigator.onLine?'클라우드 저장 대기 중':'오프라인 · 연결 후 자동 저장');
+}
+function currentCloudState(updatedAt){
   const profiles=getProfiles();
   const profileStates={};
   profiles.forEach(profile=>{
     try{profileStates[profile.id]=normalizeState({...defaultState(),...JSON.parse(localStorage.getItem(profileStateKey(profile.id))||'{}')});}
     catch(e){profileStates[profile.id]=defaultState();}
   });
-  return {version:1,updatedAt:new Date().toISOString(),profiles,profileStates};
+  const meta=getCloudSyncMeta();
+  return {version:2,updatedAt:updatedAt||meta.localUpdatedAt||new Date().toISOString(),profiles,profileStates};
 }
-function applyCloudState(data){
+function snapshotHasData(snapshot){
+  if(!snapshot||typeof snapshot!=='object')return false;
+  if(Array.isArray(snapshot.profiles)&&snapshot.profiles.length)return true;
+  return Object.values(snapshot.profileStates||{}).some(saved=>{
+    const x=saved||{};
+    return ['portfolio','properties','propertyTrades','debts','debtPayments'].some(k=>Array.isArray(x[k])&&x[k].length);
+  });
+}
+function mergeRows(remoteRows,localRows){
+  const map=new Map();
+  (remoteRows||[]).forEach(x=>map.set(String(x.id),x));
+  (localRows||[]).forEach(x=>map.set(String(x.id),x));
+  return [...map.values()];
+}
+function mergeLegacyProfileState(remoteSaved,localSaved){
+  const remote=normalizeState({...defaultState(),...(remoteSaved||{})});
+  const local=normalizeState({...defaultState(),...(localSaved||{})});
+  const categoryMap=new Map();
+  [...(remote.categories||[]),...(local.categories||[])].forEach(c=>categoryMap.set(`${c.group}|${c.name}`,c));
+  const ownerList=[...new Set([...(remote.owners||[]),...(local.owners||[])])];
+  const localBuyMeaningful=!!(local.buyTable?.account||Number(local.buyTable?.budget||0)||(local.buyTable?.rows||[]).some(r=>r.name||r.weight||r.price));
+  const localFxAt=Date.parse(local.fxAt||0)||0,remoteFxAt=Date.parse(remote.fxAt||0)||0;
+  return normalizeState({...defaultState(),...remote,...local,
+    owners:ownerList.length?ownerList:defaultState().owners,
+    categories:[...categoryMap.values()],
+    portfolio:mergeRows(remote.portfolio,local.portfolio),
+    properties:mergeRows(remote.properties,local.properties),
+    propertyTrades:mergeRows(remote.propertyTrades,local.propertyTrades),
+    debts:mergeRows(remote.debts,local.debts),
+    debtPayments:mergeRows(remote.debtPayments,local.debtPayments),
+    buyTable:localBuyMeaningful?local.buyTable:remote.buyTable,
+    fx:localFxAt>=remoteFxAt?local.fx:remote.fx,
+    fxAt:localFxAt>=remoteFxAt?local.fxAt:remote.fxAt,
+    logoData:local.logoData||remote.logoData||''
+  });
+}
+function mergeLegacySnapshots(localSnapshot,cloudSnapshot){
+  const local=localSnapshot||{profiles:[],profileStates:{}};
+  const cloud=cloudSnapshot||{profiles:[],profileStates:{}};
+  const profilesMap=new Map();
+  (cloud.profiles||[]).forEach(p=>profilesMap.set(p.id,p));
+  (local.profiles||[]).forEach(p=>profilesMap.set(p.id,{...(profilesMap.get(p.id)||{}),...p}));
+  const profiles=[...profilesMap.values()];
+  const profileStates={};
+  profiles.forEach(profile=>{
+    profileStates[profile.id]=mergeLegacyProfileState(cloud.profileStates?.[profile.id],local.profileStates?.[profile.id]);
+  });
+  return {version:2,updatedAt:new Date().toISOString(),profiles,profileStates};
+}
+function applyCloudState(data,cloudUpdatedAt){
   if(!data||typeof data!=='object')return false;
   const profiles=Array.isArray(data.profiles)?data.profiles:[];
   localStorage.setItem(PROFILE_REGISTRY_KEY,JSON.stringify(profiles));
   const profileStates=data.profileStates&&typeof data.profileStates==='object'?data.profileStates:{};
+  const allowedKeys=new Set(profiles.map(profile=>profileStateKey(profile.id)));
+  Object.keys(localStorage).filter(key=>key.startsWith(PROFILE_STATE_PREFIX)&&!allowedKeys.has(key)).forEach(key=>localStorage.removeItem(key));
   profiles.forEach(profile=>{
     const saved=profileStates[profile.id]||defaultState();
     localStorage.setItem(profileStateKey(profile.id),JSON.stringify(normalizeState({...defaultState(),...saved})));
   });
+  const syncedAt=new Date().toISOString();
+  setCloudSyncMeta({dirty:false,lastSyncedAt:syncedAt,cloudUpdatedAt:cloudUpdatedAt||data.updatedAt||syncedAt,localUpdatedAt:data.updatedAt||cloudUpdatedAt||syncedAt});
   return true;
 }
 async function loadCloudDataForUser(){
   cloudSyncReady=false;
   if(!supabaseClient||!currentUser?.id)return;
   setAuthMessage('클라우드 데이터를 불러오는 중입니다...','ok');
+  setCloudSyncStatus('클라우드 불러오는 중');
+  const localSnapshot=currentCloudState();
+  const meta=getCloudSyncMeta();
   try{
     const {data,error}=await supabaseClient.from('user_asset_data').select('data,updated_at').eq('user_id',currentUser.id).maybeSingle();
     if(error)throw error;
-    if(data?.data){
-      applyCloudState(data.data);
-      setAuthMessage('클라우드 데이터를 불러왔습니다.','ok');
-    }else{
-      const local=currentCloudState();
-      await supabaseClient.from('user_asset_data').insert({user_id:currentUser.id,data:local});
-      setAuthMessage('새 클라우드 저장공간을 만들었습니다.','ok');
-    }
     cloudSyncReady=true;
+    if(!data?.data){
+      if(snapshotHasData(localSnapshot)){
+        markLocalDirty();
+        await saveCloudDataNow({force:true});
+        setAuthMessage('이 기기의 포트폴리오를 클라우드에 저장했습니다.','ok');
+      }else{
+        await saveCloudDataNow({force:true});
+        setAuthMessage('새 클라우드 저장공간을 만들었습니다.','ok');
+      }
+      return;
+    }
+    const cloudUpdatedAt=data.updated_at||data.data.updatedAt||new Date().toISOString();
+    if(meta.dirty){
+      await saveCloudDataNow({force:true});
+      setAuthMessage('저장되지 않았던 이 기기의 변경사항을 클라우드에 반영했습니다.','ok');
+    }else if(!meta.lastSyncedAt&&snapshotHasData(localSnapshot)){
+      const merged=mergeLegacySnapshots(localSnapshot,data.data);
+      applyCloudState(merged,cloudUpdatedAt);
+      markLocalDirty();
+      await saveCloudDataNow({force:true});
+      setAuthMessage('기존 기기 데이터와 클라우드 데이터를 통합했습니다.','ok');
+    }else{
+      applyCloudState(data.data,cloudUpdatedAt);
+      setAuthMessage('최신 클라우드 데이터를 불러왔습니다.','ok');
+      setCloudSyncStatus(`클라우드 저장 완료 · ${new Date(cloudUpdatedAt).toLocaleString('ko-KR')}`,'ok');
+    }
   }catch(e){
     console.error('Cloud load failed',e);
-    setAuthMessage('클라우드 데이터 불러오기에 실패했습니다. 잠시 후 다시 시도해 주세요.','error');
     cloudSyncReady=true;
+    setAuthMessage('클라우드 연결에 실패해 이 기기의 저장 데이터를 사용합니다. 연결되면 자동으로 다시 저장합니다.','error');
+    setCloudSyncStatus('클라우드 연결 오류 · 자동 재시도','error');
+    if(snapshotHasData(localSnapshot))markLocalDirty();
+    scheduleCloudRetry();
   }
 }
 function queueCloudSave(){
-  if(!cloudSyncReady||!supabaseClient||!currentUser?.id)return;
+  if(!currentUser?.id)return;
+  markLocalDirty();
+  if(!cloudSyncReady||!supabaseClient)return;
   clearTimeout(cloudSyncTimer);
-  cloudSyncTimer=setTimeout(saveCloudDataNow,700);
+  cloudSyncTimer=setTimeout(()=>saveCloudDataNow(),350);
 }
-async function saveCloudDataNow(){
-  if(!cloudSyncReady||!supabaseClient||!currentUser?.id)return;
-  if(cloudSyncInProgress){cloudSavePending=true;return;}
+function scheduleCloudRetry(){
+  clearTimeout(cloudRetryTimer);
+  if(!currentUser?.id)return;
+  cloudRetryTimer=setTimeout(()=>{
+    const meta=getCloudSyncMeta();
+    if(meta.dirty)saveCloudDataNow();else pullCloudUpdates(false);
+  },10000);
+}
+async function saveCloudDataNow(options={}){
+  const force=!!options.force;
+  if((!cloudSyncReady&&!force)||!supabaseClient||!currentUser?.id)return false;
+  const meta=getCloudSyncMeta();
+  if(!force&&!meta.dirty)return true;
+  if(cloudSyncInProgress){cloudSavePending=true;return false;}
+  clearTimeout(cloudSyncTimer);cloudSyncTimer=null;
   cloudSyncInProgress=true;
+  setCloudSyncStatus('클라우드 저장 중');
   try{
-    const payload=currentCloudState();
-    const {data:existing,error:findError}=await supabaseClient.from('user_asset_data').select('id').eq('user_id',currentUser.id).maybeSingle();
-    if(findError)throw findError;
-    if(existing?.id){
-      const {error}=await supabaseClient.from('user_asset_data').update({data:payload,updated_at:new Date().toISOString()}).eq('id',existing.id);
-      if(error)throw error;
-    }else{
-      const {error}=await supabaseClient.from('user_asset_data').insert({user_id:currentUser.id,data:payload});
-      if(error)throw error;
-    }
+    const now=new Date().toISOString();
+    const payload=currentCloudState(now);
+    const {error}=await supabaseClient.from('user_asset_data').upsert({user_id:currentUser.id,data:payload,updated_at:now},{onConflict:'user_id'});
+    if(error)throw error;
+    setCloudSyncMeta({dirty:false,localUpdatedAt:now,lastSyncedAt:now,cloudUpdatedAt:now});
+    setCloudSyncStatus(`클라우드 저장 완료 · ${new Date(now).toLocaleString('ko-KR')}`,'ok');
+    clearTimeout(cloudRetryTimer);cloudRetryTimer=null;
+    return true;
   }catch(e){
     console.error('Cloud save failed',e);
+    setCloudSyncMeta({dirty:true});
+    setCloudSyncStatus('클라우드 저장 실패 · 자동 재시도','error');
+    scheduleCloudRetry();
+    return false;
   }finally{
     cloudSyncInProgress=false;
     if(cloudSavePending){cloudSavePending=false;queueCloudSave();}
   }
 }
-window.addEventListener('beforeunload',()=>{try{if(cloudSyncTimer)saveCloudDataNow();}catch(e){}});
+async function pullCloudUpdates(showAlert=false){
+  if(!cloudSyncReady||!supabaseClient||!currentUser?.id)return false;
+  if(getCloudSyncMeta().dirty)return saveCloudDataNow();
+  try{
+    const {data,error}=await supabaseClient.from('user_asset_data').select('data,updated_at').eq('user_id',currentUser.id).maybeSingle();
+    if(error)throw error;
+    if(!data?.data)return false;
+    const meta=getCloudSyncMeta();
+    const cloudUpdatedAt=data.updated_at||data.data.updatedAt||'';
+    const cloudTime=Date.parse(cloudUpdatedAt)||0,lastCloudTime=Date.parse(meta.cloudUpdatedAt||0)||0;
+    if(cloudTime>lastCloudTime){
+      const openProfileId=activeProfileId;
+      applyCloudState(data.data,cloudUpdatedAt);
+      if(openProfileId&&getProfiles().some(p=>p.id===openProfileId)){
+        activeProfileId=openProfileId;KEY=profileStateKey(openProfileId);state=loadProfileState(openProfileId);recalculateAllDebtBalances();renderAll();
+      }else if(openProfileId){lockApp();}
+      else renderProfileList();
+      if(showAlert)alert('다른 기기에서 저장한 최신 데이터를 불러왔습니다.');
+      return true;
+    }
+    setCloudSyncStatus(`클라우드 최신 상태 · ${new Date(meta.cloudUpdatedAt||Date.now()).toLocaleString('ko-KR')}`,'ok');
+    if(showAlert)alert('현재 데이터가 이미 최신 상태입니다.');
+    return true;
+  }catch(e){
+    console.error('Cloud refresh failed',e);
+    setCloudSyncStatus('클라우드 확인 실패 · 자동 재시도','error');
+    if(showAlert)alert('클라우드 동기화에 실패했습니다. 인터넷 연결과 Supabase 설정을 확인해 주세요.');
+    scheduleCloudRetry();
+    return false;
+  }
+}
+window.addEventListener('online',()=>{setCloudSyncStatus('인터넷 연결됨 · 동기화 확인 중');const meta=getCloudSyncMeta();meta.dirty?saveCloudDataNow({force:true}):pullCloudUpdates(false);});
+window.addEventListener('offline',()=>setCloudSyncStatus('오프라인 · 연결 후 자동 저장','error'));
+document.addEventListener('visibilitychange',()=>{
+  saveUiSessionState();
+  if(document.visibilityState==='hidden'){if(getCloudSyncMeta().dirty)saveCloudDataNow({force:true});}
+  else{clearTimeout(cloudResumeTimer);cloudResumeTimer=setTimeout(()=>{const meta=getCloudSyncMeta();meta.dirty?saveCloudDataNow({force:true}):pullCloudUpdates(false);},500);}
+});
+window.addEventListener('pagehide',()=>{saveUiSessionState();if(getCloudSyncMeta().dirty)saveCloudDataNow({force:true});});
 
 
 let authMode='login';
@@ -1486,20 +1709,27 @@ async function ensureUserProfile(){
 }
 
 async function startAuthedApp(user){
+  if(!user?.id)return;
+  const sameUser=appBooted&&currentUser?.id===user.id;
   currentUser=user;
-  await ensureUserProfile();
-  updateWelcomeAccount();
-  setAuthStorageNamespace(user.id);
-  await loadCloudDataForUser();
-  document.body.classList.remove('auth-pending');
-  $('authScreen')?.classList.add('hidden');
-  if(!appBooted){
-    init();
-    initLockScreen();
-    appBooted=true;
-  }else{
-    initLockScreen();
+  if(sameUser){
+    updateWelcomeAccount();
+    document.body.classList.remove('auth-pending');
+    $('authScreen')?.classList.add('hidden');
+    return;
   }
+  if(authStartInProgress)return;
+  authStartInProgress=true;
+  try{
+    await ensureUserProfile();
+    updateWelcomeAccount();
+    setAuthStorageNamespace(user.id);
+    await loadCloudDataForUser();
+    document.body.classList.remove('auth-pending');
+    $('authScreen')?.classList.add('hidden');
+    if(!appBooted){init();appBooted=true;}
+    initLockScreen();
+  }finally{authStartInProgress=false;}
 }
 async function bootAuth(){
   showAuthScreen();
@@ -1510,10 +1740,12 @@ async function bootAuth(){
   supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
   const {data:{session}}=await supabaseClient.auth.getSession();
   supabaseClient.auth.onAuthStateChange((event,session)=>{
-    if(session?.user)startAuthedApp(session.user);
-    else showAuthScreen();
+    if(session?.user){
+      if(event==='TOKEN_REFRESHED'||event==='USER_UPDATED'){currentUser=session.user;updateWelcomeAccount();return;}
+      startAuthedApp(session.user);
+    }else if(event==='SIGNED_OUT')showAuthScreen();
   });
-  if(session?.user)startAuthedApp(session.user);
+  if(session?.user)await startAuthedApp(session.user);
 }
 async function signUpWithEmail(){
   if(!supabaseClient)return bootAuth();
@@ -1562,7 +1794,11 @@ function init(){
   ['payPrincipal','payInterest'].forEach(id=>$(id).addEventListener('input',updatePaymentPreview));
   $('payMonth').addEventListener('change',updatePaymentPreview);
   $('importFile').addEventListener('change',importData);$('logoFile').addEventListener('change',handleLogoUpload);
-  attachMoneyFormatting();attachKoreanPreference();attachSmartDates();migrateLegacyProfile();setInterval(()=>{if(activeProfileId)refreshFx(false);},60*60*1000);
+  attachMoneyFormatting();attachKoreanPreference();attachSmartDates();migrateLegacyProfile();
+  document.addEventListener('input',scheduleUiSessionSave,true);document.addEventListener('change',scheduleUiSessionSave,true);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)saveUiSessionState();});
+  window.addEventListener('pagehide',saveUiSessionState);window.addEventListener('scroll',scheduleUiSessionSave,{passive:true});
+  setInterval(()=>{if(activeProfileId)refreshFx(false);},60*60*1000);
 }
 function openTab(id,btn){
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
@@ -1575,7 +1811,7 @@ function openTab(id,btn){
   if(id==='notices')loadNotices();
   if(id==='board')loadPosts(boardCurrentPage);
   if(id==='developer'&&!isDeveloper){alert('개발자 계정만 접근할 수 있습니다.');openPanelById('dashboard');return;}
-  attachSmartDates();
+  attachSmartDates();scheduleUiSessionSave();
 }
 function openPanelById(id){const btn=document.querySelector(`nav button[data-panel="${id}"]`);openTab(id,btn);}
 function renderAll(){
@@ -1790,7 +2026,7 @@ function resetAll(){
   const profile=getActiveProfile();if(!profile)return;
   const answer=prompt(`현재 포트폴리오 "${profile.name}"의 자산·부동산·부채·매수표·설정 데이터를 모두 삭제합니다. 계속하려면 "전체초기화"를 입력하세요.`);
   if(answer===null)return;if(answer.trim()!=='전체초기화')return alert('입력 문구가 일치하지 않아 취소했습니다.');
-  state=defaultState();clearRuntimeSelections();recalculateAllDebtBalances();
+  clearUiSessionState();state=defaultState();clearRuntimeSelections();recalculateAllDebtBalances();
   if($('yearSelect'))$('yearSelect').value=String(currentYear);if($('resetYearSelect'))$('resetYearSelect').value=String(currentYear);
   saveState();alert('현재 포트폴리오의 전체 데이터를 초기화했습니다. 포트폴리오 이름과 PIN은 유지됩니다.');
 }
@@ -1827,6 +2063,7 @@ function clearCurrentUserLocalData(userId){
   const statePrefix=`${PROFILE_STATE_BASE_PREFIX}${safe}_`;
   localStorage.removeItem(registryKey);
   Object.keys(localStorage).filter(key=>key.startsWith(statePrefix)).forEach(key=>localStorage.removeItem(key));
+  localStorage.removeItem(`${CLOUD_SYNC_META_BASE_KEY}_${safe}`);
   localStorage.removeItem('wooyoo_developer_mode');
 }
 async function deleteMyAccount(){
