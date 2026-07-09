@@ -999,7 +999,7 @@ nav button.active .nav-update-dot{display:none}
       <div class="box chartbox"><canvas id="mainPieChart"></canvas></div>
     </div>
     <div class="sectionhead" style="margin-top:18px"><div><h2 style="font-size:19px">보유 항목</h2><p>항목을 누르면 월별 원금·평가액과 누적 현황을 볼 수 있습니다.</p></div></div>
-    <p class="dashboard-visibility-note">각 자산의 ON/OFF를 변경하면 ON 상태인 항목만 대시보드 합계와 자산 비중에 반영됩니다.</p>
+    <p class="dashboard-visibility-note">각 자산·부채의 ON/OFF를 변경하면 ON 상태인 항목만 대시보드 합계와 비중에 반영됩니다.</p>
     <div id="dashboardItems" class="dashboard-groups"></div>
   </section>
 
@@ -2385,9 +2385,10 @@ function renderDebtDetail(){
 
 function getLatestPortfolioItems(cutoffMonth){const map={};state.portfolio.filter(x=>normalizeDate(x.month)<=cutoffMonth).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month))).forEach(x=>{map[`${x.owner}|${x.cat}`]=x;});return Object.values(map);}
 function getPropertyAssetAt(cutoffMonth){return state.properties.reduce((sum,p)=>{const prices=state.propertyTrades.filter(t=>t.propertyId===p.id&&normalizeDate(t.month)<=cutoffMonth).map(t=>t.price);return sum+(prices.length?Math.max(...prices):0);},0);}
-function getDebtAt(cutoffMonth){return state.debts.reduce((sum,d)=>{const execDate=d.start||'9999-99-99';if(execDate>cutoffMonth)return sum;return sum+balanceAt(d,cutoffMonth);},0);}
+function getDebtAt(cutoffMonth){return state.debts.reduce((sum,d)=>{const execDate=d.start||'9999-99-99';if(execDate>cutoffMonth||!isDashboardAssetOn(debtVisibilityKey(d)))return sum;return sum+balanceAt(d,cutoffMonth);},0);}
 function portfolioVisibilityKey(x){return `portfolio:${x.owner}|${x.cat}`;}
 function propertyVisibilityKey(p){return `property:${p.id}`;}
+function debtVisibilityKey(d){return `debt:${d.id}`;}
 function isDashboardAssetOn(key){return state.dashboardVisibility?.[key]!==false;}
 function toggleDashboardAsset(key,checked,event){
   event?.stopPropagation();
@@ -2444,9 +2445,9 @@ function renderDashboard(){
   });
 
   const debtRows=state.debts.filter(d=>(d.start||'9999-99-99')<=cutoff).map(d=>{
-    const balance=Number(balanceAt(d,cutoff)||0),last=latestPayment(d,cutoff),rateNow=Number(last?.rate??d.rate??0);
-    const card=`<article class="asset-card debt-holding" onclick="openDebtFromDashboard(${d.id})"><div class="topline"><span class="tag debt">부채</span><small>${escapeHtml(d.owner)}</small></div><h4>${escapeHtml(d.name)}</h4><p>${escapeHtml(d.bank||'금융기관 미입력')} · ${escapeHtml(d.type||'대출')}</p><strong>${money(balance)}</strong><div class="sub"><span>대출원금 ${money(d.loanAmount)}</span><span>${num(rateNow)}%</span></div></article>`;
-    return {card,value:balance};
+    const balance=Number(balanceAt(d,cutoff)||0),last=latestPayment(d,cutoff),rateNow=Number(last?.rate??d.rate??0),key=debtVisibilityKey(d),on=isDashboardAssetOn(key);
+    const card=`<article class="asset-card debt-holding ${on?'':'dashboard-off'}" onclick="openDebtFromDashboard(${d.id})"><div class="topline"><span class="tag debt">부채</span><div style="display:flex;align-items:center;gap:7px"><small>${escapeHtml(d.owner)}</small>${dashboardToggleHtml(key,on)}</div></div><h4>${escapeHtml(d.name)}</h4><p>${escapeHtml(d.bank||'금융기관 미입력')} · ${escapeHtml(d.type||'대출')}</p><strong>${money(balance)}</strong><div class="sub"><span>대출원금 ${money(d.loanAmount)}</span><span>${num(rateNow)}%</span></div></article>`;
+    return {card,value:balance,on};
   }).sort((a,b)=>b.value-a.value);
 
   const cash=grouped['현금자산']||[],finance=grouped['금융자산']||[];
@@ -2454,7 +2455,7 @@ function renderDashboard(){
     holdingGroupHtml('현금자산',cash.length,cash.reduce((s,x)=>s+x.value,0),cash.map(x=>x.card).join('')),
     holdingGroupHtml('금융자산',finance.length,finance.reduce((s,x)=>s+x.value,0),finance.map(x=>x.card).join('')),
     holdingGroupHtml('부동산',propertyRows.length,propertyRows.reduce((s,x)=>s+x.value,0),propertyRows.map(x=>x.card).join('')),
-    holdingGroupHtml('부채',debtRows.length,debtRows.reduce((s,x)=>s+x.value,0),debtRows.map(x=>x.card).join(''),'debt-group')
+    holdingGroupHtml('부채',debtRows.length,debtRows.filter(x=>x.on).reduce((s,x)=>s+x.value,0),debtRows.map(x=>x.card).join(''),'debt-group')
   ].filter(Boolean).join('');
   $('dashboardItems').innerHTML=sections||'<div class="box empty">표시할 자산·부채 기록이 없습니다.</div>';
   drawDashboardCharts(y);
@@ -2484,7 +2485,7 @@ function openAssetBreakdown(){
 }
 function openDebtBreakdown(){
   const y=$('yearSelect').value,cutoff=yearEnd(y);
-  const rows=state.debts.filter(d=>(d.start||'9999-99-99')<=cutoff).map(d=>{
+  const rows=state.debts.filter(d=>(d.start||'9999-99-99')<=cutoff&&isDashboardAssetOn(debtVisibilityKey(d))).map(d=>{
     const balance=Number(balanceAt(d,cutoff)||0),last=latestPayment(d,cutoff),rate=Number(last?.rate??d.rate??0),principal=Number(d.loanAmount||0);
     return {label:`${d.owner} · ${d.name}`,bank:d.bank||'금융기관 미입력',balance,principal,rate,repaid:Math.max(0,principal-balance)};
   }).filter(x=>x.balance>0).sort((a,b)=>b.balance-a.balance);
@@ -2503,7 +2504,7 @@ function openNetAssetBreakdown(){
   const assetRows=[];
   snap.items.forEach(x=>assetRows.push({label:`자산 · ${x.owner} · ${x.cat}`,value:toKRW(x.value,x.currency)}));
   snap.propertyItems.filter(x=>isDashboardAssetOn(x.key)&&x.value>0).forEach(x=>assetRows.push({label:`자산 · ${x.property.owner} · ${x.property.name}`,value:x.value}));
-  const debtRows=state.debts.filter(d=>(d.start||'9999-99-99')<=cutoff).map(d=>({label:`부채 · ${d.owner} · ${d.name}`,value:Number(balanceAt(d,cutoff)||0)})).filter(x=>x.value>0);
+  const debtRows=state.debts.filter(d=>(d.start||'9999-99-99')<=cutoff&&isDashboardAssetOn(debtVisibilityKey(d))).map(d=>({label:`부채 · ${d.owner} · ${d.name}`,value:Number(balanceAt(d,cutoff)||0)})).filter(x=>x.value>0);
   assetRows.sort((a,b)=>b.value-a.value);debtRows.sort((a,b)=>b.value-a.value);
   const assets=assetRows.reduce((s,x)=>s+x.value,0),debt=debtRows.reduce((s,x)=>s+x.value,0),net=assets-debt,debtRatio=assets?debt/assets*100:0;
   const list=[...assetRows.map(x=>({label:x.label,value:x.value,subHtml:`순자산 기여 +${assets?((x.value/assets)*100).toFixed(2):'0.00'}%`})),...debtRows.map(x=>({label:x.label,value:x.value,valueClass:'neg',subClass:'neg',subHtml:`순자산 차감 -${assets?((x.value/assets)*100).toFixed(2):'0.00'}%`}))];
