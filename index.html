@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WOOYOO ASSET V1.0.2</title>
-<meta name="application-name" content="WOOYOO ASSET V1.0.2">
-<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.0.2">
+<title>WOOYOO ASSET V1.0.3</title>
+<meta name="application-name" content="WOOYOO ASSET V1.0.3">
+<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.0.3">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -728,6 +728,19 @@ tbody tr:hover{background:#f4faf8}
 }
 
 
+
+
+/* WOOYOO ASSET v1.0.3 — member count and floating donation */
+.logout-stack{display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:center;height:64px!important;min-height:64px!important}
+.logout-stack .btn{height:42px!important;min-height:42px!important}
+.logout-stack small{display:block;text-align:center;color:#cbd5e1;font-size:9px;font-weight:800;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.floating-donation{position:fixed;right:18px;top:230px;z-index:25;width:210px;padding:13px 14px;border-radius:16px;background:linear-gradient(135deg,#fff7ed,#eef8f6);border:1px solid #f5d7aa;box-shadow:0 12px 28px rgba(15,23,42,.12);display:none}
+body:not(.auth-pending) #mainApp:not(.app-locked) .floating-donation{display:block}
+.floating-donation b{display:block;color:#172033;font-size:13px;margin-bottom:5px}
+.floating-donation span{display:block;color:#475569;font-size:11px;line-height:1.5}
+.floating-donation .btn{width:100%;min-height:34px;margin-top:9px;font-size:11px;padding:7px 9px}
+@media(max-width:1560px){.floating-donation{position:static;width:auto;margin:14px 0 0;display:block}body.auth-pending .floating-donation,#mainApp.app-locked .floating-donation{display:none}.app{padding-bottom:30px}}
+
 /* WOOYOO ASSET v1.0.2 — password toggle, home button and work-state retention */
 .password-field{position:relative;margin-top:6px}
 .password-field input{margin-top:0;padding-right:58px}
@@ -808,7 +821,7 @@ tbody tr:hover{background:#f4faf8}
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.0.2</span></h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.0.3</span></h1><p>Private family wealth dashboard</p></div>
     </div>
     <div class="welcome-account-bar">
       <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
@@ -878,11 +891,17 @@ tbody tr:hover{background:#f4faf8}
       <button class="btn secondary" onclick="refreshFx(true)">환율 새로고침</button>
       <button class="btn lock-btn" onclick="switchPortfolio()">포트폴리오 전환</button>
       <button class="btn lock-btn" onclick="lockApp()">잠금</button>
-      <button class="btn lock-btn" onclick="signOutUser()">로그아웃</button>
+      <div class="logout-stack"><button class="btn lock-btn" onclick="signOutUser()">로그아웃</button><small id="memberCountBadge">가입회원 -명</small></div>
     </div>
   </header>
 
   <nav id="nav"></nav>
+
+  <aside class="floating-donation" aria-label="개발자 후원">
+    <b>☕ 개발자 후원</b>
+    <span>카카오뱅크 3333-01-1766453<br>예금주 김X성</span>
+    <button class="btn secondary" type="button" onclick="copyDonationAccount()">계좌번호 복사</button>
+  </aside>
 
   <section id="dashboard" class="panel active">
     <div class="sectionhead"><div><h2>대시보드</h2><p>선택 연도의 최신 자산·부채 현황입니다.</p></div></div>
@@ -1016,7 +1035,7 @@ tbody tr:hover{background:#f4faf8}
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span id="noticeCountLabel" class="selection-count">0건</span><button id="noticeWriteToggleBtn" class="btn primary admin-only dev-tools" onclick="toggleNoticeForm(true)">＋ 공지 작성</button></div>
         </div>
         <div id="noticeWriteBox" class="notice-admin-form admin-only dev-tools" style="display:none">
-          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.0.2 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.0.2"></label></div>
+          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.0.3 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.0.3"></label></div>
           <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="noticeContent" class="ko-input wide-textarea" lang="ko" maxlength="10000" placeholder="업데이트 내용 또는 공지사항"></textarea></label>
           <div class="actions"><button class="btn soft" onclick="cancelNoticeEdit()">취소</button><button id="noticeSubmitBtn" class="btn primary" onclick="saveNotice()">공지 등록</button></div>
         </div>
@@ -1028,7 +1047,6 @@ tbody tr:hover{background:#f4faf8}
 
   <section id="board" class="panel">
     <div class="sectionhead"><div><h2>자유게시판</h2><p>고충, 오류 제보, 기능 개선 의견을 닉네임으로 자유롭게 작성할 수 있습니다.</p></div></div>
-    <div class="donation-banner"><div><b>☕ 개발자 후원</b><br><span>카카오뱅크 3333-01-1766453 · 예금주 김우성</span></div><button class="btn secondary" onclick="copyDonationAccount()">계좌번호 복사</button></div>
     <div class="community-page">
       <div class="box">
         <div class="community-toolbar"><div><h3>글쓰기 <span class="mini-pill">닉네임 노출</span></h3><p class="hint" style="margin:5px 0 0">삭제 PIN은 숫자 4자리로 설정합니다.</p></div></div>
@@ -1051,7 +1069,7 @@ tbody tr:hover{background:#f4faf8}
     <div class="sectionhead"><div><h2>개발자 모드</h2><p>개발자 계정 전용 관리 화면입니다.</p></div></div>
     <div class="developer-console">
       <div class="developer-status">
-        <div><span class="admin-badge">👑 DEVELOPER</span><strong style="display:block;margin-top:8px">kws5450@hanmail.net</strong><small>공지 관리, 게시판 관리, 회원 및 포트폴리오 데이터 조회 권한</small></div>
+        <div><span class="admin-badge">👑 DEVELOPER</span><strong style="display:block;margin-top:8px">kws5450@hanmail.net</strong><small>공지 관리, 게시판 관리, 회원 및 포트폴리오 데이터 조회·관리 권한</small></div>
         <label style="display:flex;align-items:center;gap:8px;font-weight:800"><input id="developerModeToggle" type="checkbox" style="width:20px;height:20px;margin:0" onchange="toggleDeveloperMode(this.checked)"> 개발자 모드 ON</label>
       </div>
       <div class="box">
@@ -1065,7 +1083,7 @@ tbody tr:hover{background:#f4faf8}
       </div>
       <div class="box dev-tools">
         <h3>회원 및 포트폴리오 데이터</h3>
-        <p class="danger-text">회원 자산 데이터는 민감정보입니다. 필요한 경우에만 확인하고 외부로 공유하지 마세요.</p>
+        <p class="danger-text">회원 자산 데이터는 민감정보입니다. 필요한 경우에만 확인하고 외부로 공유하지 마세요. 로그인 비밀번호와 PIN 원문은 보안상 저장·조회할 수 없으며, 개발자 화면에는 계정 정보와 포트폴리오 데이터 및 PIN 해시/설정 여부만 표시됩니다.</p>
         <div id="developerDataList" class="dev-data-list"><div class="empty">‘회원/포트폴리오 데이터 조회’를 눌러 확인하세요.</div></div>
       </div>
     </div>
@@ -1152,7 +1170,7 @@ tbody tr:hover{background:#f4faf8}
 </div>
 
 <script>
-const APP_VERSION='1.0.2';
+const APP_VERSION='1.0.3';
 const APP_TITLE='WOOYOO ASSET';
 const LEGACY_KEY='wooyoo_assets_v11';
 const LEGACY_OLD_KEY='wooyoo_assets_v10';
@@ -1165,6 +1183,8 @@ let PROFILE_STATE_PREFIX=PROFILE_STATE_BASE_PREFIX;
 let CLOUD_SYNC_META_KEY=CLOUD_SYNC_META_BASE_KEY;
 const AUTO_LOCK_MS=10*60*1000;
 const UI_SESSION_BASE_PREFIX='wooyoo_asset_ui_v101_';
+const LAST_ACTIVE_PROFILE_BASE_KEY='wooyoo_asset_last_active_profile_v103';
+let LAST_ACTIVE_PROFILE_KEY=LAST_ACTIVE_PROFILE_BASE_KEY;
 
 // Supabase 연결 정보: 아래 2개 값을 Supabase Project Settings > Data API 또는 API Keys 화면에서 복사해 넣으세요.
 const SUPABASE_URL='https://ptudkfhhwtgyrqsjhtzd.supabase.co';
@@ -1191,6 +1211,7 @@ let noticeEditingId=null,noticeCache=[];
 let noticeCurrentPage=1,noticePageSize=10,noticeTotalCount=0;
 let boardCurrentPage=1,boardPageSize=10,boardTotalCount=0;
 let cloudSyncReady=false,cloudSyncTimer=null,cloudSyncInProgress=false,cloudSavePending=false,cloudRetryTimer=null,cloudResumeTimer=null;
+let publicMemberCount=null;
 let uiSessionSaveTimer=null,authStartInProgress=false,passwordRecoveryMode=false;
 
 
@@ -1199,6 +1220,7 @@ function setAuthStorageNamespace(userId){
   PROFILE_REGISTRY_KEY=`${PROFILE_REGISTRY_BASE_KEY}_${safe}`;
   PROFILE_STATE_PREFIX=`${PROFILE_STATE_BASE_PREFIX}${safe}_`;
   CLOUD_SYNC_META_KEY=`${CLOUD_SYNC_META_BASE_KEY}_${safe}`;
+  LAST_ACTIVE_PROFILE_KEY=`${LAST_ACTIVE_PROFILE_BASE_KEY}_${safe}`;
 }
 
 function defaultState(){return {owners:['소유자 1','소유자 2'],categories:DEFAULT_CATEGORIES.map(c=>({...c})),portfolio:[],properties:[],propertyTrades:[],debts:[],debtPayments:[],buyTable:{account:'',budget:0,rows:[{id:Date.now()+1,name:'',weight:0,price:0},{id:Date.now()+2,name:'',weight:0,price:0}]},fx:0,fxAt:null,logoData:''};}
@@ -1250,6 +1272,9 @@ function togglePasswordVisibility(inputId,button){
   input.focus({preventScroll:true});
 }
 function uiSessionKey(){return currentUser?.id&&activeProfileId?`${UI_SESSION_BASE_PREFIX}${currentUser.id}_${activeProfileId}`:'';}
+function rememberActiveProfile(id=activeProfileId){if(!currentUser?.id||!id)return;try{sessionStorage.setItem(LAST_ACTIVE_PROFILE_KEY,String(id));}catch(e){}}
+function getRememberedActiveProfile(){try{return sessionStorage.getItem(LAST_ACTIVE_PROFILE_KEY)||'';}catch(e){return '';}}
+function forgetActiveProfile(){try{sessionStorage.removeItem(LAST_ACTIVE_PROFILE_KEY);}catch(e){}}
 function collectUiDraftValues(){const values={};UI_DRAFT_FIELD_IDS.forEach(id=>{const el=$(id);if(el&&el.type!=='password'&&el.type!=='file')values[id]=el.value;});return values;}
 function saveUiSessionState(){
   const key=uiSessionKey();if(!key||$('mainApp')?.classList.contains('app-locked'))return;
@@ -1390,7 +1415,7 @@ async function createNewPortfolio(){
   const profilesBefore=getProfiles();
   const profile={id,name,salt:bytesToBase64(salt),hash,createdAt:new Date().toISOString(),lastOpened:new Date().toISOString()};
   saveProfiles([...profilesBefore,profile]);
-  activeProfileId=id;KEY=profileStateKey(id);
+  activeProfileId=id;KEY=profileStateKey(id);rememberActiveProfile(id);
   let initial=defaultState();
   if(profilesBefore.length===0){
     const legacyRaw=localStorage.getItem(LEGACY_KEY)||localStorage.getItem(LEGACY_OLD_KEY);
@@ -1398,14 +1423,14 @@ async function createNewPortfolio(){
     [LEGACY_KEY,LEGACY_OLD_KEY,LEGACY_LOCK_KEY].forEach(k=>localStorage.removeItem(k));
   }
   state=initial;localStorage.setItem(KEY,JSON.stringify(state));queueCloudSave();
-  $('newProfileName').value='';$('setupPin').value='';$('setupPinConfirm').value='';openApp();
+  $('newProfileName').value='';$('setupPin').value='';$('setupPinConfirm').value='';openApp({forceDashboard:true});
 }
 function selectProfile(id){
   const profile=getProfiles().find(p=>p.id===id);if(!profile)return;
-  activeProfileId=id;KEY=profileStateKey(id);state=loadProfileState(id);clearRuntimeSelections();
+  activeProfileId=id;KEY=profileStateKey(id);rememberActiveProfile(id);state=loadProfileState(id);clearRuntimeSelections();
   $('profileListSection').style.display='none';$('createProfilePanel').classList.remove('show');$('unlockPinPanel').classList.add('show');$('selectedProfileName').textContent=profile.name;$('welcomeLogo').innerHTML=state.logoData?`<img src="${state.logoData}" alt="대표 이미지">`:'🐮';$('unlockPin').value='';syncPinDots();setWelcomeError('');setTimeout(()=>$('unlockPin')?.focus(),50);
 }
-function backToProfileList(){activeProfileId=null;KEY='';state=defaultState();$('unlockPinPanel').classList.remove('show');$('profileListSection').style.display='block';$('welcomeLogo').innerHTML='🐮';setWelcomeError('');renderProfileList();}
+function backToProfileList(){forgetActiveProfile();activeProfileId=null;KEY='';state=defaultState();$('unlockPinPanel').classList.remove('show');$('profileListSection').style.display='block';$('welcomeLogo').innerHTML='🐮';setWelcomeError('');renderProfileList();}
 async function deleteProfileFromList(id,event){
   event?.stopPropagation();
   const profile=getProfiles().find(p=>p.id===id);if(!profile)return;
@@ -1433,16 +1458,23 @@ async function unlockPortfolio(){
   const pin=$('unlockPin').value.trim();
   if(!/^\d{6}$/.test(pin))return setWelcomeError('6자리 PIN을 입력해 주세요.');
   if(!(await verifyPin(pin))){$('unlockPin').value='';syncPinDots();setWelcomeError('PIN이 올바르지 않습니다.');return;}
-  $('unlockPin').value='';syncPinDots();updateProfile(activeProfileId,{lastOpened:new Date().toISOString()});openApp();
+  $('unlockPin').value='';syncPinDots();updateProfile(activeProfileId,{lastOpened:new Date().toISOString()});openApp({forceDashboard:true});
 }
-function openApp(){
+function openApp(options={}){
+  const forceDashboard=!!options.forceDashboard;
   if(!activeProfileId)return initLockScreen();
+  rememberActiveProfile(activeProfileId);
   KEY=profileStateKey(activeProfileId);state=loadProfileState(activeProfileId);clearRuntimeSelections();recalculateAllDebtBalances();
   $('welcomeScreen').classList.add('hidden');$('mainApp').classList.remove('app-locked');setWelcomeError('');
-  if(!restoreUiSessionState())renderAll();
+  if(forceDashboard){
+    renderAll();
+    openPanelById('dashboard');
+    requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'auto'}));
+    saveUiSessionState();
+  }else if(!restoreUiSessionState())renderAll();
   refreshFx(false);resetAutoLock();
 }
-function lockApp(){saveUiSessionState();clearTimeout(autoLockTimer);autoLockTimer=null;closeDetailModal();activeProfileId=null;KEY='';state=defaultState();initLockScreen();}
+function lockApp(){saveUiSessionState();forgetActiveProfile();clearTimeout(autoLockTimer);autoLockTimer=null;closeDetailModal();activeProfileId=null;KEY='';state=defaultState();initLockScreen();}
 function switchPortfolio(){lockApp();}
 function isMainAppOpen(){return !!activeProfileId&&!$('mainApp')?.classList.contains('app-locked');}
 function hasOpenWorkForm(){return UI_FORM_IDS.some(id=>{const el=$(id);return el&&el.style.display!=='none';});}
@@ -1808,6 +1840,23 @@ function clearLegacyPersistentAuthStorage(){
   try{Object.keys(localStorage).filter(key=>/^sb-.*-auth-token$/.test(key)||key==='wooyoo_asset_auth_session').forEach(key=>localStorage.removeItem(key));}catch(e){}
 }
 
+
+async function loadPublicMemberCount(){
+  if(!supabaseClient||!currentUser?.id)return;
+  try{
+    const {data,error}=await supabaseClient.rpc('get_public_member_count');
+    if(error)throw error;
+    publicMemberCount=Number(data||0);
+  }catch(e){
+    console.warn('member count load failed',e);
+    publicMemberCount=null;
+  }
+  updateMemberCountBadge();
+}
+function updateMemberCountBadge(){
+  const el=$('memberCountBadge');
+  if(el)el.textContent=publicMemberCount===null?'가입회원 -명':`가입회원 ${publicMemberCount.toLocaleString('ko-KR')}명`;
+}
 function updateWelcomeAccount(){
   const label=currentNickname&&currentNickname!=='익명'?`${currentNickname} (${currentUser?.email||'-'})`:(currentUser?.email||'-');
   const el=$('welcomeAccountEmail');
@@ -1850,11 +1899,18 @@ async function startAuthedApp(user){
     await ensureUserProfile();
     updateWelcomeAccount();
     setAuthStorageNamespace(user.id);
+    loadPublicMemberCount();
     await loadCloudDataForUser();
     document.body.classList.remove('auth-pending');
     $('authScreen')?.classList.add('hidden');
     if(!appBooted){init();appBooted=true;}
-    initLockScreen();
+    const rememberedProfileId=getRememberedActiveProfile();
+    if(rememberedProfileId&&getProfiles().some(p=>p.id===rememberedProfileId)){
+      activeProfileId=rememberedProfileId;
+      KEY=profileStateKey(activeProfileId);
+      state=loadProfileState(activeProfileId);
+      openApp();
+    }else initLockScreen();
   }finally{authStartInProgress=false;}
 }
 async function bootAuth(){
@@ -1947,7 +2003,7 @@ function openTab(id,btn){
 function openPanelById(id){const btn=document.querySelector(`nav button[data-panel="${id}"]`);openTab(id,btn);}
 function renderAll(){
   ['rOwner','dOwner'].forEach(id=>optionList($(id),state.owners,$(id)?.value));
-  renderBrand();renderFx();renderPortfolioTabs();renderPortfolio();renderProperties();renderDebts();renderBuyTable();renderSettings();renderDashboard();updateWelcomeAccount();attachMoneyFormatting();attachKoreanPreference();attachSmartDates();
+  renderBrand();renderFx();renderPortfolioTabs();renderPortfolio();renderProperties();renderDebts();renderBuyTable();renderSettings();renderDashboard();updateWelcomeAccount();updateMemberCountBadge();attachMoneyFormatting();attachKoreanPreference();attachSmartDates();
 }
 function renderBrand(){const html=state.logoData?`<img src="${state.logoData}" alt="대표 이미지">`:'🐮';$('brandLogo').innerHTML=html;$('logoPreview').innerHTML=html;const profile=getActiveProfile();if($('activeProfileName'))$('activeProfileName').textContent=profile?.name||'-';}
 function renderFx(){$('fxText').textContent=state.fx?`₩${Number(state.fx).toLocaleString('ko-KR',{maximumFractionDigits:2})}`:'조회 실패';$('fxAt').textContent=state.fxAt?`갱신 ${new Date(state.fxAt).toLocaleString('ko-KR')}`:'저장된 환율 없음';}
@@ -2409,13 +2465,34 @@ async function loadDeveloperData(){
     supabaseClient.from('user_asset_data').select('*').order('updated_at',{ascending:false})
   ]);
   if(pe||ae){box.innerHTML=`<div class="empty">개발자 데이터 조회 실패<br>${escapeHtml((pe||ae).message)}</div>`;return;}
-  const allUsers=(profiles||[]).map(p=>{
+  const rows=profiles||[];
+  publicMemberCount=rows.length;updateMemberCountBadge();
+  const allUsers=rows.map(p=>{
     const asset=(assets||[]).find(a=>a.user_id===p.user_id);
+    const cloud=asset?.data||{};
+    const profileList=Array.isArray(cloud.profiles)?cloud.profiles:[];
+    const profileStates=cloud.profileStates&&typeof cloud.profileStates==='object'?cloud.profileStates:{};
+    const securityInfo=profileList.map(profile=>({
+      id:profile.id,
+      name:profile.name,
+      pinConfigured:!!profile.hash,
+      pinHash:profile.hash||'',
+      pinSalt:profile.salt||'',
+      createdAt:profile.createdAt||'',
+      lastOpened:profile.lastOpened||''
+    }));
+    const stateSummary=profileList.map(profile=>{
+      const st=profileStates[profile.id]||{};
+      return {profileId:profile.id,profileName:profile.name,portfolio:st.portfolio||[],properties:st.properties||[],propertyTrades:st.propertyTrades||[],debts:st.debts||[],debtPayments:st.debtPayments||[]};
+    });
+    const loginInfo={email:p.email||'',userId:p.user_id,createdAt:p.created_at||'',lastSignIn:p.last_sign_in_at||'',password:'조회 불가 - Supabase Auth는 비밀번호 원문을 저장하거나 반환하지 않습니다.'};
+    const devPayload={loginInfo,portfolioPinInfo:securityInfo,portfolioData:stateSummary,rawCloudData:cloud};
     const memberAction=String(p.user_id)===String(currentUser?.id)?'<span class="mini-pill">현재 개발자 계정</span>':`<button class="btn danger" type="button" onclick="expelMember('${String(p.user_id).replace(/'/g,'')}')">회원 추방</button>`;
-    return `<div class="dev-data-item"><b>${escapeHtml(p.nickname||'닉네임 없음')}</b><small> · ${escapeHtml(p.email||'이메일 없음')} · 가입 ${p.created_at?new Date(p.created_at).toLocaleString('ko-KR'):'-' }${asset?` · 최근 동기화 ${new Date(asset.updated_at).toLocaleString('ko-KR')}`:' · 저장 데이터 없음'}</small>${asset?`<pre>${escapeHtml(JSON.stringify(asset.data,null,2).slice(0,6000))}</pre>`:''}<div class="dev-member-actions">${memberAction}</div></div>`;
+    return `<div class="dev-data-item"><b>${escapeHtml(p.nickname||'닉네임 없음')}</b><small> · ${escapeHtml(p.email||'이메일 없음')} · 가입 ${p.created_at?new Date(p.created_at).toLocaleString('ko-KR'):'-' }${p.last_sign_in_at?` · 최근 로그인 ${new Date(p.last_sign_in_at).toLocaleString('ko-KR')}`:''}${asset?` · 최근 동기화 ${new Date(asset.updated_at).toLocaleString('ko-KR')}`:' · 저장 데이터 없음'}</small><div class="dev-member-actions">${memberAction}</div><pre>${escapeHtml(JSON.stringify(devPayload,null,2).slice(0,12000))}</pre></div>`;
   });
   box.innerHTML=allUsers.join('')||'<div class="empty">가입 회원이 없습니다.</div>';
 }
+
 
 bootAuth();
 </script>
