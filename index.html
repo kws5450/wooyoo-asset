@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WOOYOO ASSET V1.0.4</title>
-<meta name="application-name" content="WOOYOO ASSET V1.0.3">
-<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.0.3">
+<title>WOOYOO ASSET V1.0.5</title>
+<meta name="application-name" content="WOOYOO ASSET V1.0.5">
+<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.0.5">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -789,6 +789,33 @@ nav button.active .nav-update-dot{display:none}
 .purchase-price-hint{display:block;margin-top:5px;color:var(--muted);font-size:10.5px;line-height:1.45}
 @media(max-width:720px){.nav-update-dot{width:7px;height:7px;flex-basis:7px;margin-left:5px}.property-trade-table table{min-width:680px}}
 
+
+/* WOOYOO ASSET v1.0.5 — privacy, dashboard visibility and batch payments */
+.profile-stats strong{letter-spacing:.12em;user-select:none;pointer-events:none;color:#475569!important}
+.profile-stats div{overflow:hidden}
+.asset-card.dashboard-off{opacity:.56;background:#f8fafc}
+.asset-toggle{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 7px;border-radius:999px;
+  border:1px solid #d7dee7;background:#fff;color:#475569;font-size:10px;font-weight:850;
+  cursor:pointer;white-space:nowrap
+}
+.asset-toggle input{width:15px;height:15px;min-height:0;margin:0;accent-color:var(--pri)}
+.asset-toggle.is-on{background:#e7f6f3;border-color:#b8ddd7;color:#075e58}
+.asset-toggle.is-off{background:#f1f5f9;color:#64748b}
+.dashboard-visibility-note{margin:-4px 0 14px;color:var(--muted);font-size:11px;line-height:1.5}
+.payment-batch-grid{display:grid;grid-template-columns:1.05fr .75fr 1fr 1fr 1fr 1fr 1.2fr;gap:11px;align-items:start}
+.portfolio-table th:nth-child(9),.portfolio-table td:nth-child(9),
+.portfolio-table th:nth-child(10),.portfolio-table td:nth-child(10),
+.portfolio-table th:nth-child(11),.portfolio-table td:nth-child(11),
+.portfolio-table th:nth-child(12),.portfolio-table td:nth-child(12),
+.portfolio-table th:nth-child(13),.portfolio-table td:nth-child(13){text-align:right!important}
+.portfolio-table th:nth-child(5),.portfolio-table td:nth-child(5),
+.portfolio-table th:nth-child(6),.portfolio-table td:nth-child(6),
+.portfolio-table th:nth-child(7),.portfolio-table td:nth-child(7){text-align:left!important}
+.portfolio-table th:nth-child(14),.portfolio-table td:nth-child(14){text-align:center!important}
+@media(max-width:1000px){.payment-batch-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){.payment-batch-grid{grid-template-columns:1fr}.asset-toggle{font-size:9.5px}}
+
 </style>
 </head>
 <body class="auth-pending">
@@ -837,7 +864,7 @@ nav button.active .nav-update-dot{display:none}
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.0.3</span></h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.0.5</span></h1><p>Private family wealth dashboard</p></div>
     </div>
     <div class="welcome-account-bar">
       <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
@@ -932,6 +959,7 @@ nav button.active .nav-update-dot{display:none}
       <div class="box chartbox"><canvas id="mainPieChart"></canvas></div>
     </div>
     <div class="sectionhead" style="margin-top:18px"><div><h2 style="font-size:19px">보유 항목</h2><p>항목을 누르면 월별 원금·평가액과 누적 현황을 볼 수 있습니다.</p></div></div>
+    <p class="dashboard-visibility-note">각 자산의 ON/OFF를 변경하면 ON 상태인 항목만 대시보드 합계와 자산 비중에 반영됩니다.</p>
     <div id="dashboardItems" class="asset-summary"></div>
   </section>
 
@@ -959,13 +987,13 @@ nav button.active .nav-update-dot{display:none}
   </section>
 
   <section id="realestate" class="panel">
-    <div class="sectionhead"><div><h2>부동산</h2><p>내 매매가와 거래일별 실거래가를 기록하고, 가장 높은 실거래가를 자산 기준으로 사용합니다.</p></div><button class="btn primary" onclick="showPropertyForm()">＋ 자산</button></div>
+    <div class="sectionhead"><div><h2>부동산</h2><p>매매가와 거래일별 실거래가를 기록하고, 가장 높은 실거래가를 자산 기준으로 사용합니다.</p></div><button class="btn primary" onclick="showPropertyForm()">＋ 자산</button></div>
     <div id="propertyForm" class="form" style="display:none">
       <div class="formgrid">
         <label>소유자<select id="rOwner"></select></label>
         <label>부동산명<input id="rName" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 아파트"></label>
         <label>지역/주소<input id="rLocation" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 경기도 ○○시"></label>
-        <label>내 매매가<input id="rPurchasePrice" class="money-input" inputmode="numeric" placeholder="예: 588,000,000"><small class="purchase-price-hint">실거래가와 비교할 실제 매입금액을 입력하세요.</small></label>
+        <label>매매가<input id="rPurchasePrice" class="money-input" inputmode="numeric" placeholder="예: 588,000,000"><small class="purchase-price-hint">실거래가와 비교할 실제 매입금액을 입력하세요.</small></label>
         <label>메모<input id="rMemo" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 공동명의"></label>
       </div>
       <div class="actions"><button class="btn soft" onclick="hidePropertyForm()">취소</button><button class="btn primary" onclick="saveProperty()">저장</button></div>
@@ -1003,16 +1031,9 @@ nav button.active .nav-update-dot{display:none}
     <div id="debtDetail" class="subpanel" style="display:none">
       <div class="sectionhead"><div><h2 id="debtDetailTitle" style="font-size:19px">상환 기록</h2><p id="debtDetailMeta"></p></div><button class="btn primary" onclick="showPaymentForm()">＋ 상환</button></div>
       <div id="paymentForm" class="form" style="display:none">
-        <div class="formgrid">
-          <label>상환일<div class="date-combo"><input id="payMonth" class="smart-date" inputmode="numeric" maxlength="10" placeholder="YYYYMMDD" title="8자리 입력 또는 마우스 휠로 월 이동"><button type="button" class="date-picker-btn" onclick="openDatePicker(this)" aria-label="달력 열기">📅</button><input type="date" class="native-date-picker" onchange="applyDatePicker(this)"><small class="date-preview">예: 20251025 → 2025년 10월 25일</small></div></label>
-          <label>적용금리 (%)<input id="payRate" inputmode="decimal" placeholder="0.00"></label>
-          <label>상환원금<input id="payPrincipal" class="money-input" inputmode="numeric" placeholder="0"></label>
-          <label>상환이자<input id="payInterest" class="money-input" inputmode="numeric" placeholder="0"></label>
-          <label>원리금<input id="payTotal" class="money-input" inputmode="numeric" placeholder="자동 계산"></label>
-          <label>대출잔액<input id="payBalance" class="money-input readonly-money" inputmode="numeric" placeholder="자동 계산" readonly><small class="field-note">대출금액에서 누적 상환원금을 차감해 자동 계산합니다.</small></label>
-          <label>메모<input id="payMemo" class="ko-input" lang="ko" autocomplete="off" placeholder="예: 중도상환 포함"></label>
-        </div>
-        <div class="actions"><button class="btn soft" onclick="hidePaymentForm()">취소</button><button class="btn primary" onclick="savePayment()">저장</button></div>
+        <div class="sectionhead"><div><h2 style="font-size:18px">대출상환 입력</h2><p>상환내역을 한 번에 여러 건 추가할 수 있습니다.</p></div><button class="btn secondary" onclick="addPaymentBatchRow()">＋ 행</button></div>
+        <div id="paymentBatchRows" class="batch-list"></div>
+        <div class="actions"><button class="btn soft" onclick="hidePaymentForm()">취소</button><button class="btn primary" onclick="savePaymentBatch()">저장</button></div>
       </div>
       <div class="grid2"><div class="box chartbox"><canvas id="debtChart"></canvas></div><div class="box" id="debtStats"></div></div>
       <div class="tablewrap" style="margin-top:16px"><table><thead><tr><th>상환일</th><th>적용금리</th><th>상환원금</th><th>상환이자</th><th>원리금</th><th>잔액</th><th>전월대비</th><th>실행일 대비</th><th>관리</th></tr></thead><tbody id="paymentRows"></tbody></table></div>
@@ -1044,7 +1065,7 @@ nav button.active .nav-update-dot{display:none}
 
 
   <section id="notices" class="panel">
-    <div class="sectionhead"><div><h2>공지사항</h2><p>가입회원에게 전달하는 버전 업데이트와 운영 안내입니다.</p></div></div>
+    <div class="sectionhead"><div><h2>공지사항</h2><p>조회 연도와 관계없이 모든 가입회원에게 전달되는 버전 업데이트와 운영 안내입니다.</p></div></div>
     <div class="community-page">
       <div class="box">
         <div class="community-toolbar">
@@ -1052,7 +1073,7 @@ nav button.active .nav-update-dot{display:none}
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span id="noticeCountLabel" class="selection-count">0건</span><button id="noticeWriteToggleBtn" class="btn primary admin-only dev-tools" onclick="toggleNoticeForm(true)">＋ 공지 작성</button></div>
         </div>
         <div id="noticeWriteBox" class="notice-admin-form admin-only dev-tools" style="display:none">
-          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.0.4 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.0.4"></label></div>
+          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.0.5 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.0.5"></label></div>
           <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="noticeContent" class="ko-input wide-textarea" lang="ko" maxlength="10000" placeholder="업데이트 내용 또는 공지사항"></textarea></label>
           <div class="actions"><button class="btn soft" onclick="cancelNoticeEdit()">취소</button><button id="noticeSubmitBtn" class="btn primary" onclick="saveNotice()">공지 등록</button></div>
         </div>
@@ -1063,7 +1084,7 @@ nav button.active .nav-update-dot{display:none}
   </section>
 
   <section id="board" class="panel">
-    <div class="sectionhead"><div><h2>자유게시판</h2><p>고충, 오류 제보, 기능 개선 의견을 닉네임으로 자유롭게 작성할 수 있습니다.</p></div></div>
+    <div class="sectionhead"><div><h2>자유게시판</h2><p>조회 연도와 관계없이 고충, 오류 제보, 기능 개선 의견을 닉네임으로 자유롭게 작성할 수 있습니다.</p></div></div>
     <div class="community-page">
       <div class="box">
         <div class="community-toolbar"><div><h3>글쓰기 <span class="mini-pill">닉네임 노출</span></h3><p class="hint" style="margin:5px 0 0">삭제 PIN은 숫자 4자리로 설정합니다.</p></div></div>
@@ -1187,7 +1208,7 @@ nav button.active .nav-update-dot{display:none}
 </div>
 
 <script>
-const APP_VERSION='1.0.4';
+const APP_VERSION='1.0.5';
 const APP_TITLE='WOOYOO ASSET';
 const LEGACY_KEY='wooyoo_assets_v11';
 const LEGACY_OLD_KEY='wooyoo_assets_v10';
@@ -1220,7 +1241,7 @@ let activePortfolioOwner='전체',activePortfolioGroup='전체',activePortfolioC
 let selectedPortfolioIds=new Set(),visiblePortfolioIds=[];
 let editPortfolioId=null,editPropertyId=null,editTradeId=null,editDebtId=null,editPaymentId=null;
 let selectedPropertyId=null,selectedDebtId=null;
-let portfolioBatchDraft=[],tradeBatchDraft=[];
+let portfolioBatchDraft=[],tradeBatchDraft=[],paymentBatchDraft=[];
 let mainLineChart,mainPieChart,detailChart,propertyChart,debtChart;
 let autoLockTimer=null;
 let supabaseClient=null,currentUser=null,appBooted=false;
@@ -1242,7 +1263,7 @@ function setAuthStorageNamespace(userId){
   LAST_ACTIVE_PROFILE_KEY=`${LAST_ACTIVE_PROFILE_BASE_KEY}_${safe}`;
 }
 
-function defaultState(){return {owners:['소유자 1','소유자 2'],categories:DEFAULT_CATEGORIES.map(c=>({...c})),portfolio:[],properties:[],propertyTrades:[],debts:[],debtPayments:[],buyTable:{account:'',budget:0,rows:[{id:Date.now()+1,name:'',weight:0,price:0},{id:Date.now()+2,name:'',weight:0,price:0}]},fx:0,fxAt:null,logoData:''};}
+function defaultState(){return {owners:['소유자 1','소유자 2'],categories:DEFAULT_CATEGORIES.map(c=>({...c})),portfolio:[],properties:[],propertyTrades:[],debts:[],debtPayments:[],dashboardVisibility:{},buyTable:{account:'',budget:0,rows:[{id:Date.now()+1,name:'',weight:0,price:0},{id:Date.now()+2,name:'',weight:0,price:0}]},fx:0,fxAt:null,logoData:''};}
 function profileStateKey(id){return `${PROFILE_STATE_PREFIX}${id}`;}
 function getProfiles(){try{const value=JSON.parse(localStorage.getItem(PROFILE_REGISTRY_KEY)||'[]');return Array.isArray(value)?value:[];}catch(e){return [];}}
 function saveProfiles(profiles){localStorage.setItem(PROFILE_REGISTRY_KEY,JSON.stringify(profiles));queueCloudSave();}
@@ -1270,6 +1291,7 @@ function normalizeState(s){
   s.properties=(s.properties||[]).map(x=>({...x,purchasePrice:Number(x.purchasePrice||x.buyPrice||0)}));
   s.propertyTrades=(s.propertyTrades||[]).map(x=>({...x,month:normalizeDate(x.month||x.date)}));
   s.debtPayments=(s.debtPayments||[]).map(x=>({...x,month:normalizeDate(x.month||x.date)}));
+  s.dashboardVisibility=s.dashboardVisibility&&typeof s.dashboardVisibility==='object'?s.dashboardVisibility:{};
   s.buyTable=s.buyTable&&typeof s.buyTable==='object'?s.buyTable:{account:'',budget:0,rows:[]};
   s.buyTable.rows=Array.isArray(s.buyTable.rows)&&s.buyTable.rows.length?s.buyTable.rows:[{id:Date.now()+1,name:'',weight:0,price:0},{id:Date.now()+2,name:'',weight:0,price:0}];
   s.buyTable.rows=s.buyTable.rows.map((r,i)=>({id:r.id||Date.now()+i+1,name:r.name||'',weight:Number(r.weight||0),price:Number(r.price||0)}));
@@ -1283,7 +1305,7 @@ function applyAppVersion(){
   document.querySelectorAll('meta[name="application-name"],meta[name="apple-mobile-web-app-title"]').forEach(el=>el.setAttribute('content',fullTitle));
 }
 applyAppVersion();
-const UI_DRAFT_FIELD_IDS=['rOwner','rName','rLocation','rPurchasePrice','rMemo','dOwner','dType','dName','dBank','dStart','dEnd','dLoanAmount','dRate','dMemo','payMonth','payRate','payPrincipal','payInterest','payTotal','payBalance','payMemo','buyAccount','buyBudget','noticeTitle','noticeVersion','noticeContent','postTitle','postContent','profileNickname','currentProfileName','newOwner','newCategoryGroup','newCategory','resetYearSelect'];
+const UI_DRAFT_FIELD_IDS=['rOwner','rName','rLocation','rPurchasePrice','rMemo','dOwner','dType','dName','dBank','dStart','dEnd','dLoanAmount','dRate','dMemo','buyAccount','buyBudget','noticeTitle','noticeVersion','noticeContent','postTitle','postContent','profileNickname','currentProfileName','newOwner','newCategoryGroup','newCategory','resetYearSelect'];
 const UI_FORM_IDS=['portfolioBatchForm','propertyForm','tradeBatchForm','debtForm','paymentForm','noticeWriteBox'];
 function togglePasswordVisibility(inputId,button){
   const input=$(inputId);if(!input)return;
@@ -1300,7 +1322,7 @@ function saveUiSessionState(){
   const key=uiSessionKey();if(!key||$('mainApp')?.classList.contains('app-locked'))return;
   const activePanel=document.querySelector('.panel.active')?.id||'dashboard';
   const forms={};UI_FORM_IDS.forEach(id=>{const el=$(id);if(el)forms[id]=el.style.display!=='none';});
-  const data={activePanel,year:$('yearSelect')?.value||String(currentYear),scrollY:window.scrollY||0,selectedPropertyId,selectedDebtId,activePortfolioOwner,activePortfolioGroup,activePortfolioCat,editPortfolioId,editPropertyId,editTradeId,editDebtId,editPaymentId,portfolioBatchDraft,tradeBatchDraft,forms,values:collectUiDraftValues(),savedAt:Date.now()};
+  const data={activePanel,year:$('yearSelect')?.value||String(currentYear),scrollY:window.scrollY||0,selectedPropertyId,selectedDebtId,activePortfolioOwner,activePortfolioGroup,activePortfolioCat,editPortfolioId,editPropertyId,editTradeId,editDebtId,editPaymentId,portfolioBatchDraft,tradeBatchDraft,paymentBatchDraft,forms,values:collectUiDraftValues(),savedAt:Date.now()};
   try{sessionStorage.setItem(key,JSON.stringify(data));}catch(e){console.warn('UI session save failed',e);}
 }
 function scheduleUiSessionSave(){clearTimeout(uiSessionSaveTimer);uiSessionSaveTimer=setTimeout(saveUiSessionState,180);}
@@ -1311,15 +1333,16 @@ function restoreUiSessionState(){
   selectedPropertyId=saved.selectedPropertyId??null;selectedDebtId=saved.selectedDebtId??null;
   activePortfolioOwner=saved.activePortfolioOwner||'전체';activePortfolioGroup=saved.activePortfolioGroup||'전체';activePortfolioCat=saved.activePortfolioCat||'전체';
   editPortfolioId=saved.editPortfolioId??null;editPropertyId=saved.editPropertyId??null;editTradeId=saved.editTradeId??null;editDebtId=saved.editDebtId??null;editPaymentId=saved.editPaymentId??null;
-  portfolioBatchDraft=Array.isArray(saved.portfolioBatchDraft)?saved.portfolioBatchDraft:[];tradeBatchDraft=Array.isArray(saved.tradeBatchDraft)?saved.tradeBatchDraft:[];
+  portfolioBatchDraft=Array.isArray(saved.portfolioBatchDraft)?saved.portfolioBatchDraft:[];tradeBatchDraft=Array.isArray(saved.tradeBatchDraft)?saved.tradeBatchDraft:[];paymentBatchDraft=Array.isArray(saved.paymentBatchDraft)?saved.paymentBatchDraft:[];
   renderAll();
   const panelId=$(saved.activePanel)?saved.activePanel:'dashboard';openPanelById(panelId);
   if(saved.forms){UI_FORM_IDS.forEach(id=>{const el=$(id);if(el)el.style.display=saved.forms[id]?'block':'none';});}
   if(portfolioBatchDraft.length&&saved.forms?.portfolioBatchForm)renderPortfolioBatchRows();
   if(tradeBatchDraft.length&&saved.forms?.tradeBatchForm)renderTradeBatchRows();
+  if(paymentBatchDraft.length&&saved.forms?.paymentForm)renderPaymentBatchRows();
   if(saved.values){Object.entries(saved.values).forEach(([id,value])=>{const el=$(id);if(el&&el.type!=='password'&&el.type!=='file')el.value=value??'';});}
   attachMoneyFormatting();attachKoreanPreference();attachSmartDates();
-  if($('payMonth'))updateDatePreview($('payMonth'));if($('dStart'))updateDatePreview($('dStart'));if($('dEnd'))updateDatePreview($('dEnd'));
+  if($('dStart'))updateDatePreview($('dStart'));if($('dEnd'))updateDatePreview($('dEnd'));
   requestAnimationFrame(()=>window.scrollTo({top:Number(saved.scrollY||0),behavior:'auto'}));
   return true;
 }
@@ -1374,8 +1397,27 @@ const categoryGroup=cat=>state.categories.find(c=>c.name===cat)?.group||'금융�
 function trend(value){const n=Number(value||0);return `<span class="${n>0?'pos':n<0?'neg':'neutral'}">${n>0?'▲':n<0?'▼':'－'} ${pct(n)}</span>`}
 function escapeHtml(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
 function saveState(){if(KEY)localStorage.setItem(KEY,JSON.stringify(state));queueCloudSave();renderAll();}
-function setMoneyInput(el,value){el.value=value===undefined||value===null||value===''?'':Number(value).toLocaleString('ko-KR',{maximumFractionDigits:2});}
-function bindMoneyInput(el){if(!el||el.dataset.bound)return;el.dataset.bound='1';el.addEventListener('input',()=>{const raw=el.value.replace(/,/g,'');if(!/^[-]?\d*(\.\d*)?$/.test(raw))return;const parts=raw.split('.');parts[0]=parts[0]?Number(parts[0]).toLocaleString('en-US'):'';el.value=parts.join('.');try{el.setSelectionRange(el.value.length,el.value.length)}catch(e){}});}
+function formatMoneyInputValue(value){
+  const raw=String(value??'').replace(/,/g,'').trim();
+  if(!raw)return '';
+  const negative=raw.startsWith('-');
+  const unsigned=negative?raw.slice(1):raw;
+  const dot=unsigned.indexOf('.');
+  const integerRaw=(dot>=0?unsigned.slice(0,dot):unsigned).replace(/\D/g,'');
+  const decimalRaw=(dot>=0?unsigned.slice(dot+1):'').replace(/\D/g,'').slice(0,2);
+  const integer=(integerRaw||'0').replace(/^0+(?=\d)/,'').replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  return `${negative?'-':''}${integer}${dot>=0?'.'+decimalRaw:''}`;
+}
+function setMoneyInput(el,value){if(el)el.value=value===undefined||value===null||value===''?'':formatMoneyInputValue(value);}
+function bindMoneyInput(el){
+  if(!el||el.dataset.bound)return;el.dataset.bound='1';
+  el.value=formatMoneyInputValue(el.value);
+  el.addEventListener('input',()=>{
+    const formatted=formatMoneyInputValue(el.value);
+    if(el.value!==formatted)el.value=formatted;
+    try{el.setSelectionRange(el.value.length,el.value.length)}catch(e){}
+  });
+}
 function attachMoneyFormatting(){document.querySelectorAll('.money-input').forEach(bindMoneyInput);}
 function attachKoreanPreference(){document.querySelectorAll('.ko-input').forEach(el=>{el.lang='ko';el.setAttribute('autocapitalize','off');el.setAttribute('spellcheck','false');});}
 function optionList(el,arr,selected){if(!el)return;el.innerHTML=arr.map(x=>`<option value="${escapeHtml(x)}" ${x===selected?'selected':''}>${escapeHtml(x)}</option>`).join('');}
@@ -1437,7 +1479,7 @@ function renderProfileList(){
   const profiles=getProfiles();
   const list=$('profileList');
   if(!list)return;
-  list.innerHTML=profiles.length?profiles.map(p=>{const stats=profilePreviewStats(p.id);return `<div class="profile-row"><button class="profile-card" onclick='selectProfile(${JSON.stringify(p.id)})'><span class="profile-avatar">${profileLogoHtml(p.id)}</span><span class="profile-card-main"><b>${escapeHtml(p.name)}</b><small>${p.lastOpened?`최근 열람 ${new Date(p.lastOpened).toLocaleString('ko-KR')}`:`개설 ${new Date(p.createdAt).toLocaleDateString('ko-KR')}`}</small></span><span class="profile-stats"><div><small>총자산</small><strong>${money(stats.totalAssets)}</strong></div><div><small>순자산</small><strong>${money(stats.net)}</strong></div></span><span class="profile-open">PIN 입력 후 열기 ›</span></button><button class="profile-delete" onclick='deleteProfileFromList(${JSON.stringify(p.id)},event)' aria-label="${escapeHtml(p.name)} 삭제">포트폴리오 삭제</button></div>`}).join(''):'<div class="profile-empty">등록된 포트폴리오가 없습니다.<br>새 포트폴리오를 개설해 시작하세요.</div>';
+  list.innerHTML=profiles.length?profiles.map(p=>{return `<div class="profile-row"><button class="profile-card" onclick='selectProfile(${JSON.stringify(p.id)})'><span class="profile-avatar">${profileLogoHtml(p.id)}</span><span class="profile-card-main"><b>${escapeHtml(p.name)}</b><small>${p.lastOpened?`최근 열람 ${new Date(p.lastOpened).toLocaleString('ko-KR')}`:`개설 ${new Date(p.createdAt).toLocaleDateString('ko-KR')}`}</small></span><span class="profile-stats"><div><small>총자산</small><strong aria-label="금액 숨김">••••••••</strong></div><div><small>순자산</small><strong aria-label="금액 숨김">••••••••</strong></div></span><span class="profile-open">PIN 입력 후 열기 ›</span></button><button class="profile-delete" onclick='deleteProfileFromList(${JSON.stringify(p.id)},event)' aria-label="${escapeHtml(p.name)} 삭제">포트폴리오 삭제</button></div>`}).join(''):'<div class="profile-empty">등록된 포트폴리오가 없습니다.<br>새 포트폴리오를 개설해 시작하세요.</div>';
   $('welcomeCopy').textContent=profiles.length?'사용할 포트폴리오를 선택하거나 새 포트폴리오를 개설하세요.':'포트폴리오 이름과 6자리 PIN을 설정해 시작하세요.';
 }
 function initLockScreen(){
@@ -1557,7 +1599,7 @@ function deleteCurrentProfile(){
 }
 ['click','keydown','mousemove','touchstart'].forEach(eventName=>document.addEventListener(eventName,()=>resetAutoLock(),{passive:true}));
 function recordYear(record){const value=normalizeDate(record?.month||record?.date||record?.recordDate||'');const match=value.match(/^(\d{4})/);return match?match[1]:'';}
-function clearRuntimeSelections(){selectedPortfolioIds.clear();visiblePortfolioIds=[];editPortfolioId=editPropertyId=editTradeId=editDebtId=editPaymentId=null;selectedPropertyId=selectedDebtId=null;portfolioBatchDraft=[];tradeBatchDraft=[];activePortfolioOwner='전체';activePortfolioGroup='전체';activePortfolioCat='전체';}
+function clearRuntimeSelections(){selectedPortfolioIds.clear();visiblePortfolioIds=[];editPortfolioId=editPropertyId=editTradeId=editDebtId=editPaymentId=null;selectedPropertyId=selectedDebtId=null;portfolioBatchDraft=[];tradeBatchDraft=[];paymentBatchDraft=[];activePortfolioOwner='전체';activePortfolioGroup='전체';activePortfolioCat='전체';}
 
 
 function getCloudSyncMeta(){
@@ -2025,19 +2067,23 @@ function init(){
     $('yearSelect').insertAdjacentHTML('beforeend',`<option value="${y}" ${y===currentYear?'selected':''}>${y}년</option>`);
     $('resetYearSelect').insertAdjacentHTML('beforeend',`<option value="${y}" ${y===currentYear?'selected':''}>${y}년</option>`);
   }
-  $('yearSelect').addEventListener('change',renderAll);
+  $('yearSelect').addEventListener('change',handleYearChange);
   $('resetYearSelect').addEventListener('change',renderSettings);
   const navs=[['dashboard','대시보드'],['portfolio','포트폴리오'],['realestate','부동산'],['debt','부채'],['buytable','매수표'],['notices','공지사항'],['board','자유게시판'],['settings','설정']];
   if(isDeveloper)navs.push(['developer','개발자']);
   $('nav').innerHTML=navs.map((x,i)=>`<button data-panel="${x[0]}" data-label="${x[1]}" class="${i===0?'active':''}" onclick="openTab('${x[0]}',this)"><span>${x[1]}</span><span class="nav-update-dot" aria-hidden="true"></span></button>`).join('');
-  ['payPrincipal','payInterest'].forEach(id=>$(id).addEventListener('input',updatePaymentPreview));
-  $('payMonth').addEventListener('change',updatePaymentPreview);
   $('importFile').addEventListener('change',importData);$('logoFile').addEventListener('change',handleLogoUpload);
   attachMoneyFormatting();attachKoreanPreference();attachSmartDates();migrateLegacyProfile();
   document.addEventListener('input',scheduleUiSessionSave,true);document.addEventListener('change',scheduleUiSessionSave,true);
   window.addEventListener('scroll',scheduleUiSessionSave,{passive:true});
   setInterval(()=>{if(activeProfileId)refreshFx(false);},60*60*1000);
   window.addEventListener('focus',checkRemoteTabNotifications);window.addEventListener('online',checkRemoteTabNotifications);
+}
+function handleYearChange(){
+  openPanelById('dashboard');
+  renderAll();
+  window.scrollTo({top:$('dashboard')?.offsetTop?Math.max(0,$('dashboard').offsetTop-90):0,behavior:'smooth'});
+  scheduleUiSessionSave();
 }
 function openTab(id,btn){
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
@@ -2075,7 +2121,7 @@ function renderPortfolioTabs(){
   if(activePortfolioCat!=='전체'&&!cats.includes(activePortfolioCat))activePortfolioCat='전체';
   $('portfolioCatTabs').innerHTML=['전체',...cats].map(x=>`<button class="${x===activePortfolioCat?'active':''}" onclick='setCatFilter(${JSON.stringify(x)})'>${escapeHtml(x)}</button>`).join('');
 }
-function blankPortfolioRow(){return {draftId:uniqueId(),month:selectedYearDate(),owner:activePortfolioOwner==='전체'?(state.owners[0]||''):activePortfolioOwner,cat:activePortfolioCat==='전체'?(state.categories.find(c=>activePortfolioGroup==='전체'||c.group===activePortfolioGroup)?.name||state.categories[0]?.name||''):activePortfolioCat,institution:'',accountNumber:'',currency:'KRW',principal:'',value:'',memo:''};}
+function blankPortfolioRow(){return {draftId:uniqueId(),month:'',owner:activePortfolioOwner==='전체'?(state.owners[0]||''):activePortfolioOwner,cat:activePortfolioCat==='전체'?(state.categories.find(c=>activePortfolioGroup==='전체'||c.group===activePortfolioGroup)?.name||state.categories[0]?.name||''):activePortfolioCat,institution:'',accountNumber:'',currency:'KRW',principal:'',value:'',memo:''};}
 function showPortfolioBatchForm(){editPortfolioId=null;portfolioBatchDraft=[blankPortfolioRow()];$('portfolioBatchForm').style.display='block';renderPortfolioBatchRows();window.scrollTo({top:$('portfolioBatchForm').offsetTop-120,behavior:'smooth'});}
 function hidePortfolioBatchForm(){$('portfolioBatchForm').style.display='none';portfolioBatchDraft=[];editPortfolioId=null;}
 function addPortfolioBatchRow(prefill){portfolioBatchDraft.push(prefill||blankPortfolioRow());renderPortfolioBatchRows();}
@@ -2128,7 +2174,7 @@ function hidePropertyForm(){$('propertyForm').style.display='none';editPropertyI
 function saveProperty(){if(!$('rName').value.trim())return alert('부동산명을 입력해 주세요.');const obj={id:editPropertyId||uniqueId(),owner:$('rOwner').value,name:$('rName').value.trim(),location:$('rLocation').value.trim(),purchasePrice:parseMoney($('rPurchasePrice').value),memo:$('rMemo').value.trim()};const i=state.properties.findIndex(x=>x.id===editPropertyId);i>=0?state.properties[i]=obj:state.properties.push(obj);hidePropertyForm();selectedPropertyId=obj.id;saveState();}
 function editProperty(id){const x=state.properties.find(v=>v.id===id);editPropertyId=id;$('propertyForm').style.display='block';$('rOwner').value=x.owner;$('rName').value=x.name;$('rLocation').value=x.location||'';setMoneyInput($('rPurchasePrice'),x.purchasePrice||'');$('rMemo').value=x.memo||'';}
 function renderProperties(){
-  const y=Number($('yearSelect').value);$('propertyCards').innerHTML=state.properties.map(x=>{const trades=state.propertyTrades.filter(t=>t.propertyId===x.id&&Number(t.month.slice(0,4))<=y);const high=trades.length?Math.max(...trades.map(t=>t.price)):0;const latest=trades.slice().sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0];return `<article class="property-card ${selectedPropertyId===x.id?'selected':''}" onclick="selectProperty(${x.id})"><header><div><h3>${escapeHtml(x.name)}</h3><div class="muted">${escapeHtml(x.owner)} · ${escapeHtml(x.location||'지역 미입력')}</div></div><span class="tag">부동산</span></header><div class="meta"><div><small>내 매매가</small><b>${x.purchasePrice?money(x.purchasePrice):'미입력'}</b></div><div><small>자산 기준 최고 실거래가</small><b>${money(high)}</b></div><div><small>최근 기록</small><b>${latest?dateLabel(latest.month):'-'}</b></div></div><div class="card-actions"><button onclick="event.stopPropagation();editProperty(${x.id})">기본정보 수정</button><button onclick="event.stopPropagation();deleteProperty(${x.id})">삭제</button></div></article>`}).join('')||'<div class="box empty" style="grid-column:1/-1">등록된 부동산이 없습니다.</div>';
+  const y=Number($('yearSelect').value);$('propertyCards').innerHTML=state.properties.map(x=>{const trades=state.propertyTrades.filter(t=>t.propertyId===x.id&&Number(t.month.slice(0,4))<=y);const high=trades.length?Math.max(...trades.map(t=>t.price)):0;const latest=trades.slice().sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0];return `<article class="property-card ${selectedPropertyId===x.id?'selected':''}" onclick="selectProperty(${x.id})"><header><div><h3>${escapeHtml(x.name)}</h3><div class="muted">${escapeHtml(x.owner)} · ${escapeHtml(x.location||'지역 미입력')}</div></div><span class="tag">부동산</span></header><div class="meta"><div><small>매매가</small><b>${x.purchasePrice?money(x.purchasePrice):'미입력'}</b></div><div><small>자산 기준 최고 실거래가</small><b>${money(high)}</b></div><div><small>최근 기록</small><b>${latest?dateLabel(latest.month):'-'}</b></div></div><div class="card-actions"><button onclick="event.stopPropagation();editProperty(${x.id})">기본정보 수정</button><button onclick="event.stopPropagation();deleteProperty(${x.id})">삭제</button></div></article>`}).join('')||'<div class="box empty" style="grid-column:1/-1">등록된 부동산이 없습니다.</div>';
   if(selectedPropertyId&&!state.properties.some(x=>x.id===selectedPropertyId))selectedPropertyId=null;if(selectedPropertyId)renderPropertyDetail();else $('propertyDetail').style.display='none';
 }
 function selectProperty(id){selectedPropertyId=id;renderProperties();$('propertyDetail').scrollIntoView({behavior:'smooth',block:'start'});}
@@ -2143,12 +2189,23 @@ function renderTradeBatchRows(){$('tradeBatchRows').innerHTML=tradeBatchDraft.ma
 function saveTradeBatch(){if(!selectedPropertyId)return;if(tradeBatchDraft.some(r=>!r.month))return alert('거래일을 선택해 주세요.');const records=tradeBatchDraft.map(r=>({id:r.recordId||uniqueId(),propertyId:selectedPropertyId,month:r.month,price:parseMoney(r.price),memo:String(r.memo||'').trim()}));if(editTradeId){const idx=state.propertyTrades.findIndex(x=>x.id===editTradeId);if(idx>=0)state.propertyTrades[idx]=records[0];}else state.propertyTrades.push(...records);hideTradeBatchForm();saveState();}
 function editTrade(id){const x=state.propertyTrades.find(v=>v.id===id);if(!x)return;editTradeId=id;tradeBatchDraft=[{draftId:uniqueId(),recordId:id,month:x.month,price:x.price,memo:x.memo||''}];$('tradeBatchForm').style.display='block';renderTradeBatchRows();}
 function renderPropertyDetail(){
-  const prop=state.properties.find(x=>x.id===selectedPropertyId);if(!prop)return;$('propertyDetail').style.display='block';$('propertyDetailTitle').textContent=`${prop.name} 실거래가`;$('propertyDetailMeta').textContent=`${prop.owner} · ${prop.location||'지역 미입력'}`;
-  const y=$('yearSelect').value;const arr=state.propertyTrades.filter(x=>x.propertyId===prop.id&&normalizeDate(x.month).startsWith(y)).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));const allUntil=state.propertyTrades.filter(x=>x.propertyId===prop.id&&normalizeDate(x.month)<=yearEnd(y));const high=allUntil.length?Math.max(...allUntil.map(x=>x.price)):0;const latest=allUntil.slice().sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0];const purchase=Number(prop.purchasePrice||0);
-  $('propertyStats').innerHTML=`<h3>부동산 현황</h3><div class="meta"><div><small>내 매매가</small><b>${purchase?money(purchase):'미입력'}</b></div><div><small>최고 실거래가</small><b>${money(high)}</b></div><div><small>최근 실거래가</small><b>${money(latest?.price||0)}</b></div><div><small>선택 연도 기록 수</small><b>${arr.length}건</b></div></div><p class="hint" style="margin-top:14px">그래프의 점선은 입력한 내 매매가이며, 표의 등락률은 매매가를 기준으로 계산합니다.</p>`;
+  const prop=state.properties.find(x=>x.id===selectedPropertyId);if(!prop)return;
+  $('propertyDetail').style.display='block';
+  $('propertyDetailTitle').textContent=`${prop.name} 실거래가`;
+  $('propertyDetailMeta').textContent=`${prop.owner} · ${prop.location||'지역 미입력'}`;
+  const y=$('yearSelect').value;
+  const arr=state.propertyTrades.filter(x=>x.propertyId===prop.id&&normalizeDate(x.month).startsWith(y)).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));
+  const allUntil=state.propertyTrades.filter(x=>x.propertyId===prop.id&&normalizeDate(x.month)<=yearEnd(y));
+  const high=allUntil.length?Math.max(...allUntil.map(x=>x.price)):0;
+  const latest=allUntil.slice().sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0];
+  const purchase=Number(prop.purchasePrice||0);
+  const highDiff=purchase?((high-purchase)/purchase*100):null;
+  $('propertyStats').innerHTML=`<h3>부동산 현황</h3><div class="meta"><div><small>매매가</small><b>${purchase?money(purchase):'미입력'}</b></div><div><small>최고 실거래가</small><b>${money(high)}</b></div><div><small>매매가 대비 최고가</small><b>${highDiff===null?'<span class="neutral">매매가 미입력</span>':trend(highDiff)}</b></div><div><small>최근 실거래가</small><b>${money(latest?.price||0)}</b></div><div><small>선택 연도 기록 수</small><b>${arr.length}건</b></div></div><p class="hint" style="margin-top:14px">그래프의 점선은 입력한 매매가이며, 표의 등락률은 매매가를 기준으로 계산합니다.</p>`;
   $('tradeRows').innerHTML=arr.slice().reverse().map(x=>{const diff=purchase?((x.price-purchase)/purchase*100):null;return `<tr><td>${dateLabel(x.month)}</td><td>${money(x.price)}</td><td>${diff===null?'<span class="neutral">매매가 미입력</span>':trend(diff)}</td><td>${escapeHtml(x.memo||'')}</td><td><button onclick="editTrade(${x.id})">수정</button> <button onclick="removeRecord('propertyTrades',${x.id})">삭제</button></td></tr>`}).join('')||'<tr><td colspan="5" class="empty">선택 연도의 실거래가 기록이 없습니다.</td></tr>';
-  const labels=arr.length?arr.map(x=>shortDateLabel(x.month)):['매매가'];const datasets=[{label:'실거래가',data:arr.length?arr.map(x=>x.price):[null],tension:.25,fill:false}];if(purchase)datasets.push({label:'내 매매가',data:labels.map(()=>purchase),borderDash:[7,5],pointRadius:0,pointHoverRadius:0,tension:0,fill:false});
-  drawChart('propertyChart','propertyChart','line',{labels,datasets},chartOptions('거래일별 실거래가 · 내 매매가'));
+  const labels=arr.length?arr.map(x=>shortDateLabel(x.month)):['매매가'];
+  const datasets=[{label:'실거래가',data:arr.length?arr.map(x=>x.price):[null],tension:.25,fill:false}];
+  if(purchase)datasets.push({label:'매매가',data:labels.map(()=>purchase),borderDash:[7,5],pointRadius:0,pointHoverRadius:0,tension:0,fill:false});
+  drawChart('propertyChart','propertyChart','line',{labels,datasets},chartOptions('거래일별 실거래가 · 매매가'));
 }
 
 function showDebtForm(){editDebtId=null;$('debtForm').style.display='block';['dName','dBank','dStart','dEnd','dRate','dMemo'].forEach(id=>$(id).value='');setMoneyInput($('dLoanAmount'),'');attachSmartDates();updateDatePreview($('dStart'));updateDatePreview($('dEnd'));}
@@ -2168,11 +2225,116 @@ function renderDebts(){
 }
 function selectDebt(id){selectedDebtId=id;renderDebts();$('debtDetail').scrollIntoView({behavior:'smooth',block:'start'});}
 function deleteDebt(id){if(!confirm('대출과 모든 상환 기록을 삭제할까요?'))return;state.debts=state.debts.filter(x=>x.id!==id);state.debtPayments=state.debtPayments.filter(x=>x.debtId!==id);if(selectedDebtId===id)selectedDebtId=null;saveState();}
-function showPaymentForm(){editPaymentId=null;$('paymentForm').style.display='block';$('payMonth').value=selectedYearDate();attachSmartDates();updateDatePreview($('payMonth'));['payRate','payMemo'].forEach(id=>$(id).value='');['payPrincipal','payInterest','payTotal','payBalance'].forEach(id=>setMoneyInput($(id),''));const debt=state.debts.find(x=>x.id===selectedDebtId);if(debt)$('payRate').value=latestPayment(debt,$('payMonth').value)?.rate??debt.rate;updatePaymentPreview();}
-function hidePaymentForm(){$('paymentForm').style.display='none';editPaymentId=null;}
-function updatePaymentPreview(){const principal=parseMoney($('payPrincipal').value),interest=parseMoney($('payInterest').value);setMoneyInput($('payTotal'),principal+interest);const debt=state.debts.find(x=>x.id===selectedDebtId),date=$('payMonth').value;if(!debt||!date){setMoneyInput($('payBalance'),'');return;}const before=balanceBeforePayment(debt,date,editPaymentId);setMoneyInput($('payBalance'),Math.max(0,before-principal));}
-function savePayment(){if(!selectedDebtId||!$('payMonth').value)return alert('상환일을 선택해 주세요.');const debt=state.debts.find(x=>x.id===selectedDebtId),principal=parseMoney($('payPrincipal').value),interest=parseMoney($('payInterest').value);if(principal<0||interest<0)return alert('상환금액은 0 이상으로 입력해 주세요.');const available=balanceBeforePayment(debt,$('payMonth').value,editPaymentId);if(principal>available&&!confirm('상환원금이 해당 시점의 대출잔액보다 큽니다. 잔액을 0원으로 처리할까요?'))return;const obj={id:editPaymentId||uniqueId(),debtId:selectedDebtId,month:parseSmartDate($('payMonth').value),rate:parseMoney($('payRate').value),principal:Math.min(principal,available),interest,total:Math.min(principal,available)+interest,balance:0,memo:$('payMemo').value.trim()};const i=state.debtPayments.findIndex(x=>x.id===editPaymentId);i>=0?state.debtPayments[i]=obj:state.debtPayments.push(obj);recalculateDebtBalances(selectedDebtId);hidePaymentForm();saveState();}
-function editPayment(id){const x=state.debtPayments.find(v=>v.id===id);editPaymentId=id;$('paymentForm').style.display='block';$('payMonth').value=normalizeDate(x.month);updateDatePreview($('payMonth'));$('payRate').value=x.rate;setMoneyInput($('payPrincipal'),x.principal);setMoneyInput($('payInterest'),x.interest);setMoneyInput($('payTotal'),x.total);$('payMemo').value=x.memo||'';updatePaymentPreview();}
+function blankPaymentRow(prefill={}){
+  const debt=state.debts.find(x=>x.id===selectedDebtId);
+  return {
+    draftId:uniqueId(),
+    recordId:prefill.recordId||null,
+    month:prefill.month||selectedYearDate(),
+    rate:prefill.rate??(debt?latestPayment(debt,selectedYearDate())?.rate??debt.rate:''),
+    principal:prefill.principal??'',
+    interest:prefill.interest??'',
+    memo:prefill.memo||''
+  };
+}
+function showPaymentForm(){
+  if(!selectedDebtId)return;
+  editPaymentId=null;
+  paymentBatchDraft=[blankPaymentRow()];
+  $('paymentForm').style.display='block';
+  renderPaymentBatchRows();
+}
+function hidePaymentForm(){
+  $('paymentForm').style.display='none';
+  paymentBatchDraft=[];
+  editPaymentId=null;
+}
+function addPaymentBatchRow(prefill){
+  paymentBatchDraft.push(blankPaymentRow(prefill||{}));
+  renderPaymentBatchRows();
+}
+function removePaymentBatchRow(id){
+  if(paymentBatchDraft.length===1)return alert('입력줄은 최소 1개가 필요합니다.');
+  paymentBatchDraft=paymentBatchDraft.filter(x=>x.draftId!==id);
+  renderPaymentBatchRows();
+}
+function updatePaymentDraft(id,field,value){
+  const row=paymentBatchDraft.find(x=>x.draftId===id);if(!row)return;
+  row[field]=value;
+  if(['month','principal','interest'].includes(field))refreshPaymentBatchComputed();
+  scheduleUiSessionSave();
+}
+function paymentDraftComputations(){
+  const debt=state.debts.find(x=>x.id===selectedDebtId);
+  const result={};
+  if(!debt)return result;
+  const draftIds=new Set(paymentBatchDraft.map(r=>r.recordId).filter(Boolean));
+  const combined=[
+    ...state.debtPayments.filter(p=>p.debtId===debt.id&&!draftIds.has(p.id)).map(p=>({kind:'saved',month:normalizeDate(p.month),id:p.id,principal:Number(p.principal||0)})),
+    ...paymentBatchDraft.map(r=>({kind:'draft',month:normalizeDate(r.month),id:r.draftId,principal:parseMoney(r.principal),interest:parseMoney(r.interest)}))
+  ].sort((a,b)=>String(a.month||'9999-99-99').localeCompare(String(b.month||'9999-99-99'))||Number(a.id)-Number(b.id));
+  let balance=Number(debt.loanAmount||0);
+  combined.forEach(item=>{
+    if(item.kind==='saved'){balance=Math.max(0,balance-item.principal);return;}
+    const allowed=Math.min(Math.max(0,item.principal),balance);
+    balance=Math.max(0,balance-allowed);
+    result[item.id]={principal:allowed,interest:Math.max(0,item.interest||0),total:allowed+Math.max(0,item.interest||0),balance,over:item.principal>allowed};
+  });
+  return result;
+}
+function refreshPaymentBatchComputed(){
+  const computed=paymentDraftComputations();
+  paymentBatchDraft.forEach(r=>{
+    const c=computed[r.draftId]||{total:0,balance:0,over:false};
+    const total=$(`payTotal-${r.draftId}`),balance=$(`payBalance-${r.draftId}`),warn=$(`payWarn-${r.draftId}`);
+    if(total)setMoneyInput(total,c.total);
+    if(balance)setMoneyInput(balance,c.balance);
+    if(warn){warn.textContent=c.over?'상환원금이 해당 시점 잔액을 초과해 저장 시 잔액 범위로 조정됩니다.':'';warn.style.display=c.over?'block':'none';}
+  });
+}
+function renderPaymentBatchRows(){
+  const box=$('paymentBatchRows');if(!box)return;
+  const computed=paymentDraftComputations();
+  box.innerHTML=paymentBatchDraft.map((r,i)=>{
+    const c=computed[r.draftId]||{total:0,balance:0,over:false};
+    return `<div class="batch-row"><div class="batch-head"><b>상환 ${i+1}</b><button class="row-remove" onclick="removePaymentBatchRow(${r.draftId})">삭제</button></div><div class="payment-batch-grid">
+      <label>상환일<div class="date-combo"><input class="smart-date" inputmode="numeric" maxlength="10" value="${escapeHtml(normalizeDate(r.month))}" placeholder="YYYYMMDD" title="8자리 입력 또는 마우스 휠로 월 이동" onchange="updatePaymentDraft(${r.draftId},'month',parseSmartDate(this.value))"><button type="button" class="date-picker-btn" onclick="openDatePicker(this)" aria-label="달력 열기">📅</button><input type="date" class="native-date-picker" onchange="applyDatePicker(this)"><small class="date-preview"></small></div></label>
+      <label>적용금리 (%)<input inputmode="decimal" value="${escapeHtml(r.rate)}" placeholder="0.00" oninput="updatePaymentDraft(${r.draftId},'rate',this.value)"></label>
+      <label>상환원금<input class="money-input" inputmode="numeric" value="${escapeHtml(formatMoneyInputValue(r.principal))}" placeholder="0" oninput="updatePaymentDraft(${r.draftId},'principal',this.value)"></label>
+      <label>상환이자<input class="money-input" inputmode="numeric" value="${escapeHtml(formatMoneyInputValue(r.interest))}" placeholder="0" oninput="updatePaymentDraft(${r.draftId},'interest',this.value)"></label>
+      <label>원리금<input id="payTotal-${r.draftId}" class="money-input readonly-money" inputmode="numeric" value="${escapeHtml(formatMoneyInputValue(c.total))}" readonly></label>
+      <label>대출잔액<input id="payBalance-${r.draftId}" class="money-input readonly-money" inputmode="numeric" value="${escapeHtml(formatMoneyInputValue(c.balance))}" readonly><small id="payWarn-${r.draftId}" class="field-note" style="display:${c.over?'block':'none'};color:#b42318">${c.over?'상환원금이 해당 시점 잔액을 초과해 저장 시 잔액 범위로 조정됩니다.':''}</small></label>
+      <label>메모<input class="ko-input" lang="ko" autocomplete="off" value="${escapeHtml(r.memo)}" placeholder="예: 중도상환 포함" oninput="updatePaymentDraft(${r.draftId},'memo',this.value)"></label>
+    </div></div>`;
+  }).join('');
+  attachMoneyFormatting();attachKoreanPreference();attachSmartDates();refreshPaymentBatchComputed();
+}
+function savePaymentBatch(){
+  if(!selectedDebtId||!paymentBatchDraft.length)return;
+  if(paymentBatchDraft.some(r=>!parseSmartDate(r.month)))return alert('모든 상환일을 입력해 주세요.');
+  const debt=state.debts.find(x=>x.id===selectedDebtId);if(!debt)return;
+  const computed=paymentDraftComputations();
+  const records=paymentBatchDraft.map(r=>{
+    const c=computed[r.draftId]||{principal:0,interest:0,total:0,balance:0};
+    return {id:r.recordId||uniqueId(),debtId:selectedDebtId,month:parseSmartDate(r.month),rate:parseMoney(r.rate),principal:c.principal,interest:c.interest,total:c.total,balance:c.balance,memo:String(r.memo||'').trim()};
+  });
+  const over=paymentBatchDraft.some(r=>computed[r.draftId]?.over);
+  if(over&&!confirm('일부 상환원금이 해당 시점의 대출잔액보다 큽니다. 잔액 범위로 자동 조정해 저장할까요?'))return;
+  if(editPaymentId){
+    const idx=state.debtPayments.findIndex(x=>x.id===editPaymentId);
+    if(idx>=0)state.debtPayments[idx]=records[0];
+  }else state.debtPayments.push(...records);
+  recalculateDebtBalances(selectedDebtId);
+  hidePaymentForm();saveState();
+}
+function savePayment(){return savePaymentBatch();}
+function editPayment(id){
+  const x=state.debtPayments.find(v=>v.id===id);if(!x)return;
+  editPaymentId=id;
+  paymentBatchDraft=[blankPaymentRow({recordId:id,month:x.month,rate:x.rate,principal:x.principal,interest:x.interest,memo:x.memo||''})];
+  $('paymentForm').style.display='block';
+  renderPaymentBatchRows();
+}
 function renderDebtDetail(){
   const debt=state.debts.find(x=>x.id===selectedDebtId);if(!debt)return;$('debtDetail').style.display='block';$('debtDetailTitle').textContent=`${debt.name} 상환 기록`;$('debtDetailMeta').textContent=`${debt.owner} · ${debt.bank||'금융기관 미입력'} · ${debt.start||'-'} ~ ${debt.end||'-'}`;
   const y=$('yearSelect').value;const arr=state.debtPayments.filter(x=>x.debtId===debt.id&&normalizeDate(x.month).startsWith(y)).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));const all=state.debtPayments.filter(x=>x.debtId===debt.id&&normalizeDate(x.month)<=yearEnd(y)).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));const latest=all[all.length-1],balance=latest?.balance??debt.loanAmount,totalPrincipal=all.reduce((s,x)=>s+x.principal,0),totalInterest=all.reduce((s,x)=>s+x.interest,0),totalPayment=all.reduce((s,x)=>s+x.total,0),execChange=debt.loanAmount?(balance-debt.loanAmount)/debt.loanAmount*100:0;
@@ -2184,17 +2346,57 @@ function renderDebtDetail(){
 function getLatestPortfolioItems(cutoffMonth){const map={};state.portfolio.filter(x=>normalizeDate(x.month)<=cutoffMonth).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month))).forEach(x=>{map[`${x.owner}|${x.cat}`]=x;});return Object.values(map);}
 function getPropertyAssetAt(cutoffMonth){return state.properties.reduce((sum,p)=>{const prices=state.propertyTrades.filter(t=>t.propertyId===p.id&&normalizeDate(t.month)<=cutoffMonth).map(t=>t.price);return sum+(prices.length?Math.max(...prices):0);},0);}
 function getDebtAt(cutoffMonth){return state.debts.reduce((sum,d)=>{const execDate=d.start||'9999-99-99';if(execDate>cutoffMonth)return sum;return sum+balanceAt(d,cutoffMonth);},0);}
-function dashboardSnapshot(cutoffMonth){const items=getLatestPortfolioItems(cutoffMonth);const portfolioValue=items.reduce((s,x)=>s+toKRW(x.value,x.currency),0);const portfolioPrincipal=items.reduce((s,x)=>s+toKRW(x.principal,x.currency),0);const property=getPropertyAssetAt(cutoffMonth);const debt=getDebtAt(cutoffMonth);return {items,portfolioValue,portfolioPrincipal,property,debt,assets:portfolioValue+property,net:portfolioValue+property-debt};}
+function portfolioVisibilityKey(x){return `portfolio:${x.owner}|${x.cat}`;}
+function propertyVisibilityKey(p){return `property:${p.id}`;}
+function isDashboardAssetOn(key){return state.dashboardVisibility?.[key]!==false;}
+function toggleDashboardAsset(key,checked,event){
+  event?.stopPropagation();
+  state.dashboardVisibility=state.dashboardVisibility||{};
+  state.dashboardVisibility[key]=!!checked;
+  persistState();
+  renderDashboard();
+  refreshLocalTabNotifications();
+}
+function dashboardSnapshot(cutoffMonth){
+  const allItems=getLatestPortfolioItems(cutoffMonth);
+  const items=allItems.filter(x=>isDashboardAssetOn(portfolioVisibilityKey(x)));
+  const portfolioValue=items.reduce((s,x)=>s+toKRW(x.value,x.currency),0);
+  const portfolioPrincipal=items.reduce((s,x)=>s+toKRW(x.principal,x.currency),0);
+  const propertyItems=state.properties.map(p=>{
+    const prices=state.propertyTrades.filter(t=>t.propertyId===p.id&&normalizeDate(t.month)<=cutoffMonth).map(t=>Number(t.price||0));
+    return {property:p,value:prices.length?Math.max(...prices):0,key:propertyVisibilityKey(p)};
+  });
+  const property=propertyItems.filter(x=>isDashboardAssetOn(x.key)).reduce((sum,x)=>sum+x.value,0);
+  const debt=getDebtAt(cutoffMonth);
+  return {items,allItems,propertyItems,portfolioValue,portfolioPrincipal,property,debt,assets:portfolioValue+property,net:portfolioValue+property-debt};
+}
+function dashboardToggleHtml(key,on){
+  return `<label class="asset-toggle ${on?'is-on':'is-off'}" onclick="event.stopPropagation()"><input type="checkbox" ${on?'checked':''} onchange='toggleDashboardAsset(${JSON.stringify(key)},this.checked,event)'><span>${on?'ON':'OFF'}</span></label>`;
+}
 function renderDashboard(){
-  const y=$('yearSelect').value;const snap=dashboardSnapshot(yearEnd(y));const profit=snap.portfolioValue-snap.portfolioPrincipal,rate=snap.portfolioPrincipal?profit/snap.portfolioPrincipal*100:0;$('sumAsset').textContent=money(snap.assets);$('sumDebt').textContent=money(snap.debt);$('sumNet').textContent=money(snap.net);$('sumProfit').textContent=money(profit);$('sumProfit').className=profit>0?'pos':profit<0?'neg':'';$('profitRate').innerHTML=trend(rate);
-  const portfolioCards=snap.items.sort((a,b)=>toKRW(b.value,b.currency)-toKRW(a.value,a.currency)).map(x=>{const p=toKRW(x.principal,x.currency),v=toKRW(x.value,x.currency),r=p?(v-p)/p*100:0,group=categoryGroup(x.cat);return `<article class="asset-card" onclick='openPortfolioDetail(${JSON.stringify(x.owner)},${JSON.stringify(x.cat)})'><div class="topline"><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span><small>${escapeHtml(x.owner)}</small></div><h4>${escapeHtml(x.cat)}</h4><p>${escapeHtml(assetAccountLabel(x)||`최근 기록 ${dateLabel(x.month)}`)}</p><strong>${money(v)}</strong><div class="sub"><span>원금 ${money(p)}</span>${trend(r)}</div></article>`;}).join('');
-  const propertyCards=state.properties.map(p=>{const trades=state.propertyTrades.filter(t=>t.propertyId===p.id&&normalizeDate(t.month)<=yearEnd(y));const high=trades.length?Math.max(...trades.map(t=>t.price)):0;if(!high)return '';return `<article class="asset-card" onclick="openPropertyDetailModal(${p.id})"><div class="topline"><span class="tag">부동산</span><small>${escapeHtml(p.owner)}</small></div><h4>${escapeHtml(p.name)}</h4><p>${escapeHtml(p.location||'지역 미입력')}</p><strong>${money(high)}</strong><div class="sub"><span>${p.purchasePrice?`내 매매가 ${money(p.purchasePrice)}`:'최고 실거래가 기준'}</span><span>상세보기 →</span></div></article>`;}).join('');
-  $('dashboardItems').innerHTML=portfolioCards+propertyCards||'<div class="box empty" style="grid-column:1/-1">표시할 자산 기록이 없습니다.</div>';drawDashboardCharts(y);
+  const y=$('yearSelect').value;
+  const snap=dashboardSnapshot(yearEnd(y));
+  const profit=snap.portfolioValue-snap.portfolioPrincipal,rate=snap.portfolioPrincipal?profit/snap.portfolioPrincipal*100:0;
+  $('sumAsset').textContent=money(snap.assets);$('sumDebt').textContent=money(snap.debt);$('sumNet').textContent=money(snap.net);$('sumProfit').textContent=money(profit);$('sumProfit').className=profit>0?'pos':profit<0?'neg':'';$('profitRate').innerHTML=trend(rate);
+  const portfolioCards=snap.allItems.slice().sort((a,b)=>toKRW(b.value,b.currency)-toKRW(a.value,a.currency)).map(x=>{
+    const p=toKRW(x.principal,x.currency),v=toKRW(x.value,x.currency),r=p?(v-p)/p*100:0,group=categoryGroup(x.cat),key=portfolioVisibilityKey(x),on=isDashboardAssetOn(key);
+    return `<article class="asset-card ${on?'':'dashboard-off'}" onclick='openPortfolioDetail(${JSON.stringify(x.owner)},${JSON.stringify(x.cat)})'><div class="topline"><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span><div style="display:flex;align-items:center;gap:7px"><small>${escapeHtml(x.owner)}</small>${dashboardToggleHtml(key,on)}</div></div><h4>${escapeHtml(x.cat)}</h4><p>${escapeHtml(assetAccountLabel(x)||`최근 기록 ${dateLabel(x.month)}`)}</p><strong>${money(v)}</strong><div class="sub"><span>원금 ${money(p)}</span>${trend(r)}</div></article>`;
+  }).join('');
+  const propertyCards=snap.propertyItems.map(({property:p,value:high,key})=>{
+    const on=isDashboardAssetOn(key);
+    return `<article class="asset-card ${on?'':'dashboard-off'}" onclick="openPropertyDetailModal(${p.id})"><div class="topline"><span class="tag">부동산</span><div style="display:flex;align-items:center;gap:7px"><small>${escapeHtml(p.owner)}</small>${dashboardToggleHtml(key,on)}</div></div><h4>${escapeHtml(p.name)}</h4><p>${escapeHtml(p.location||'지역 미입력')}</p><strong>${money(high)}</strong><div class="sub"><span>${p.purchasePrice?`매매가 ${money(p.purchasePrice)}`:'최고 실거래가 기준'}</span><span>상세보기 →</span></div></article>`;
+  }).join('');
+  $('dashboardItems').innerHTML=portfolioCards+propertyCards||'<div class="box empty" style="grid-column:1/-1">표시할 자산 기록이 없습니다.</div>';
+  drawDashboardCharts(y);
 }
 function drawDashboardCharts(y){
   const rows=Array.from({length:12},(_,i)=>{const m=monthCutoff(y,i+1);return {label:`${i+1}월`,...dashboardSnapshot(m)};});
   drawChart('mainLineChart','mainLineChart','line',{labels:rows.map(x=>x.label),datasets:[{label:'총자산',data:rows.map(x=>x.assets),tension:.25},{label:'총부채',data:rows.map(x=>x.debt),tension:.25},{label:'순자산',data:rows.map(x=>x.net),tension:.25}]},chartOptions('월별 자산·부채·순자산'));
-  const end=rows[11];const byCat={};end.items.forEach(x=>byCat[x.cat]=(byCat[x.cat]||0)+toKRW(x.value,x.currency));byCat['부동산']=end.property;const labels=Object.keys(byCat).filter(k=>byCat[k]>0),data=labels.map(k=>byCat[k]);drawChart('mainPieChart','mainPieChart','doughnut',{labels,datasets:[{data}]},{responsive:true,maintainAspectRatio:false,plugins:{title:{display:true,text:'자산 항목별 비중'},legend:{position:'bottom'},tooltip:{callbacks:{label:c=>`${c.label}: ${money(c.raw)} (${((c.raw/(data.reduce((a,b)=>a+b,0)||1))*100).toFixed(1)}%)`}}}});
+  const end=rows[11],byCat={};
+  end.items.forEach(x=>byCat[x.cat]=(byCat[x.cat]||0)+toKRW(x.value,x.currency));
+  end.propertyItems.filter(x=>isDashboardAssetOn(x.key)&&x.value>0).forEach(x=>{byCat[x.property.name]=(byCat[x.property.name]||0)+x.value;});
+  const labels=Object.keys(byCat).filter(k=>byCat[k]>0),data=labels.map(k=>byCat[k]);
+  drawChart('mainPieChart','mainPieChart','doughnut',{labels,datasets:[{data}]},{responsive:true,maintainAspectRatio:false,plugins:{title:{display:true,text:'ON 자산 항목별 비중'},legend:{position:'bottom'},tooltip:{callbacks:{label:c=>`${c.label}: ${money(c.raw)} (${((c.raw/(data.reduce((a,b)=>a+b,0)||1))*100).toFixed(1)}%)`}}}});
 }
 function chartOptions(title){return {responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{title:{display:true,text:title},legend:{position:'bottom'},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`}}},scales:{y:{ticks:{callback:v=>Number(v).toLocaleString('ko-KR')}}}};}
 function drawChart(holderKey,canvasId,type,data,options){if(typeof Chart==='undefined')return;const old=window[holderKey];if(old?.destroy)old.destroy();window[holderKey]=new Chart($(canvasId),{type,data,options});}
@@ -2203,7 +2405,25 @@ function openPortfolioDetail(owner,cat){
   const lp=latest?toKRW(latest.principal,latest.currency):0,lv=latest?toKRW(latest.value,latest.currency):0,profit=lv-lp,rate=lp?profit/lp*100:0;$('detailStats').innerHTML=`<div><small>최근 원금</small><b>${money(lp)}</b></div><div><small>최근 평가액</small><b>${money(lv)}</b></div><div><small>평가손익</small><b class="${profit>0?'pos':profit<0?'neg':''}">${money(profit)}</b></div><div><small>수익률</small><b>${trend(rate)}</b></div>`;
   const monthly=Array.from({length:12},(_,i)=>{const month=monthCutoff(y,i+1);const x=state.portfolio.filter(v=>v.owner===owner&&v.cat===cat&&v.month<=month).sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0];return {month:`${i+1}월`,principal:x?toKRW(x.principal,x.currency):null,value:x?toKRW(x.value,x.currency):null};});showDetailModal();if(typeof Chart!=='undefined'){if(detailChart)detailChart.destroy();detailChart=new Chart($('detailChart'),{type:'line',data:{labels:monthly.map(x=>x.month),datasets:[{label:'원금',data:monthly.map(x=>x.principal),tension:.25},{label:'평가액',data:monthly.map(x=>x.value),tension:.25}]},options:chartOptions(`${cat} 월별 현황`)});}
 }
-function openPropertyDetailModal(id){const p=state.properties.find(x=>x.id===id),y=$('yearSelect').value;const arr=state.propertyTrades.filter(x=>x.propertyId===id&&normalizeDate(x.month).startsWith(y)).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));const all=state.propertyTrades.filter(x=>x.propertyId===id&&normalizeDate(x.month)<=yearEnd(y));const high=all.length?Math.max(...all.map(x=>x.price)):0,latest=all.slice().sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0],purchase=Number(p.purchasePrice||0);$('detailTitle').textContent=p.name;$('detailMeta').textContent=`${p.owner} · ${p.location||'지역 미입력'} · ${y}년`;$('detailStats').innerHTML=`<div><small>내 매매가</small><b>${purchase?money(purchase):'미입력'}</b></div><div><small>자산 기준 최고가</small><b>${money(high)}</b></div><div><small>최근 실거래가</small><b>${money(latest?.price||0)}</b></div><div><small>선택 연도 기록</small><b>${arr.length}건</b></div>`;showDetailModal();if(typeof Chart!=='undefined'){if(detailChart)detailChart.destroy();const labels=arr.length?arr.map(x=>shortDateLabel(x.month)):['매매가'];const datasets=[{label:'실거래가',data:arr.length?arr.map(x=>x.price):[null],tension:.25}];if(purchase)datasets.push({label:'내 매매가',data:labels.map(()=>purchase),borderDash:[7,5],pointRadius:0,pointHoverRadius:0,tension:0});detailChart=new Chart($('detailChart'),{type:'line',data:{labels,datasets},options:chartOptions(`${p.name} 실거래가 · 내 매매가`)});}}
+function openPropertyDetailModal(id){
+  const p=state.properties.find(x=>x.id===id),y=$('yearSelect').value;if(!p)return;
+  const arr=state.propertyTrades.filter(x=>x.propertyId===id&&normalizeDate(x.month).startsWith(y)).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));
+  const all=state.propertyTrades.filter(x=>x.propertyId===id&&normalizeDate(x.month)<=yearEnd(y));
+  const high=all.length?Math.max(...all.map(x=>x.price)):0;
+  const latest=all.slice().sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0];
+  const purchase=Number(p.purchasePrice||0),highDiff=purchase?((high-purchase)/purchase*100):null;
+  $('detailTitle').textContent=p.name;
+  $('detailMeta').textContent=`${p.owner} · ${p.location||'지역 미입력'} · ${y}년`;
+  $('detailStats').innerHTML=`<div><small>매매가</small><b>${purchase?money(purchase):'미입력'}</b></div><div><small>최고 실거래가</small><b>${money(high)}</b></div><div><small>매매가 대비 최고가</small><b>${highDiff===null?'<span class="neutral">-</span>':trend(highDiff)}</b></div><div><small>최근 실거래가</small><b>${money(latest?.price||0)}</b></div><div><small>선택 연도 기록</small><b>${arr.length}건</b></div>`;
+  showDetailModal();
+  if(typeof Chart!=='undefined'){
+    if(detailChart)detailChart.destroy();
+    const labels=arr.length?arr.map(x=>shortDateLabel(x.month)):['매매가'];
+    const datasets=[{label:'실거래가',data:arr.length?arr.map(x=>x.price):[null],tension:.25}];
+    if(purchase)datasets.push({label:'매매가',data:labels.map(()=>purchase),borderDash:[7,5],pointRadius:0,pointHoverRadius:0,tension:0});
+    detailChart=new Chart($('detailChart'),{type:'line',data:{labels,datasets},options:chartOptions(`${p.name} 실거래가 · 매매가`)});
+  }
+}
 function showDetailModal(){$('detailModal').classList.add('show');}function closeDetailModal(){$('detailModal').classList.remove('show');}
 
 function persistState(){if(KEY)localStorage.setItem(KEY,JSON.stringify(state));queueCloudSave();}
