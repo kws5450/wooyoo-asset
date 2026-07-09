@@ -818,6 +818,34 @@ nav button.active .nav-update-dot{display:none}
 @media(max-width:1000px){.payment-batch-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:720px){.payment-batch-grid{grid-template-columns:1fr}.asset-toggle{font-size:9.5px}}
 
+
+
+/* WOOYOO ASSET v1.0.5 — dashboard grouped holdings and profit breakdown */
+.profit-summary-card{cursor:pointer;transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.profit-summary-card:hover{transform:translateY(-2px);border-color:#99cfc8;box-shadow:0 12px 30px rgba(15,118,110,.13)}
+.profit-summary-card:focus-visible{outline:none;box-shadow:var(--focus)}
+.profit-summary-card em{margin-top:6px;font-size:10.5px;line-height:1;font-style:normal;font-weight:850;color:var(--pri)}
+.dashboard-groups{display:grid;gap:18px}
+.holding-group{background:#fff;border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 7px 24px rgba(15,23,42,.045)}
+.holding-group.debt-group{border-color:#f2c9c5;background:linear-gradient(180deg,#fff,#fffafa)}
+.holding-group-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px;padding-bottom:11px;border-bottom:1px solid #edf1f5}
+.holding-group-title{display:flex;align-items:center;gap:9px;min-width:0}
+.holding-group-title h3{margin:0;font-size:16px;line-height:1.3;color:var(--text-strong)}
+.holding-group-title .group-count{display:inline-flex;align-items:center;justify-content:center;min-width:25px;height:23px;padding:0 8px;border-radius:999px;background:#eef2f6;color:#526072;font-size:10.5px;font-weight:850}
+.holding-group-total{text-align:right;color:var(--text-soft);font-size:10.5px;font-weight:750;white-space:nowrap}
+.holding-group-total b{display:block;margin-top:2px;color:var(--text-strong);font-size:14px}
+.holding-group .asset-summary{margin-top:0;grid-template-columns:repeat(3,minmax(0,1fr))}
+.asset-card.debt-holding{border-color:#f1d5d2;background:linear-gradient(180deg,#fff,#fff9f9)}
+.asset-card.debt-holding strong{color:#b42318}
+.tag.debt{background:#fff1f2;color:#b42318}
+.profit-breakdown-list{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%}
+.profit-breakdown-item{min-height:90px!important;align-items:flex-start!important;text-align:left!important;padding:13px!important}
+.profit-breakdown-item small{width:100%;font-size:10.5px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profit-breakdown-item b{width:100%;font-size:15px!important;margin-top:5px!important}
+.profit-breakdown-item span{display:block;width:100%;margin-top:5px;font-size:12px;font-weight:850}
+@media(max-width:1000px){.holding-group .asset-summary,.profit-breakdown-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.holding-group{padding:13px}.holding-group-head{align-items:flex-start;flex-direction:column}.holding-group-total{text-align:left}.holding-group .asset-summary,.profit-breakdown-list{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body class="auth-pending">
@@ -954,7 +982,7 @@ nav button.active .nav-update-dot{display:none}
       <div class="card"><span>총자산</span><b id="sumAsset">₩0</b><small id="assetSub">현금·금융자산 + 부동산</small></div>
       <div class="card"><span>총부채</span><b id="sumDebt">₩0</b><small id="debtSub">선택 연도 말 기준</small></div>
       <div class="card"><span>순자산</span><b id="sumNet">₩0</b><small id="netSub">총자산 - 총부채</small></div>
-      <div class="card"><span>투자 평가손익</span><b id="sumProfit">₩0</b><small id="profitRate">0.00%</small></div>
+      <div class="card profit-summary-card" role="button" tabindex="0" onclick="openProfitBreakdown()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProfitBreakdown()}" aria-label="투자 평가손익 항목별 상세보기"><span>투자 평가손익</span><b id="sumProfit">₩0</b><small id="profitRate">0.00%</small><em>항목별 보기 →</em></div>
     </div>
     <div class="grid2">
       <div class="box chartbox"><canvas id="mainLineChart"></canvas></div>
@@ -962,7 +990,7 @@ nav button.active .nav-update-dot{display:none}
     </div>
     <div class="sectionhead" style="margin-top:18px"><div><h2 style="font-size:19px">보유 항목</h2><p>항목을 누르면 월별 원금·평가액과 누적 현황을 볼 수 있습니다.</p></div></div>
     <p class="dashboard-visibility-note">각 자산의 ON/OFF를 변경하면 ON 상태인 항목만 대시보드 합계와 자산 비중에 반영됩니다.</p>
-    <div id="dashboardItems" class="asset-summary"></div>
+    <div id="dashboardItems" class="dashboard-groups"></div>
   </section>
 
   <section id="portfolio" class="panel">
@@ -2375,21 +2403,68 @@ function dashboardSnapshot(cutoffMonth){
 function dashboardToggleHtml(key,on){
   return `<label class="asset-toggle ${on?'is-on':'is-off'}" onclick="event.stopPropagation()"><input type="checkbox" ${on?'checked':''} onchange='toggleDashboardAsset(${JSON.stringify(key)},this.checked,event)'><span>${on?'ON':'OFF'}</span></label>`;
 }
+function holdingGroupHtml(title,count,total,cards,kind=''){
+  if(!count)return '';
+  return `<section class="holding-group ${kind}"><div class="holding-group-head"><div class="holding-group-title"><h3>${escapeHtml(title)}</h3><span class="group-count">${count}개</span></div><div class="holding-group-total">합계<b>${money(total)}</b></div></div><div class="asset-summary">${cards}</div></section>`;
+}
+function openDebtFromDashboard(id){
+  selectedDebtId=id;
+  openPanelById('debt');
+  renderDebts();
+  setTimeout(()=>{const target=$('debtDetail')||$('debtCards');target?.scrollIntoView({behavior:'smooth',block:'start'});},80);
+}
 function renderDashboard(){
   const y=$('yearSelect').value;
-  const snap=dashboardSnapshot(yearEnd(y));
+  const cutoff=yearEnd(y);
+  const snap=dashboardSnapshot(cutoff);
   const profit=snap.portfolioValue-snap.portfolioPrincipal,rate=snap.portfolioPrincipal?profit/snap.portfolioPrincipal*100:0;
   $('sumAsset').textContent=money(snap.assets);$('sumDebt').textContent=money(snap.debt);$('sumNet').textContent=money(snap.net);$('sumProfit').textContent=money(profit);$('sumProfit').className=profit>0?'pos':profit<0?'neg':'';$('profitRate').innerHTML=trend(rate);
-  const portfolioCards=snap.allItems.slice().sort((a,b)=>toKRW(b.value,b.currency)-toKRW(a.value,a.currency)).map(x=>{
+
+  const grouped={현금자산:[],금융자산:[]};
+  snap.allItems.slice().sort((a,b)=>toKRW(b.value,b.currency)-toKRW(a.value,a.currency)).forEach(x=>{
     const p=toKRW(x.principal,x.currency),v=toKRW(x.value,x.currency),r=p?(v-p)/p*100:0,group=categoryGroup(x.cat),key=portfolioVisibilityKey(x),on=isDashboardAssetOn(key);
-    return `<article class="asset-card ${on?'':'dashboard-off'}" onclick='openPortfolioDetail(${JSON.stringify(x.owner)},${JSON.stringify(x.cat)})'><div class="topline"><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span><div style="display:flex;align-items:center;gap:7px"><small>${escapeHtml(x.owner)}</small>${dashboardToggleHtml(key,on)}</div></div><h4>${escapeHtml(x.cat)}</h4><p>${escapeHtml(assetAccountLabel(x)||`최근 기록 ${dateLabel(x.month)}`)}</p><strong>${money(v)}</strong><div class="sub"><span>원금 ${money(p)}</span>${trend(r)}</div></article>`;
-  }).join('');
-  const propertyCards=snap.propertyItems.map(({property:p,value:high,key})=>{
+    const card=`<article class="asset-card ${on?'':'dashboard-off'}" onclick='openPortfolioDetail(${JSON.stringify(x.owner)},${JSON.stringify(x.cat)})'><div class="topline"><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span><div style="display:flex;align-items:center;gap:7px"><small>${escapeHtml(x.owner)}</small>${dashboardToggleHtml(key,on)}</div></div><h4>${escapeHtml(x.cat)}</h4><p>${escapeHtml(assetAccountLabel(x)||`최근 기록 ${dateLabel(x.month)}`)}</p><strong>${money(v)}</strong><div class="sub"><span>원금 ${money(p)}</span>${trend(r)}</div></article>`;
+    (grouped[group]||(grouped[group]=[])).push({card,value:v});
+  });
+
+  const propertyRows=snap.propertyItems.filter(x=>x.value>0).map(({property:p,value:high,key})=>{
     const on=isDashboardAssetOn(key);
-    return `<article class="asset-card ${on?'':'dashboard-off'}" onclick="openPropertyDetailModal(${p.id})"><div class="topline"><span class="tag">부동산</span><div style="display:flex;align-items:center;gap:7px"><small>${escapeHtml(p.owner)}</small>${dashboardToggleHtml(key,on)}</div></div><h4>${escapeHtml(p.name)}</h4><p>${escapeHtml(p.location||'지역 미입력')}</p><strong>${money(high)}</strong><div class="sub"><span>${p.purchasePrice?`매매가 ${money(p.purchasePrice)}`:'최고 실거래가 기준'}</span><span>상세보기 →</span></div></article>`;
-  }).join('');
-  $('dashboardItems').innerHTML=portfolioCards+propertyCards||'<div class="box empty" style="grid-column:1/-1">표시할 자산 기록이 없습니다.</div>';
+    const card=`<article class="asset-card ${on?'':'dashboard-off'}" onclick="openPropertyDetailModal(${p.id})"><div class="topline"><span class="tag">부동산</span><div style="display:flex;align-items:center;gap:7px"><small>${escapeHtml(p.owner)}</small>${dashboardToggleHtml(key,on)}</div></div><h4>${escapeHtml(p.name)}</h4><p>${escapeHtml(p.location||'지역 미입력')}</p><strong>${money(high)}</strong><div class="sub"><span>${p.purchasePrice?`매매가 ${money(p.purchasePrice)}`:'최고 실거래가 기준'}</span><span>상세보기 →</span></div></article>`;
+    return {card,value:high};
+  });
+
+  const debtRows=state.debts.filter(d=>(d.start||'9999-99-99')<=cutoff).map(d=>{
+    const balance=Number(balanceAt(d,cutoff)||0),last=latestPayment(d,cutoff),rateNow=Number(last?.rate??d.rate??0);
+    const card=`<article class="asset-card debt-holding" onclick="openDebtFromDashboard(${d.id})"><div class="topline"><span class="tag debt">부채</span><small>${escapeHtml(d.owner)}</small></div><h4>${escapeHtml(d.name)}</h4><p>${escapeHtml(d.bank||'금융기관 미입력')} · ${escapeHtml(d.type||'대출')}</p><strong>${money(balance)}</strong><div class="sub"><span>대출원금 ${money(d.loanAmount)}</span><span>${num(rateNow)}%</span></div></article>`;
+    return {card,value:balance};
+  }).sort((a,b)=>b.value-a.value);
+
+  const cash=grouped['현금자산']||[],finance=grouped['금융자산']||[];
+  const sections=[
+    holdingGroupHtml('현금자산',cash.length,cash.reduce((s,x)=>s+x.value,0),cash.map(x=>x.card).join('')),
+    holdingGroupHtml('금융자산',finance.length,finance.reduce((s,x)=>s+x.value,0),finance.map(x=>x.card).join('')),
+    holdingGroupHtml('부동산',propertyRows.length,propertyRows.reduce((s,x)=>s+x.value,0),propertyRows.map(x=>x.card).join('')),
+    holdingGroupHtml('부채',debtRows.length,debtRows.reduce((s,x)=>s+x.value,0),debtRows.map(x=>x.card).join(''),'debt-group')
+  ].filter(Boolean).join('');
+  $('dashboardItems').innerHTML=sections||'<div class="box empty">표시할 자산·부채 기록이 없습니다.</div>';
   drawDashboardCharts(y);
+}
+function openProfitBreakdown(){
+  const y=$('yearSelect').value;
+  const items=dashboardSnapshot(yearEnd(y)).items.map(x=>{
+    const principal=toKRW(x.principal,x.currency),value=toKRW(x.value,x.currency),profit=value-principal,rate=principal?profit/principal*100:0;
+    return {...x,principal,value,profit,rate};
+  }).sort((a,b)=>b.rate-a.rate);
+  const totalPrincipal=items.reduce((s,x)=>s+x.principal,0),totalValue=items.reduce((s,x)=>s+x.value,0),totalProfit=totalValue-totalPrincipal,totalRate=totalPrincipal?totalProfit/totalPrincipal*100:0;
+  $('detailTitle').textContent='투자 평가손익 상세';
+  $('detailMeta').textContent=`${y}년 · 대시보드 ON 상태 금융·현금자산 기준`;
+  $('detailStats').innerHTML=items.length?`<div><small>총 원금</small><b>${money(totalPrincipal)}</b></div><div><small>총 평가액</small><b>${money(totalValue)}</b></div><div><small>총 평가손익</small><b class="${totalProfit>0?'pos':totalProfit<0?'neg':'neutral'}">${money(totalProfit)}</b></div><div><small>전체 수익률</small><b>${trend(totalRate)}</b></div><div class="profit-breakdown-list">${items.map(x=>`<div class="profit-breakdown-item"><small>${escapeHtml(x.owner)} · ${escapeHtml(x.cat)}</small><b>${money(x.profit)}</b><span class="${x.rate>0?'pos':x.rate<0?'neg':'neutral'}">${x.rate>0?'▲':x.rate<0?'▼':'－'} ${pct(x.rate)}</span></div>`).join('')}</div>`:'<div class="empty" style="grid-column:1/-1">표시할 투자 항목이 없습니다.</div>';
+  showDetailModal();
+  if(typeof Chart!=='undefined'){
+    if(detailChart)detailChart.destroy();
+    const labels=items.map(x=>`${x.owner} · ${x.cat}`),data=items.map(x=>Number(x.rate.toFixed(2)));
+    detailChart=new Chart($('detailChart'),{type:'bar',data:{labels,datasets:[{label:'수익률 (%)',data}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{title:{display:true,text:'항목별 수익률'},legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw.toFixed(2)}%`}}},scales:{x:{ticks:{callback:v=>`${v}%`}},y:{ticks:{autoSkip:false}}}}});
+  }
 }
 function drawDashboardCharts(y){
   const rows=Array.from({length:12},(_,i)=>{const m=monthCutoff(y,i+1);return {label:`${i+1}월`,...dashboardSnapshot(m)};});
