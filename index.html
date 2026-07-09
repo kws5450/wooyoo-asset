@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WOOYOO ASSET V1.0.1</title>
-<meta name="application-name" content="WOOYOO ASSET V1.0.1">
-<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.0.1">
+<title>WOOYOO ASSET V1.0.2</title>
+<meta name="application-name" content="WOOYOO ASSET V1.0.2">
+<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.0.2">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -154,11 +154,11 @@ th,td{height:50px;padding:10px 12px;vertical-align:middle;line-height:1.3}
 th{text-align:center!important;font-size:11.5px;font-weight:800;letter-spacing:.01em}
 td{text-align:center!important;font-size:12.5px}
 .select-col{width:46px;min-width:46px}.select-box{display:block;margin:0 auto}
-#portfolioRows td:nth-child(7),#portfolioRows td:nth-child(8),#portfolioRows td:nth-child(9),#portfolioRows td:nth-child(10),#portfolioRows td:nth-child(11),
+#portfolioRows td:nth-child(9),#portfolioRows td:nth-child(10),#portfolioRows td:nth-child(11),#portfolioRows td:nth-child(12),#portfolioRows td:nth-child(13),
 #tradeRows td:nth-child(2),#tradeRows td:nth-child(3),
 #paymentRows td:nth-child(n+2):nth-child(-n+8),
 #buyRows td:nth-child(n+2):nth-child(-n+7){text-align:right!important}
-#portfolioRows td:nth-child(5),#tradeRows td:nth-child(4),#buyRows td:first-child{text-align:left!important}
+#portfolioRows td:nth-child(5),#portfolioRows td:nth-child(6),#portfolioRows td:nth-child(7),#tradeRows td:nth-child(4),#buyRows td:first-child{text-align:left!important}
 #portfolioRows td:last-child,#tradeRows td:last-child,#paymentRows td:last-child,#buyRows td:last-child{text-align:center!important}
 td .owner-dot{vertical-align:middle}.pos,.neg,.neutral{display:inline-flex;align-items:center;justify-content:flex-end;min-width:74px}
 .tablewrap td button{margin:2px 1px}
@@ -728,7 +728,7 @@ tbody tr:hover{background:#f4faf8}
 }
 
 
-/* WOOYOO ASSET v1.0.1 — password toggle, home button and work-state retention */
+/* WOOYOO ASSET v1.0.2 — password toggle, home button and work-state retention */
 .password-field{position:relative;margin-top:6px}
 .password-field input{margin-top:0;padding-right:58px}
 .password-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);min-width:44px;height:30px;border:1px solid #d7dee7;border-radius:7px;background:#f8fafc;color:#475569;font-size:11px;font-weight:800;cursor:pointer}
@@ -748,6 +748,17 @@ tbody tr:hover{background:#f4faf8}
   .hero-tools{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 @media(max-width:520px){.pin-password-field{max-width:none}}
+
+
+/* WOOYOO ASSET v1.0.2 — recovery, session-only login and developer expulsion */
+.password-reset-copy{margin:0 0 16px;color:var(--text-soft);font-size:12px;line-height:1.65}
+.password-reset-actions{display:grid;gap:9px;margin-top:16px}
+.password-reset-actions .btn{width:100%;min-height:45px}
+.portfolio-table table{min-width:1180px}
+.dev-member-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-top:10px}
+.dev-member-actions .danger{min-width:96px}
+.account-mask{font-variant-numeric:tabular-nums;letter-spacing:.02em}
+@media(max-width:720px){.dev-member-actions{justify-content:stretch}.dev-member-actions .btn{width:100%}}
 
 </style>
 </head>
@@ -776,11 +787,28 @@ tbody tr:hover{background:#f4faf8}
   </div>
 </div>
 
+<div id="passwordResetScreen" class="auth-screen hidden">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <div class="auth-logo">🔐</div>
+      <div><h1><b>비밀번호</b> 재설정</h1><p>새 비밀번호를 설정한 뒤 다시 로그인하세요</p></div>
+    </div>
+    <p class="password-reset-copy">보안을 위해 비밀번호 변경이 완료되면 현재 복구 세션은 종료되고 로그인 화면으로 이동합니다.</p>
+    <label>새 비밀번호<div class="password-field"><input id="recoveryNewPassword" type="password" autocomplete="new-password" minlength="6" placeholder="6자 이상"><button type="button" class="password-toggle" onclick="togglePasswordVisibility('recoveryNewPassword',this)" aria-label="새 비밀번호 표시">보기</button></div></label>
+    <label>새 비밀번호 확인<div class="password-field"><input id="recoveryConfirmPassword" type="password" autocomplete="new-password" minlength="6" placeholder="새 비밀번호 확인" onkeydown="if(event.key==='Enter')completePasswordRecovery()"><button type="button" class="password-toggle" onclick="togglePasswordVisibility('recoveryConfirmPassword',this)" aria-label="새 비밀번호 확인 표시">보기</button></div></label>
+    <div class="password-reset-actions">
+      <button id="recoverySubmitBtn" class="btn primary" type="button" onclick="completePasswordRecovery()">비밀번호 변경</button>
+      <button class="btn soft" type="button" onclick="cancelPasswordRecovery()">로그인 화면으로</button>
+    </div>
+    <div id="recoveryMessage" class="auth-message"></div>
+  </div>
+</div>
+
 <div id="welcomeScreen" class="welcome-screen">
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.0.1</span></h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.0.2</span></h1><p>Private family wealth dashboard</p></div>
     </div>
     <div class="welcome-account-bar">
       <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
@@ -892,7 +920,7 @@ tbody tr:hover{background:#f4faf8}
       <div class="selection-left"><label><input id="portfolioSelectAllTop" type="checkbox" onchange="toggleAllVisiblePortfolio(this.checked)">현재 목록 전체 선택</label><span id="portfolioSelectionCount" class="selection-count">0건 선택</span></div>
       <button id="deleteSelectedPortfolioBtn" class="btn danger" onclick="deleteSelectedPortfolio()" disabled>선택 삭제</button>
     </div>
-    <div class="tablewrap"><table><thead><tr><th class="select-col"><input id="portfolioSelectAllHead" class="select-box" type="checkbox" onchange="toggleAllVisiblePortfolio(this.checked)" aria-label="현재 목록 전체 선택"></th><th>기준일</th><th>소유자</th><th>구분</th><th>항목</th><th>통화</th><th>원금</th><th>평가액</th><th>원화 평가액</th><th>손익</th><th>수익률</th><th>관리</th></tr></thead><tbody id="portfolioRows"></tbody></table></div>
+    <div class="tablewrap portfolio-table"><table><thead><tr><th class="select-col"><input id="portfolioSelectAllHead" class="select-box" type="checkbox" onchange="toggleAllVisiblePortfolio(this.checked)" aria-label="현재 목록 전체 선택"></th><th>기준일</th><th>소유자</th><th>구분</th><th>항목</th><th>은행·증권사</th><th>계좌번호</th><th>통화</th><th>원금</th><th>평가액</th><th>원화 평가액</th><th>손익</th><th>수익률</th><th>관리</th></tr></thead><tbody id="portfolioRows"></tbody></table></div>
   </section>
 
   <section id="realestate" class="panel">
@@ -988,7 +1016,7 @@ tbody tr:hover{background:#f4faf8}
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span id="noticeCountLabel" class="selection-count">0건</span><button id="noticeWriteToggleBtn" class="btn primary admin-only dev-tools" onclick="toggleNoticeForm(true)">＋ 공지 작성</button></div>
         </div>
         <div id="noticeWriteBox" class="notice-admin-form admin-only dev-tools" style="display:none">
-          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.0.1 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.0.1"></label></div>
+          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.0.2 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.0.2"></label></div>
           <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="noticeContent" class="ko-input wide-textarea" lang="ko" maxlength="10000" placeholder="업데이트 내용 또는 공지사항"></textarea></label>
           <div class="actions"><button class="btn soft" onclick="cancelNoticeEdit()">취소</button><button id="noticeSubmitBtn" class="btn primary" onclick="saveNotice()">공지 등록</button></div>
         </div>
@@ -1124,7 +1152,7 @@ tbody tr:hover{background:#f4faf8}
 </div>
 
 <script>
-const APP_VERSION='1.0.1';
+const APP_VERSION='1.0.2';
 const APP_TITLE='WOOYOO ASSET';
 const LEGACY_KEY='wooyoo_assets_v11';
 const LEGACY_OLD_KEY='wooyoo_assets_v10';
@@ -1163,7 +1191,7 @@ let noticeEditingId=null,noticeCache=[];
 let noticeCurrentPage=1,noticePageSize=10,noticeTotalCount=0;
 let boardCurrentPage=1,boardPageSize=10,boardTotalCount=0;
 let cloudSyncReady=false,cloudSyncTimer=null,cloudSyncInProgress=false,cloudSavePending=false,cloudRetryTimer=null,cloudResumeTimer=null;
-let uiSessionSaveTimer=null,authStartInProgress=false;
+let uiSessionSaveTimer=null,authStartInProgress=false,passwordRecoveryMode=false;
 
 
 function setAuthStorageNamespace(userId){
@@ -1197,7 +1225,7 @@ function migrateLegacyProfile(){
 function normalizeState(s){
   s.categories=Array.isArray(s.categories)&&s.categories.length?s.categories:DEFAULT_CATEGORIES.map(c=>({...c}));
   s.categories=s.categories.map(c=>typeof c==='string'?{name:c,group:'금융자산'}:c).filter(c=>c?.name);
-  s.portfolio=(s.portfolio||[]).map(x=>({...x,month:normalizeDate(x.month||x.date),cat:x.cat||'기타',currency:x.currency||'KRW'}));
+  s.portfolio=(s.portfolio||[]).map(x=>({...x,month:normalizeDate(x.month||x.date),cat:x.cat||'기타',currency:x.currency||'KRW',institution:String(x.institution||x.bank||''),accountNumber:String(x.accountNumber||x.account||'')}));
   s.propertyTrades=(s.propertyTrades||[]).map(x=>({...x,month:normalizeDate(x.month||x.date)}));
   s.debtPayments=(s.debtPayments||[]).map(x=>({...x,month:normalizeDate(x.month||x.date)}));
   s.buyTable=s.buyTable&&typeof s.buyTable==='object'?s.buyTable:{account:'',budget:0,rows:[]};
@@ -1265,6 +1293,8 @@ const selectedYearDate=()=>{const now=new Date(),y=Number($('yearSelect')?.value
 const getFx=()=>Number(state.fx||0)||1;
 const toKRW=(amount,currency)=>currency==='USD'?Number(amount||0)*getFx():Number(amount||0);
 const originalMoney=(amount,currency)=>currency==='USD'?`$${Number(amount||0).toLocaleString('en-US',{maximumFractionDigits:2})}`:money(amount);
+const maskAccountNumber=value=>{const raw=String(value||'').trim();if(!raw)return '-';const compact=raw.replace(/\s+/g,'');return compact.length<=4?compact:`•••• ${compact.slice(-4)}`;};
+const assetAccountLabel=x=>[String(x?.institution||'').trim(),x?.accountNumber?maskAccountNumber(x.accountNumber):''].filter(Boolean).join(' · ');
 const categoryGroup=cat=>state.categories.find(c=>c.name===cat)?.group||'금융자산';
 function trend(value){const n=Number(value||0);return `<span class="${n>0?'pos':n<0?'neg':'neutral'}">${n>0?'▲':n<0?'▼':'－'} ${pct(n)}</span>`}
 function escapeHtml(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));}
@@ -1727,10 +1757,55 @@ function setAuthMessage(msg,type='error'){
 function showAuthScreen(){
   document.body.classList.add('auth-pending');
   $('authScreen')?.classList.remove('hidden');
+  $('passwordResetScreen')?.classList.add('hidden');
   $('welcomeScreen')?.classList.add('hidden');
   $('mainApp')?.classList.add('app-locked');
   const acc=$('welcomeAccountEmail');if(acc)acc.textContent='-';
   setAuthMode('login');
+}
+
+function setRecoveryMessage(msg,type='error'){
+  const el=$('recoveryMessage');if(!el)return;
+  el.textContent=msg||'';el.classList.toggle('ok',type==='ok');
+}
+function showPasswordResetScreen(){
+  passwordRecoveryMode=true;
+  document.body.classList.add('auth-pending');
+  $('authScreen')?.classList.add('hidden');
+  $('welcomeScreen')?.classList.add('hidden');
+  $('mainApp')?.classList.add('app-locked');
+  $('passwordResetScreen')?.classList.remove('hidden');
+  if($('recoveryNewPassword'))$('recoveryNewPassword').value='';
+  if($('recoveryConfirmPassword'))$('recoveryConfirmPassword').value='';
+  setRecoveryMessage('');
+  setTimeout(()=>$('recoveryNewPassword')?.focus(),50);
+}
+async function completePasswordRecovery(){
+  if(!supabaseClient)return;
+  const pw=$('recoveryNewPassword')?.value||'',confirmPw=$('recoveryConfirmPassword')?.value||'';
+  if(pw.length<6)return setRecoveryMessage('새 비밀번호는 6자 이상 입력해 주세요.');
+  if(pw!==confirmPw)return setRecoveryMessage('새 비밀번호 확인 값이 일치하지 않습니다.');
+  const btn=$('recoverySubmitBtn');if(btn){btn.disabled=true;btn.textContent='변경 중...';}
+  try{
+    const {error}=await supabaseClient.auth.updateUser({password:pw});
+    if(error)throw error;
+    await supabaseClient.auth.signOut();
+    passwordRecoveryMode=false;
+    history.replaceState(null,'',location.pathname);
+    showAuthScreen();
+    setAuthMessage('비밀번호가 변경되었습니다. 새 비밀번호로 다시 로그인해 주세요.','ok');
+  }catch(e){setRecoveryMessage(e?.message||'비밀번호 변경에 실패했습니다.');}
+  finally{if(btn){btn.disabled=false;btn.textContent='비밀번호 변경';}}
+}
+async function cancelPasswordRecovery(){
+  try{await supabaseClient?.auth.signOut();}catch(e){}
+  passwordRecoveryMode=false;
+  history.replaceState(null,'',location.pathname);
+  showAuthScreen();
+  setAuthMessage('비밀번호 재설정을 취소했습니다.');
+}
+function clearLegacyPersistentAuthStorage(){
+  try{Object.keys(localStorage).filter(key=>/^sb-.*-auth-token$/.test(key)||key==='wooyoo_asset_auth_session').forEach(key=>localStorage.removeItem(key));}catch(e){}
 }
 
 function updateWelcomeAccount(){
@@ -1760,7 +1835,7 @@ async function ensureUserProfile(){
 }
 
 async function startAuthedApp(user){
-  if(!user?.id)return;
+  if(!user?.id||passwordRecoveryMode)return;
   const sameUser=appBooted&&currentUser?.id===user.id;
   currentUser=user;
   if(sameUser){
@@ -1788,15 +1863,20 @@ async function bootAuth(){
     setAuthMessage('Supabase URL과 anon public key를 index.html 안에 먼저 입력해 주세요.');
     return;
   }
-  supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-  const {data:{session}}=await supabaseClient.auth.getSession();
+  clearLegacyPersistentAuthStorage();
+  supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{storage:window.sessionStorage,storageKey:'wooyoo_asset_auth_session',persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  const recoveryHint=location.hash.includes('type=recovery')||new URLSearchParams(location.search).get('type')==='recovery';
+  if(recoveryHint)passwordRecoveryMode=true;
   supabaseClient.auth.onAuthStateChange((event,session)=>{
+    if(event==='PASSWORD_RECOVERY'){currentUser=session?.user||null;showPasswordResetScreen();return;}
+    if(passwordRecoveryMode)return;
     if(session?.user){
       if(event==='TOKEN_REFRESHED'||event==='USER_UPDATED'){currentUser=session.user;updateWelcomeAccount();return;}
       startAuthedApp(session.user);
     }else if(event==='SIGNED_OUT')showAuthScreen();
   });
-  if(session?.user)await startAuthedApp(session.user);
+  const {data:{session}}=await supabaseClient.auth.getSession();
+  if(session?.user&&!passwordRecoveryMode)await startAuthedApp(session.user);
 }
 async function signUpWithEmail(){
   if(!supabaseClient)return bootAuth();
@@ -1823,7 +1903,7 @@ async function resetPasswordByEmail(){
   if(!supabaseClient)return bootAuth();
   const email=$('authEmail').value.trim();
   if(!email)return setAuthMessage('비밀번호 재설정 메일을 받을 이메일을 입력해 주세요.');
-  const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:location.origin});
+  const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{redirectTo:`${location.origin}${location.pathname}`});
   if(error)return setAuthMessage(error.message);
   setAuthMessage('비밀번호 재설정 메일을 보냈습니다.','ok');
 }
@@ -1887,7 +1967,7 @@ function renderPortfolioTabs(){
   if(activePortfolioCat!=='전체'&&!cats.includes(activePortfolioCat))activePortfolioCat='전체';
   $('portfolioCatTabs').innerHTML=['전체',...cats].map(x=>`<button class="${x===activePortfolioCat?'active':''}" onclick='setCatFilter(${JSON.stringify(x)})'>${escapeHtml(x)}</button>`).join('');
 }
-function blankPortfolioRow(){return {draftId:uniqueId(),month:selectedYearDate(),owner:activePortfolioOwner==='전체'?(state.owners[0]||''):activePortfolioOwner,cat:activePortfolioCat==='전체'?(state.categories.find(c=>activePortfolioGroup==='전체'||c.group===activePortfolioGroup)?.name||state.categories[0]?.name||''):activePortfolioCat,currency:'KRW',principal:'',value:'',memo:''};}
+function blankPortfolioRow(){return {draftId:uniqueId(),month:selectedYearDate(),owner:activePortfolioOwner==='전체'?(state.owners[0]||''):activePortfolioOwner,cat:activePortfolioCat==='전체'?(state.categories.find(c=>activePortfolioGroup==='전체'||c.group===activePortfolioGroup)?.name||state.categories[0]?.name||''):activePortfolioCat,institution:'',accountNumber:'',currency:'KRW',principal:'',value:'',memo:''};}
 function showPortfolioBatchForm(){editPortfolioId=null;portfolioBatchDraft=[blankPortfolioRow()];$('portfolioBatchForm').style.display='block';renderPortfolioBatchRows();window.scrollTo({top:$('portfolioBatchForm').offsetTop-120,behavior:'smooth'});}
 function hidePortfolioBatchForm(){$('portfolioBatchForm').style.display='none';portfolioBatchDraft=[];editPortfolioId=null;}
 function addPortfolioBatchRow(prefill){portfolioBatchDraft.push(prefill||blankPortfolioRow());renderPortfolioBatchRows();}
@@ -1898,6 +1978,8 @@ function renderPortfolioBatchRows(){
     <label>기준일<div class="date-combo"><input class="smart-date" inputmode="numeric" maxlength="10" value="${escapeHtml(normalizeDate(r.month))}" placeholder="YYYYMMDD" title="8자리 입력 또는 마우스 휠로 월 이동" onchange="updatePortfolioDraft(${r.draftId},'month',parseSmartDate(this.value))"><button type="button" class="date-picker-btn" onclick="openDatePicker(this)" aria-label="달력 열기">📅</button><input type="date" class="native-date-picker" onchange="applyDatePicker(this)"><small class="date-preview"></small></div></label>
     <label>소유자<select onchange="updatePortfolioDraft(${r.draftId},'owner',this.value)">${state.owners.map(x=>`<option ${x===r.owner?'selected':''}>${escapeHtml(x)}</option>`).join('')}</select></label>
     <label>항목<select onchange="updatePortfolioDraft(${r.draftId},'cat',this.value)">${categoryOptions(r.cat)}</select></label>
+    <label>은행·증권사<input class="ko-input" lang="ko" autocomplete="off" value="${escapeHtml(r.institution||'')}" oninput="updatePortfolioDraft(${r.draftId},'institution',this.value)" placeholder="예: 우리은행, 한국투자증권"></label>
+    <label>계좌번호<input autocomplete="off" value="${escapeHtml(r.accountNumber||'')}" oninput="updatePortfolioDraft(${r.draftId},'accountNumber',this.value)" placeholder="예: 123-456-789012"></label>
     <label>통화<select onchange="updatePortfolioDraft(${r.draftId},'currency',this.value)"><option value="KRW" ${r.currency==='KRW'?'selected':''}>원화</option><option value="USD" ${r.currency==='USD'?'selected':''}>달러</option></select></label>
     <label>원금<input class="money-input" inputmode="numeric" value="${escapeHtml(r.principal)}" oninput="updatePortfolioDraft(${r.draftId},'principal',this.value)" placeholder="0"></label>
     <label>평가액<input class="money-input" inputmode="numeric" value="${escapeHtml(r.value)}" oninput="updatePortfolioDraft(${r.draftId},'value',this.value)" placeholder="0"></label>
@@ -1907,16 +1989,16 @@ function renderPortfolioBatchRows(){
 function savePortfolioBatch(){
   if(!portfolioBatchDraft.length)return;
   const invalid=portfolioBatchDraft.some(r=>!r.month||!r.owner||!r.cat);if(invalid)return alert('기준일, 소유자, 항목을 모두 선택해 주세요.');
-  const records=portfolioBatchDraft.map(r=>({id:r.recordId||uniqueId(),month:r.month,owner:r.owner,cat:r.cat,currency:r.currency||'KRW',principal:parseMoney(r.principal),value:parseMoney(r.value),memo:String(r.memo||'').trim()}));
+  const records=portfolioBatchDraft.map(r=>({id:r.recordId||uniqueId(),month:r.month,owner:r.owner,cat:r.cat,institution:String(r.institution||'').trim(),accountNumber:String(r.accountNumber||'').trim(),currency:r.currency||'KRW',principal:parseMoney(r.principal),value:parseMoney(r.value),memo:String(r.memo||'').trim()}));
   if(editPortfolioId){const idx=state.portfolio.findIndex(x=>x.id===editPortfolioId);if(idx>=0)state.portfolio[idx]=records[0];}
   else state.portfolio.push(...records);
   hidePortfolioBatchForm();saveState();
 }
-function editPortfolio(id){const x=state.portfolio.find(v=>v.id===id);if(!x)return;editPortfolioId=id;portfolioBatchDraft=[{draftId:uniqueId(),recordId:id,month:x.month,owner:x.owner,cat:x.cat,currency:x.currency||'KRW',principal:x.principal,value:x.value,memo:x.memo||''}];$('portfolioBatchForm').style.display='block';renderPortfolioBatchRows();window.scrollTo({top:$('portfolioBatchForm').offsetTop-120,behavior:'smooth'});}
+function editPortfolio(id){const x=state.portfolio.find(v=>v.id===id);if(!x)return;editPortfolioId=id;portfolioBatchDraft=[{draftId:uniqueId(),recordId:id,month:x.month,owner:x.owner,cat:x.cat,institution:x.institution||'',accountNumber:x.accountNumber||'',currency:x.currency||'KRW',principal:x.principal,value:x.value,memo:x.memo||''}];$('portfolioBatchForm').style.display='block';renderPortfolioBatchRows();window.scrollTo({top:$('portfolioBatchForm').offsetTop-120,behavior:'smooth'});}
 function renderPortfolio(){
   const y=$('yearSelect').value;const arr=state.portfolio.filter(x=>x.month.startsWith(y)&&(activePortfolioOwner==='전체'||x.owner===activePortfolioOwner)&&(activePortfolioGroup==='전체'||categoryGroup(x.cat)===activePortfolioGroup)&&(activePortfolioCat==='전체'||x.cat===activePortfolioCat)).sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month))||a.cat.localeCompare(b.cat));
   visiblePortfolioIds=arr.map(x=>x.id);selectedPortfolioIds=new Set([...selectedPortfolioIds].filter(id=>visiblePortfolioIds.includes(id)));
-  $('portfolioRows').innerHTML=arr.map(x=>{const p=toKRW(x.principal,x.currency),v=toKRW(x.value,x.currency),d=v-p,r=p?d/p*100:0;const group=categoryGroup(x.cat);return `<tr><td class="select-col"><input class="select-box portfolio-row-check" type="checkbox" ${selectedPortfolioIds.has(x.id)?'checked':''} onchange="togglePortfolioSelection(${x.id},this.checked)" aria-label="${dateLabel(x.month)} ${escapeHtml(x.cat)} 선택"></td><td><b>${dateLabel(x.month)}</b><div class="muted">${escapeHtml(x.memo||'')}</div></td><td><span class="owner-dot"></span>${escapeHtml(x.owner)}</td><td><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span></td><td>${escapeHtml(x.cat)}</td><td>${x.currency}</td><td>${originalMoney(x.principal,x.currency)}</td><td>${originalMoney(x.value,x.currency)}</td><td>${money(v)}</td><td class="${d>0?'pos':d<0?'neg':'neutral'}">${d>0?'▲':d<0?'▼':'－'} ${money(Math.abs(d))}</td><td>${trend(r)}</td><td><button onclick="editPortfolio(${x.id})">수정</button> <button onclick="removeRecord('portfolio',${x.id})">삭제</button></td></tr>`}).join('')||'<tr><td colspan="12" class="empty">선택 연도의 포트폴리오 기록이 없습니다.</td></tr>';
+  $('portfolioRows').innerHTML=arr.map(x=>{const p=toKRW(x.principal,x.currency),v=toKRW(x.value,x.currency),d=v-p,r=p?d/p*100:0;const group=categoryGroup(x.cat);return `<tr><td class="select-col"><input class="select-box portfolio-row-check" type="checkbox" ${selectedPortfolioIds.has(x.id)?'checked':''} onchange="togglePortfolioSelection(${x.id},this.checked)" aria-label="${dateLabel(x.month)} ${escapeHtml(x.cat)} 선택"></td><td><b>${dateLabel(x.month)}</b><div class="muted">${escapeHtml(x.memo||'')}</div></td><td><span class="owner-dot"></span>${escapeHtml(x.owner)}</td><td><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span></td><td>${escapeHtml(x.cat)}</td><td>${escapeHtml(x.institution||'-')}</td><td><span class="account-mask">${escapeHtml(maskAccountNumber(x.accountNumber))}</span></td><td>${x.currency}</td><td>${originalMoney(x.principal,x.currency)}</td><td>${originalMoney(x.value,x.currency)}</td><td>${money(v)}</td><td class="${d>0?'pos':d<0?'neg':'neutral'}">${d>0?'▲':d<0?'▼':'－'} ${money(Math.abs(d))}</td><td>${trend(r)}</td><td><button onclick="editPortfolio(${x.id})">수정</button> <button onclick="removeRecord('portfolio',${x.id})">삭제</button></td></tr>`}).join('')||'<tr><td colspan="14" class="empty">선택 연도의 포트폴리오 기록이 없습니다.</td></tr>';
   updatePortfolioSelectionUI();
 }
 function togglePortfolioSelection(id,checked){checked?selectedPortfolioIds.add(id):selectedPortfolioIds.delete(id);updatePortfolioSelectionUI();}
@@ -1996,7 +2078,7 @@ function getDebtAt(cutoffMonth){return state.debts.reduce((sum,d)=>{const execDa
 function dashboardSnapshot(cutoffMonth){const items=getLatestPortfolioItems(cutoffMonth);const portfolioValue=items.reduce((s,x)=>s+toKRW(x.value,x.currency),0);const portfolioPrincipal=items.reduce((s,x)=>s+toKRW(x.principal,x.currency),0);const property=getPropertyAssetAt(cutoffMonth);const debt=getDebtAt(cutoffMonth);return {items,portfolioValue,portfolioPrincipal,property,debt,assets:portfolioValue+property,net:portfolioValue+property-debt};}
 function renderDashboard(){
   const y=$('yearSelect').value;const snap=dashboardSnapshot(yearEnd(y));const profit=snap.portfolioValue-snap.portfolioPrincipal,rate=snap.portfolioPrincipal?profit/snap.portfolioPrincipal*100:0;$('sumAsset').textContent=money(snap.assets);$('sumDebt').textContent=money(snap.debt);$('sumNet').textContent=money(snap.net);$('sumProfit').textContent=money(profit);$('sumProfit').className=profit>0?'pos':profit<0?'neg':'';$('profitRate').innerHTML=trend(rate);
-  const portfolioCards=snap.items.sort((a,b)=>toKRW(b.value,b.currency)-toKRW(a.value,a.currency)).map(x=>{const p=toKRW(x.principal,x.currency),v=toKRW(x.value,x.currency),r=p?(v-p)/p*100:0,group=categoryGroup(x.cat);return `<article class="asset-card" onclick='openPortfolioDetail(${JSON.stringify(x.owner)},${JSON.stringify(x.cat)})'><div class="topline"><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span><small>${escapeHtml(x.owner)}</small></div><h4>${escapeHtml(x.cat)}</h4><p>최근 기록 ${dateLabel(x.month)}</p><strong>${money(v)}</strong><div class="sub"><span>원금 ${money(p)}</span>${trend(r)}</div></article>`;}).join('');
+  const portfolioCards=snap.items.sort((a,b)=>toKRW(b.value,b.currency)-toKRW(a.value,a.currency)).map(x=>{const p=toKRW(x.principal,x.currency),v=toKRW(x.value,x.currency),r=p?(v-p)/p*100:0,group=categoryGroup(x.cat);return `<article class="asset-card" onclick='openPortfolioDetail(${JSON.stringify(x.owner)},${JSON.stringify(x.cat)})'><div class="topline"><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span><small>${escapeHtml(x.owner)}</small></div><h4>${escapeHtml(x.cat)}</h4><p>${escapeHtml(assetAccountLabel(x)||`최근 기록 ${dateLabel(x.month)}`)}</p><strong>${money(v)}</strong><div class="sub"><span>원금 ${money(p)}</span>${trend(r)}</div></article>`;}).join('');
   const propertyCards=state.properties.map(p=>{const trades=state.propertyTrades.filter(t=>t.propertyId===p.id&&normalizeDate(t.month)<=yearEnd(y));const high=trades.length?Math.max(...trades.map(t=>t.price)):0;if(!high)return '';return `<article class="asset-card" onclick="openPropertyDetailModal(${p.id})"><div class="topline"><span class="tag">부동산</span><small>${escapeHtml(p.owner)}</small></div><h4>${escapeHtml(p.name)}</h4><p>${escapeHtml(p.location||'지역 미입력')}</p><strong>${money(high)}</strong><div class="sub"><span>최고 실거래가 기준</span><span>상세보기 →</span></div></article>`;}).join('');
   $('dashboardItems').innerHTML=portfolioCards+propertyCards||'<div class="box empty" style="grid-column:1/-1">표시할 자산 기록이 없습니다.</div>';drawDashboardCharts(y);
 }
@@ -2008,7 +2090,7 @@ function drawDashboardCharts(y){
 function chartOptions(title){return {responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{title:{display:true,text:title},legend:{position:'bottom'},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`}}},scales:{y:{ticks:{callback:v=>Number(v).toLocaleString('ko-KR')}}}};}
 function drawChart(holderKey,canvasId,type,data,options){if(typeof Chart==='undefined')return;const old=window[holderKey];if(old?.destroy)old.destroy();window[holderKey]=new Chart($(canvasId),{type,data,options});}
 function openPortfolioDetail(owner,cat){
-  const y=$('yearSelect').value;const latest=getLatestPortfolioItems(yearEnd(y)).find(x=>x.owner===owner&&x.cat===cat);$('detailTitle').textContent=cat;$('detailMeta').textContent=`${owner} · ${categoryGroup(cat)} · ${y}년`;
+  const y=$('yearSelect').value;const latest=getLatestPortfolioItems(yearEnd(y)).find(x=>x.owner===owner&&x.cat===cat);$('detailTitle').textContent=cat;$('detailMeta').textContent=`${owner} · ${categoryGroup(cat)} · ${y}년${latest&&assetAccountLabel(latest)?` · ${assetAccountLabel(latest)}`:''}`;
   const lp=latest?toKRW(latest.principal,latest.currency):0,lv=latest?toKRW(latest.value,latest.currency):0,profit=lv-lp,rate=lp?profit/lp*100:0;$('detailStats').innerHTML=`<div><small>최근 원금</small><b>${money(lp)}</b></div><div><small>최근 평가액</small><b>${money(lv)}</b></div><div><small>평가손익</small><b class="${profit>0?'pos':profit<0?'neg':''}">${money(profit)}</b></div><div><small>수익률</small><b>${trend(rate)}</b></div>`;
   const monthly=Array.from({length:12},(_,i)=>{const month=monthCutoff(y,i+1);const x=state.portfolio.filter(v=>v.owner===owner&&v.cat===cat&&v.month<=month).sort((a,b)=>normalizeDate(b.month).localeCompare(normalizeDate(a.month)))[0];return {month:`${i+1}월`,principal:x?toKRW(x.principal,x.currency):null,value:x?toKRW(x.value,x.currency):null};});showDetailModal();if(typeof Chart!=='undefined'){if(detailChart)detailChart.destroy();detailChart=new Chart($('detailChart'),{type:'line',data:{labels:monthly.map(x=>x.month),datasets:[{label:'원금',data:monthly.map(x=>x.principal),tension:.25},{label:'평가액',data:monthly.map(x=>x.value),tension:.25}]},options:chartOptions(`${cat} 월별 현황`)});}
 }
@@ -2306,6 +2388,19 @@ async function deletePost(id){
   if(error)return alert(error.message);
   loadPosts(boardCurrentPage);
 }
+async function expelMember(userId){
+  if(!isDeveloper||!developerMode)return alert('개발자 모드를 켜야 사용할 수 있습니다.');
+  if(!userId||String(userId)===String(currentUser?.id))return alert('현재 개발자 계정은 추방할 수 없습니다.');
+  if(!confirm('선택한 회원의 로그인 계정과 모든 자산 데이터를 삭제합니다. 게시글과 댓글은 탈퇴한 사용자로 익명 처리됩니다. 계속할까요?'))return;
+  const phrase=prompt('이 작업은 되돌릴 수 없습니다. 계속하려면 “회원추방”을 입력하세요.');
+  if(phrase===null)return;
+  if(phrase.trim()!=='회원추방')return alert('확인 문구가 일치하지 않아 취소했습니다.');
+  const {error}=await supabaseClient.rpc('admin_expel_user',{target_user_id:userId});
+  if(error)return alert(`회원 추방에 실패했습니다. ${error.message}`);
+  alert('회원을 추방하고 계정 및 자산 데이터를 삭제했습니다.');
+  loadDeveloperData();
+}
+
 async function loadDeveloperData(){
   if(!isDeveloper||!developerMode)return alert('개발자 모드를 켜야 접근할 수 있습니다.');
   const box=$('developerDataList');box.innerHTML='<div class="empty">불러오는 중...</div>';
@@ -2316,7 +2411,8 @@ async function loadDeveloperData(){
   if(pe||ae){box.innerHTML=`<div class="empty">개발자 데이터 조회 실패<br>${escapeHtml((pe||ae).message)}</div>`;return;}
   const allUsers=(profiles||[]).map(p=>{
     const asset=(assets||[]).find(a=>a.user_id===p.user_id);
-    return `<div class="dev-data-item"><b>${escapeHtml(p.nickname||'닉네임 없음')}</b><small> · ${escapeHtml(p.email||'이메일 없음')} · 가입 ${p.created_at?new Date(p.created_at).toLocaleString('ko-KR'):'-' }${asset?` · 최근 동기화 ${new Date(asset.updated_at).toLocaleString('ko-KR')}`:' · 저장 데이터 없음'}</small>${asset?`<pre>${escapeHtml(JSON.stringify(asset.data,null,2).slice(0,6000))}</pre>`:''}</div>`;
+    const memberAction=String(p.user_id)===String(currentUser?.id)?'<span class="mini-pill">현재 개발자 계정</span>':`<button class="btn danger" type="button" onclick="expelMember('${String(p.user_id).replace(/'/g,'')}')">회원 추방</button>`;
+    return `<div class="dev-data-item"><b>${escapeHtml(p.nickname||'닉네임 없음')}</b><small> · ${escapeHtml(p.email||'이메일 없음')} · 가입 ${p.created_at?new Date(p.created_at).toLocaleString('ko-KR'):'-' }${asset?` · 최근 동기화 ${new Date(asset.updated_at).toLocaleString('ko-KR')}`:' · 저장 데이터 없음'}</small>${asset?`<pre>${escapeHtml(JSON.stringify(asset.data,null,2).slice(0,6000))}</pre>`:''}<div class="dev-member-actions">${memberAction}</div></div>`;
   });
   box.innerHTML=allUsers.join('')||'<div class="empty">가입 회원이 없습니다.</div>';
 }
