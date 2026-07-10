@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WOOYOO ASSET V1.0.5</title>
-<meta name="application-name" content="WOOYOO ASSET V1.0.5">
-<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.0.5">
+<title>WOOYOO ASSET V1.0.6</title>
+<meta name="application-name" content="WOOYOO ASSET V1.0.6">
+<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.0.6">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -38,6 +38,7 @@ nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}nav button{border:1px soli
 
 .date-combo{display:grid;grid-template-columns:1fr 42px;gap:6px;align-items:start;margin-top:5px}.date-combo input{margin-top:0}.date-picker-btn{height:42px;border:1px solid var(--line);border-radius:9px;background:#f8fafc;cursor:pointer;font-size:18px}.native-date-picker{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}.date-preview{grid-column:1/-1;display:block;color:var(--muted);font-size:11px;margin-top:-1px}.smart-date.invalid{border-color:#dc2626;background:#fff7f7}
 .buy-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0}.buy-summary>div{background:#fff;border:1px solid #e7ecf4;border-radius:14px;padding:15px;box-shadow:var(--shadow)}.buy-summary small{display:block;color:var(--muted)}.buy-summary b{display:block;font-size:21px;margin-top:7px}.buy-controls{display:grid;grid-template-columns:1.2fr 1fr auto auto;gap:12px;align-items:end}.buy-table input{margin-top:0;min-width:120px}.buy-table td:first-child{text-align:left}.buy-warning{padding:10px 12px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:12px;margin:10px 0;display:none}.buy-warning.show{display:block}.qty-badge{display:inline-flex;min-width:46px;justify-content:center;padding:5px 9px;border-radius:999px;background:#eef2ff;color:#3730a3;font-weight:800}.buy-note{background:#f8fafc;border-radius:12px;padding:12px;color:var(--muted);font-size:12px;margin-top:12px}
+.buy-plan-manager{margin-bottom:16px;padding:15px;border:1px solid #dfe6ee;border-radius:13px;background:#f8fafc}.buy-plan-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}.buy-plan-head h3{margin:0;font-size:15px}.buy-plan-head p{margin:4px 0 0;color:var(--muted);font-size:11.5px}.buy-plan-actions{display:grid;grid-template-columns:minmax(180px,1fr) auto auto auto;gap:8px;align-items:center}.buy-plan-actions select{margin:0}.buy-plan-status{display:inline-flex;align-items:center;justify-content:center;min-height:26px;padding:5px 9px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:10.5px;font-weight:850;white-space:nowrap}.buy-plan-status.dirty{background:#fff7ed;color:#9a3412}.buy-plan-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:12px}.buy-plan-card{border:1px solid #e1e7ed;border-radius:11px;background:#fff;padding:11px;text-align:left;cursor:pointer;transition:.15s}.buy-plan-card:hover{border-color:#9bcac4;transform:translateY(-1px)}.buy-plan-card.active{border-color:var(--pri);box-shadow:0 0 0 2px rgba(15,118,110,.10)}.buy-plan-card b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#172033}.buy-plan-card small{display:block;margin-top:4px;color:var(--muted);font-size:10.5px}.buy-plan-empty{grid-column:1/-1;padding:14px;border:1px dashed #cbd5e1;border-radius:10px;text-align:center;color:var(--muted);font-size:11.5px}
 @media(max-width:1150px){.batch-grid{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:1000px){.buy-controls{grid-template-columns:1fr 1fr}.buy-summary{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr 1fr}.asset-summary,.grid3{grid-template-columns:1fr 1fr}.formgrid{grid-template-columns:1fr 1fr}.property-grid,.debt-grid{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.hero-tools{width:100%}.fx-pill{flex:1}.modal-stats{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.buy-controls,.buy-summary{grid-template-columns:1fr}.batch-grid{grid-template-columns:1fr 1fr}.app{padding:10px}.cards,.asset-summary,.grid2,.grid3,.formgrid,.modal-stats{grid-template-columns:1fr}.hero{padding:16px}.brand{align-items:flex-start}.brand h1{font-size:21px}.logo{width:3cm;height:3cm;min-width:3cm}.chartbox{height:300px}.sectionhead{align-items:flex-start;flex-direction:column}.sectionhead .btn{width:100%}.property-card,.debt-card{padding:14px}}
@@ -847,6 +848,9 @@ nav button.active .nav-update-dot{display:none}
 @media(max-width:1000px){.holding-group .asset-summary,.profit-breakdown-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:720px){.holding-group{padding:13px}.holding-group-head{align-items:flex-start;flex-direction:column}.holding-group-total{text-align:left}.holding-group .asset-summary,.profit-breakdown-list{grid-template-columns:1fr}}
 
+
+@media(max-width:1000px){.buy-plan-list{grid-template-columns:repeat(2,minmax(0,1fr))}.buy-plan-actions{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.buy-plan-head{flex-direction:column}.buy-plan-actions,.buy-plan-list{grid-template-columns:1fr}.buy-plan-actions .btn{width:100%}}
 </style>
 </head>
 <body class="auth-pending">
@@ -904,7 +908,7 @@ nav button.active .nav-update-dot{display:none}
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.0.5</span></h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.0.6</span></h1><p>Private family wealth dashboard</p></div>
     </div>
     <div class="welcome-account-bar">
       <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
@@ -1082,8 +1086,21 @@ nav button.active .nav-update-dot{display:none}
 
 
   <section id="buytable" class="panel">
-    <div class="sectionhead"><div><h2>매수표</h2><p>투자 예산과 종목별 목표 비중을 입력하면 주문 가능 수량과 남는 예수금을 자동 계산합니다.</p></div></div>
+    <div class="sectionhead"><div><h2>매수표</h2><p>여러 매수계획을 생성·저장하고 필요할 때 다시 불러올 수 있습니다.</p></div></div>
     <div class="form">
+      <div class="buy-plan-manager">
+        <div class="buy-plan-head">
+          <div><h3>저장된 매수표</h3><p>계좌·목적별 매수계획을 따로 저장해 반복해서 사용할 수 있습니다.</p></div>
+          <span id="buyPlanStatus" class="buy-plan-status">새 매수표</span>
+        </div>
+        <div class="buy-plan-actions">
+          <select id="buyPlanSelect" onchange="loadBuyPlan(this.value)"><option value="">저장된 매수표 선택</option></select>
+          <button class="btn secondary" type="button" onclick="newBuyPlan()">＋ 새 매수표</button>
+          <button class="btn primary" type="button" onclick="saveBuyPlan()">저장</button>
+          <button id="deleteBuyPlanBtn" class="btn danger" type="button" onclick="deleteBuyPlan()" disabled>삭제</button>
+        </div>
+        <div id="buyPlanList" class="buy-plan-list"></div>
+      </div>
       <div class="buy-controls">
         <label>계좌/계획명<input id="buyAccount" class="ko-input" lang="ko" autocomplete="off" placeholder="예: ISA" oninput="updateBuyAccount(this.value)"></label>
         <label>투자 예산<input id="buyBudget" class="money-input" inputmode="numeric" placeholder="예: 1,000,000" oninput="updateBuyBudget(this.value)"></label>
@@ -1113,7 +1130,7 @@ nav button.active .nav-update-dot{display:none}
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span id="noticeCountLabel" class="selection-count">0건</span><button id="noticeWriteToggleBtn" class="btn primary admin-only dev-tools" onclick="toggleNoticeForm(true)">＋ 공지 작성</button></div>
         </div>
         <div id="noticeWriteBox" class="notice-admin-form admin-only dev-tools" style="display:none">
-          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.0.5 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.0.5"></label></div>
+          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.0.6 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.0.6"></label></div>
           <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="noticeContent" class="ko-input wide-textarea" lang="ko" maxlength="10000" placeholder="업데이트 내용 또는 공지사항"></textarea></label>
           <div class="actions"><button class="btn soft" onclick="cancelNoticeEdit()">취소</button><button id="noticeSubmitBtn" class="btn primary" onclick="saveNotice()">공지 등록</button></div>
         </div>
@@ -1248,7 +1265,7 @@ nav button.active .nav-update-dot{display:none}
 </div>
 
 <script>
-const APP_VERSION='1.0.5';
+const APP_VERSION='1.0.6';
 const APP_TITLE='WOOYOO ASSET';
 const LEGACY_KEY='wooyoo_assets_v11';
 const LEGACY_OLD_KEY='wooyoo_assets_v10';
@@ -1303,7 +1320,8 @@ function setAuthStorageNamespace(userId){
   LAST_ACTIVE_PROFILE_KEY=`${LAST_ACTIVE_PROFILE_BASE_KEY}_${safe}`;
 }
 
-function defaultState(){return {owners:['소유자 1','소유자 2'],categories:DEFAULT_CATEGORIES.map(c=>({...c})),portfolio:[],properties:[],propertyTrades:[],debts:[],debtPayments:[],dashboardVisibility:{},buyTable:{account:'',budget:0,rows:[{id:Date.now()+1,name:'',weight:0,price:0},{id:Date.now()+2,name:'',weight:0,price:0}]},fx:0,fxAt:null,logoData:''};}
+function createBlankBuyTable(){return {account:'',budget:0,rows:[{id:uniqueId(),name:'',weight:0,price:0},{id:uniqueId(),name:'',weight:0,price:0}]};}
+function defaultState(){return {owners:['소유자 1','소유자 2'],categories:DEFAULT_CATEGORIES.map(c=>({...c})),portfolio:[],properties:[],propertyTrades:[],debts:[],debtPayments:[],dashboardVisibility:{},buyTable:createBlankBuyTable(),buyPlans:[],activeBuyPlanId:null,fx:0,fxAt:null,logoData:''};}
 function profileStateKey(id){return `${PROFILE_STATE_PREFIX}${id}`;}
 function getProfiles(){try{const value=JSON.parse(localStorage.getItem(PROFILE_REGISTRY_KEY)||'[]');return Array.isArray(value)?value:[];}catch(e){return [];}}
 function saveProfiles(profiles){localStorage.setItem(PROFILE_REGISTRY_KEY,JSON.stringify(profiles));queueCloudSave();}
@@ -1332,9 +1350,17 @@ function normalizeState(s){
   s.propertyTrades=(s.propertyTrades||[]).map(x=>({...x,month:normalizeDate(x.month||x.date)}));
   s.debtPayments=(s.debtPayments||[]).map(x=>({...x,month:normalizeDate(x.month||x.date)}));
   s.dashboardVisibility=s.dashboardVisibility&&typeof s.dashboardVisibility==='object'?s.dashboardVisibility:{};
-  s.buyTable=s.buyTable&&typeof s.buyTable==='object'?s.buyTable:{account:'',budget:0,rows:[]};
-  s.buyTable.rows=Array.isArray(s.buyTable.rows)&&s.buyTable.rows.length?s.buyTable.rows:[{id:Date.now()+1,name:'',weight:0,price:0},{id:Date.now()+2,name:'',weight:0,price:0}];
-  s.buyTable.rows=s.buyTable.rows.map((r,i)=>({id:r.id||Date.now()+i+1,name:r.name||'',weight:Number(r.weight||0),price:Number(r.price||0)}));
+  s.buyTable=s.buyTable&&typeof s.buyTable==='object'?s.buyTable:createBlankBuyTable();
+  s.buyTable.account=String(s.buyTable.account||'');
+  s.buyTable.budget=Number(s.buyTable.budget||0);
+  s.buyTable.rows=Array.isArray(s.buyTable.rows)&&s.buyTable.rows.length?s.buyTable.rows:createBlankBuyTable().rows;
+  s.buyTable.rows=s.buyTable.rows.map((r,i)=>({id:r.id||uniqueId()+i,name:String(r.name||''),weight:Number(r.weight||0),price:Number(r.price||0)}));
+  s.buyPlans=Array.isArray(s.buyPlans)?s.buyPlans.map((p,i)=>({
+    id:String(p.id||`bp_${Date.now()}_${i}`),name:String(p.name||p.account||`매수표 ${i+1}`),account:String(p.account||p.name||''),budget:Number(p.budget||0),
+    rows:(Array.isArray(p.rows)&&p.rows.length?p.rows:createBlankBuyTable().rows).map((r,j)=>({id:r.id||uniqueId()+j,name:String(r.name||''),weight:Number(r.weight||0),price:Number(r.price||0)})),
+    createdAt:p.createdAt||new Date().toISOString(),updatedAt:p.updatedAt||p.createdAt||new Date().toISOString()
+  })):[];
+  s.activeBuyPlanId=s.buyPlans.some(p=>p.id===String(s.activeBuyPlanId||''))?String(s.activeBuyPlanId):null;
   return s;
 }
 const $=id=>document.getElementById(id);
@@ -1399,7 +1425,7 @@ function localTabSignatures(){const profile=getActiveProfile();return {
   portfolio:signatureOf(state.portfolio),
   realestate:signatureOf({properties:state.properties,propertyTrades:state.propertyTrades}),
   debt:signatureOf({debts:state.debts,debtPayments:state.debtPayments}),
-  buytable:signatureOf(state.buyTable),
+  buytable:signatureOf({buyTable:state.buyTable,buyPlans:state.buyPlans,activeBuyPlanId:state.activeBuyPlanId}),
   settings:signatureOf({owners:state.owners,categories:state.categories,profileName:profile?.name||'',logoSize:String(state.logoData||'').length}),
   developer:signatureOf({memberCount:publicMemberCount})
 };}
@@ -1685,13 +1711,24 @@ function mergeRows(remoteRows,localRows){
   (localRows||[]).forEach(x=>map.set(String(x.id),x));
   return [...map.values()];
 }
+function mergeBuyPlans(remotePlans,localPlans){
+  const map=new Map();
+  [...(remotePlans||[]),...(localPlans||[])].forEach(plan=>{
+    if(!plan?.id)return;
+    const key=String(plan.id),prev=map.get(key);
+    if(!prev||(Date.parse(plan.updatedAt||0)||0)>=(Date.parse(prev.updatedAt||0)||0))map.set(key,plan);
+  });
+  return [...map.values()].sort((a,b)=>(Date.parse(b.updatedAt||0)||0)-(Date.parse(a.updatedAt||0)||0));
+}
 function mergeLegacyProfileState(remoteSaved,localSaved){
   const remote=normalizeState({...defaultState(),...(remoteSaved||{})});
   const local=normalizeState({...defaultState(),...(localSaved||{})});
   const categoryMap=new Map();
   [...(remote.categories||[]),...(local.categories||[])].forEach(c=>categoryMap.set(`${c.group}|${c.name}`,c));
   const ownerList=[...new Set([...(remote.owners||[]),...(local.owners||[])])];
-  const localBuyMeaningful=!!(local.buyTable?.account||Number(local.buyTable?.budget||0)||(local.buyTable?.rows||[]).some(r=>r.name||r.weight||r.price));
+  const localBuyMeaningful=buyTableMeaningful(local.buyTable);
+  const mergedBuyPlans=mergeBuyPlans(remote.buyPlans,local.buyPlans);
+  const activeBuyPlanId=mergedBuyPlans.some(p=>p.id===String(local.activeBuyPlanId||''))?String(local.activeBuyPlanId):mergedBuyPlans.some(p=>p.id===String(remote.activeBuyPlanId||''))?String(remote.activeBuyPlanId):null;
   const localFxAt=Date.parse(local.fxAt||0)||0,remoteFxAt=Date.parse(remote.fxAt||0)||0;
   return normalizeState({...defaultState(),...remote,...local,
     owners:ownerList.length?ownerList:defaultState().owners,
@@ -1702,6 +1739,8 @@ function mergeLegacyProfileState(remoteSaved,localSaved){
     debts:mergeRows(remote.debts,local.debts),
     debtPayments:mergeRows(remote.debtPayments,local.debtPayments),
     buyTable:localBuyMeaningful?local.buyTable:remote.buyTable,
+    buyPlans:mergedBuyPlans,
+    activeBuyPlanId,
     fx:localFxAt>=remoteFxAt?local.fx:remote.fx,
     fxAt:localFxAt>=remoteFxAt?local.fxAt:remote.fxAt,
     logoData:local.logoData||remote.logoData||''
@@ -2573,17 +2612,57 @@ function openPropertyDetailModal(id){
 function showDetailModal(){$('detailModal').classList.add('show');}function closeDetailModal(){$('detailModal').classList.remove('show');}
 
 function persistState(){if(KEY)localStorage.setItem(KEY,JSON.stringify(state));queueCloudSave();}
-function updateBuyAccount(value){state.buyTable.account=value;persistState();}
-function updateBuyBudget(value){state.buyTable.budget=parseMoney(value);persistState();calculateBuyTable();}
-function updateBuyRow(id,field,value){const row=state.buyTable.rows.find(r=>r.id===id);if(!row)return;row[field]=field==='name'?value:parseMoney(value);persistState();calculateBuyTable();}
+function cloneBuyTable(table=state.buyTable){return {account:String(table?.account||''),budget:Number(table?.budget||0),rows:(table?.rows||[]).map(r=>({id:r.id||uniqueId(),name:String(r.name||''),weight:Number(r.weight||0),price:Number(r.price||0)}))};}
+function buyTableMeaningful(table=state.buyTable){return !!(String(table?.account||'').trim()||Number(table?.budget||0)||(table?.rows||[]).some(r=>String(r.name||'').trim()||Number(r.weight||0)||Number(r.price||0)));}
+function activeBuyPlan(){return (state.buyPlans||[]).find(p=>p.id===state.activeBuyPlanId)||null;}
+function buyTableSignature(table){return JSON.stringify({account:String(table?.account||''),budget:Number(table?.budget||0),rows:(table?.rows||[]).map(r=>({name:String(r.name||''),weight:Number(r.weight||0),price:Number(r.price||0)}))});}
+function isBuyPlanDirty(){const plan=activeBuyPlan();return plan?buyTableSignature(state.buyTable)!==buyTableSignature(plan):buyTableMeaningful(state.buyTable);}
+function updateBuyPlanStatus(){
+  const el=$('buyPlanStatus'),plan=activeBuyPlan(),dirty=isBuyPlanDirty();if(!el)return;
+  el.textContent=plan?(dirty?'수정사항 미저장':'저장됨'):(dirty?'새 매수표 작성 중':'새 매수표');
+  el.classList.toggle('dirty',dirty);
+  if($('deleteBuyPlanBtn'))$('deleteBuyPlanBtn').disabled=!plan;
+}
+function renderBuyPlanManager(){
+  const plans=(state.buyPlans||[]).slice().sort((a,b)=>(Date.parse(b.updatedAt||0)||0)-(Date.parse(a.updatedAt||0)||0));
+  const select=$('buyPlanSelect');if(select){select.innerHTML='<option value="">저장된 매수표 선택</option>'+plans.map(p=>`<option value="${escapeHtml(p.id)}" ${p.id===state.activeBuyPlanId?'selected':''}>${escapeHtml(p.name)}</option>`).join('');}
+  const list=$('buyPlanList');if(list)list.innerHTML=plans.length?plans.map(p=>`<button type="button" class="buy-plan-card ${p.id===state.activeBuyPlanId?'active':''}" onclick='loadBuyPlan(${JSON.stringify(p.id)})'><b>${escapeHtml(p.name)}</b><small>${money(p.budget)} · ${(p.rows||[]).length}종목</small><small>수정 ${new Date(p.updatedAt).toLocaleString('ko-KR')}</small></button>`).join(''):'<div class="buy-plan-empty">저장된 매수표가 없습니다. 계획명과 예산을 입력한 뒤 저장해 보세요.</div>';
+  updateBuyPlanStatus();
+}
+function updateBuyAccount(value){state.buyTable.account=value;persistState();updateBuyPlanStatus();}
+function updateBuyBudget(value){state.buyTable.budget=parseMoney(value);persistState();calculateBuyTable();updateBuyPlanStatus();}
+function updateBuyRow(id,field,value){const row=state.buyTable.rows.find(r=>r.id===id);if(!row)return;row[field]=field==='name'?value:parseMoney(value);persistState();calculateBuyTable();updateBuyPlanStatus();}
 function addBuyRow(){state.buyTable.rows.push({id:uniqueId(),name:'',weight:0,price:0});persistState();renderBuyTable();}
 function removeBuyRow(id){if(state.buyTable.rows.length===1)return alert('종목은 최소 1개가 필요합니다.');state.buyTable.rows=state.buyTable.rows.filter(r=>r.id!==id);persistState();renderBuyTable();}
-function resetBuyTable(){if(!confirm('매수표 입력값을 모두 초기화할까요?'))return;state.buyTable={account:'',budget:0,rows:[{id:uniqueId(),name:'',weight:0,price:0},{id:uniqueId(),name:'',weight:0,price:0}]};persistState();renderBuyTable();}
+function saveBuyPlan(){
+  const name=String(state.buyTable.account||'').trim();if(!name)return alert('계좌/계획명을 입력해 주세요.');
+  const now=new Date().toISOString(),current=activeBuyPlan(),table=cloneBuyTable();
+  if(current){Object.assign(current,{name,account:table.account,budget:table.budget,rows:table.rows,updatedAt:now});}
+  else{const plan={id:`bp_${Date.now()}_${Math.random().toString(36).slice(2,7)}`,name,account:table.account,budget:table.budget,rows:table.rows,createdAt:now,updatedAt:now};state.buyPlans.push(plan);state.activeBuyPlanId=plan.id;}
+  persistState();renderBuyTable();alert(`“${name}” 매수표를 저장했습니다.`);
+}
+function loadBuyPlan(id){
+  if(!id)return;
+  const plan=(state.buyPlans||[]).find(p=>p.id===String(id));if(!plan)return;
+  if(isBuyPlanDirty()&&!confirm('현재 작성 중인 미저장 내용을 닫고 선택한 매수표를 불러올까요?')){renderBuyPlanManager();return;}
+  state.activeBuyPlanId=plan.id;state.buyTable=cloneBuyTable(plan);persistState();renderBuyTable();
+}
+function newBuyPlan(){
+  if(isBuyPlanDirty()&&!confirm('현재 작성 중인 미저장 내용을 비우고 새 매수표를 만들까요?'))return;
+  state.activeBuyPlanId=null;state.buyTable=createBlankBuyTable();persistState();renderBuyTable();setTimeout(()=>$('buyAccount')?.focus(),30);
+}
+function deleteBuyPlan(){
+  const plan=activeBuyPlan();if(!plan)return;
+  if(!confirm(`저장된 매수표 “${plan.name}”을 삭제할까요?`))return;
+  state.buyPlans=state.buyPlans.filter(p=>p.id!==plan.id);state.activeBuyPlanId=null;state.buyTable=createBlankBuyTable();persistState();renderBuyTable();
+}
+function resetBuyTable(){if(!confirm('현재 매수표 입력값을 초기화할까요? 저장된 매수표는 삭제되지 않습니다.'))return;state.buyTable=createBlankBuyTable();persistState();renderBuyTable();}
 function renderBuyTable(){
   if(!$('buyRows'))return;
+  if(!state.buyTable||!Array.isArray(state.buyTable.rows))state.buyTable=createBlankBuyTable();
   $('buyAccount').value=state.buyTable.account||'';setMoneyInput($('buyBudget'),state.buyTable.budget||'');
   $('buyRows').innerHTML=state.buyTable.rows.map((r,i)=>`<tr><td><input class="ko-input" lang="ko" autocomplete="off" value="${escapeHtml(r.name)}" placeholder="${i===0?'예: TIGER 미국S&P500':i===1?'예: KODEX 미국나스닥100':'예: 종목명'}" oninput="updateBuyRow(${r.id},'name',this.value)"></td><td><div class="inline"><input inputmode="decimal" value="${r.weight?num(r.weight):''}" placeholder="예: ${i===0?'60':i===1?'40':'20'}" oninput="updateBuyRow(${r.id},'weight',this.value)" style="min-width:90px"><span>%</span></div></td><td><input class="money-input" inputmode="numeric" value="${r.price?Number(r.price).toLocaleString('ko-KR'):''}" placeholder="예: 20,000" oninput="updateBuyRow(${r.id},'price',this.value)"></td><td id="buyAlloc-${r.id}">₩0</td><td><span id="buyQty-${r.id}" class="qty-badge">0</span></td><td id="buyOrder-${r.id}">₩0</td><td id="buyLeft-${r.id}">₩0</td><td><button onclick="removeBuyRow(${r.id})">삭제</button></td></tr>`).join('');
-  attachMoneyFormatting();attachKoreanPreference();calculateBuyTable();
+  attachMoneyFormatting();attachKoreanPreference();calculateBuyTable();renderBuyPlanManager();
 }
 function calculateBuyTable(){
   if(!$('buyRows'))return;
@@ -2591,6 +2670,7 @@ function calculateBuyTable(){
   state.buyTable.rows.forEach(r=>{const weight=Number(r.weight||0),price=Number(r.price||0),allocated=budget*weight/100,qty=price>0?Math.floor(allocated/price):0,order=qty*price,left=Math.max(0,allocated-order);totalWeight+=weight;totalOrder+=order;const a=$(`buyAlloc-${r.id}`),q=$(`buyQty-${r.id}`),o=$(`buyOrder-${r.id}`),l=$(`buyLeft-${r.id}`);if(a)a.textContent=money(allocated);if(q)q.textContent=num(qty);if(o)o.textContent=money(order);if(l)l.textContent=money(left);});
   const cash=Math.max(0,budget-totalOrder);$('buyBudgetSum').textContent=money(budget);$('buyWeightSum').textContent=`${totalWeight.toFixed(2)}%`;$('buyOrderSum').textContent=money(totalOrder);$('buyCashLeft').textContent=money(cash);
   const warning=$('buyWeightWarning');if(totalWeight>100){warning.textContent=`목표 비중이 100%를 ${(totalWeight-100).toFixed(2)}% 초과했습니다. 주문 가능수량은 입력 비중대로 계산되지만 총 배정금액이 예산을 넘을 수 있습니다.`;warning.classList.add('show');}else if(totalWeight<100){warning.textContent=`목표 비중이 100%보다 ${(100-totalWeight).toFixed(2)}% 부족합니다. 미배정 금액은 남는 예수금에 포함됩니다.`;warning.classList.add('show');}else warning.classList.remove('show');
+  updateBuyPlanStatus();
 }
 
 function removeRecord(key,id){if(confirm('이 기록을 삭제할까요?')){const old=state[key]?.find(x=>x.id===id);state[key]=state[key].filter(x=>x.id!==id);if(key==='debtPayments'&&old)recalculateDebtBalances(old.debtId);saveState();}}
