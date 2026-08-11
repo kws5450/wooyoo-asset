@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WOOYOO ASSET V1.1.0</title>
-<meta name="application-name" content="WOOYOO ASSET V1.1.0">
-<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.1.0">
+<title>WOOYOO ASSET V1.1.1</title>
+<meta name="application-name" content="WOOYOO ASSET V1.1.1">
+<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.1.1">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -948,6 +948,17 @@ body{background:var(--v110-bg)!important;color:var(--v110-text)}
 body.mobile-sheet-open{overflow:hidden}
 @media(max-width:900px){.topbar-tools>.header-account-menu{position:fixed!important;left:10px!important;right:10px!important;top:72px!important;width:auto!important}}
 
+
+/* WOOYOO ASSET v1.1.1 — dashboard simplification and navigation UX */
+.panel{max-width:1220px!important}
+.dashboard-subhead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:18px 2px 8px}.dashboard-subhead h3{margin:0;color:#182522;font-size:14px;font-weight:900}.dashboard-subhead p{margin:3px 0 0;color:var(--v110-muted);font-size:9.5px}.dashboard-subhead span{color:#9aa5a2;font-size:9px;font-weight:800}
+.monthly-change-card{border-color:#dbe9e6!important;background:linear-gradient(155deg,#ffffff,#f7fbfa)!important}.monthly-change-main{margin-top:13px!important;padding:13px 0!important}.monthly-change-main b{font-size:20px!important}.monthly-change-list>div{padding:3px 0}.monthly-change-list b{font-size:11.5px!important}
+.asset-class-card b,.net-worth-hero>b,.net-worth-breakdown strong,.monthly-change-main b,.monthly-change-list b{font-variant-numeric:tabular-nums}
+.dashboard-analysis-grid{grid-template-columns:minmax(0,1.55fr) minmax(310px,.7fr)!important;margin-top:12px!important}.dashboard-analysis-grid .chartbox{height:330px!important}.dashboard-detail-disclosure{display:none!important}
+.dashboard-visibility-manager{margin:14px 0 18px;border:1px solid var(--v110-line);border-radius:16px;background:#fff;box-shadow:0 5px 18px rgba(15,23,42,.03);overflow:hidden}.dashboard-visibility-manager>summary{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 17px;cursor:pointer;list-style:none}.dashboard-visibility-manager>summary::-webkit-details-marker{display:none}.dashboard-visibility-manager>summary b{display:block;color:#172421;font-size:12.5px}.dashboard-visibility-manager>summary small{display:block;margin-top:3px;color:var(--v110-muted);font-size:9.5px}.dashboard-visibility-manager>summary>span:last-child{color:var(--v110-primary);font-size:10px;font-weight:850}.dashboard-visibility-manager[open]>summary{border-bottom:1px solid #edf1f1}.visibility-manager-body{padding:14px}.visibility-manager-overview{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;margin-bottom:11px;border-radius:12px;background:#f7faf9}.visibility-manager-overview b{font-size:11px}.visibility-manager-overview span{display:block;margin-top:2px;color:var(--v110-muted);font-size:9.5px}.visibility-manager-actions{display:flex;gap:6px}.visibility-manager-actions .btn{min-height:31px!important;padding:6px 9px!important;font-size:9.5px!important}.visibility-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.visibility-group{border:1px solid #e9eeee;border-radius:13px;background:#fff;overflow:hidden}.visibility-group-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 11px;background:#fafcfc;border-bottom:1px solid #edf1f1}.visibility-group-head b{font-size:11px}.visibility-group-head .holding-group-toggle{transform:scale(.92);transform-origin:right center}.visibility-list{display:grid}.visibility-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;min-height:48px;padding:9px 11px;border-bottom:1px solid #f0f3f3}.visibility-row:last-child{border-bottom:0}.visibility-row-main{min-width:0}.visibility-row-main b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#2a3835;font-size:10.5px}.visibility-row-main small{display:block;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#8a9693;font-size:8.8px}.visibility-row-value{color:#475552;font-size:10px;font-weight:800;white-space:nowrap}.visibility-row .asset-toggle{font-size:9px}.visibility-empty{padding:18px;text-align:center;color:var(--v110-muted);font-size:10px}
+@media(max-width:1180px){.panel{max-width:none!important}.dashboard-analysis-grid{grid-template-columns:1fr!important}.dashboard-analysis-grid .chartbox{height:315px!important}}
+@media(max-width:760px){.dashboard-subhead{align-items:flex-start;flex-direction:column}.visibility-groups{grid-template-columns:1fr}.visibility-manager-overview{align-items:stretch;flex-direction:column}.visibility-manager-actions{display:grid;grid-template-columns:1fr 1fr}.visibility-row{grid-template-columns:minmax(0,1fr) auto}.visibility-row-value{grid-column:1/2;grid-row:2;margin-top:-5px}.visibility-row .asset-toggle{grid-column:2;grid-row:1/3}.dashboard-analysis-grid .chartbox{height:300px!important}}
+
 </style>
 </head>
 <body class="auth-pending">
@@ -1005,7 +1016,7 @@ body.mobile-sheet-open{overflow:hidden}
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.1.0</span></h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.1.1</span></h1><p>Private family wealth dashboard</p></div>
     </div>
     <div class="welcome-account-bar">
       <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
@@ -1123,6 +1134,7 @@ body.mobile-sheet-open{overflow:hidden}
       </article>
     </div>
 
+    <div class="dashboard-subhead"><div><h3>MY ASSET</h3><p>자산군을 선택하면 상세 관리 화면으로 이동합니다.</p></div><span>홈은 핵심 현황만 간단히 표시합니다.</span></div>
     <div class="asset-class-grid">
       <button class="asset-class-card cash-card" type="button" onclick="openAssetGroup('현금자산')"><span class="asset-class-icon">₩</span><div><small>현금자산</small><b id="homeCash">₩0</b><em id="homeCashShare">총자산의 0%</em></div><span class="asset-card-arrow">›</span></button>
       <button class="asset-class-card finance-card" type="button" onclick="openAssetGroup('금융자산')"><span class="asset-class-icon">↗</span><div><small>투자자산</small><b id="homeFinance">₩0</b><em><span id="sumProfit">₩0</span> · <span id="profitRate">0.00%</span></em></div><span class="asset-card-arrow">›</span></button>
@@ -1138,15 +1150,7 @@ body.mobile-sheet-open{overflow:hidden}
       <div class="box chartbox dashboard-composition-box"><div class="chart-section-head"><div><h3>자산 구성</h3><p>대시보드 ON 항목 기준</p></div></div><div class="chart-canvas-wrap"><canvas id="mainPieChart"></canvas></div></div>
     </div>
 
-    <details class="dashboard-detail-disclosure">
-      <summary><span><b>전체 보유 항목</b><small>항목별 평가액과 ON/OFF 설정을 확인합니다.</small></span><span>펼쳐보기</span></summary>
-      <div class="dashboard-detail-body">
-        <div id="holdingsChartBox" class="box chartbox holdings-chartbox"><canvas id="holdingsBarChart"></canvas></div>
-        <p class="dashboard-visibility-note">각 자산·부채의 ON/OFF를 변경하면 ON 상태인 항목만 홈 합계와 그래프에 반영됩니다.</p>
-        <div id="dashboardBulkControls" class="dashboard-bulk-toolbar" aria-label="보유 항목 전체 표시 설정"></div>
-        <div id="dashboardItems" class="dashboard-groups"></div>
-      </div>
-    </details>
+
   </section>
 
   <section id="reports" class="panel">
@@ -1177,7 +1181,7 @@ body.mobile-sheet-open{overflow:hidden}
   </section>
 
   <section id="portfolio" class="panel">
-    <div class="sectionhead"><div><h2>포트폴리오</h2><p>현금자산과 금융자산의 월별 원금·평가액을 기록합니다.</p></div><button class="btn primary" onclick="showPortfolioBatchForm()">＋ 입력</button></div>
+    <div class="sectionhead"><div><h2>자산</h2><p>현금자산과 투자자산의 월별 원금·평가액을 기록하고 홈 반영 여부를 관리합니다.</p></div><button class="btn primary" onclick="showPortfolioBatchForm()">＋ 입력</button></div>
     <div class="tab-label">소유자</div>
     <div id="portfolioOwnerTabs" class="tabs"></div>
     <div class="tab-label">자산 구분</div>
@@ -1185,8 +1189,13 @@ body.mobile-sheet-open{overflow:hidden}
     <div class="tab-label">세부 항목</div>
     <div id="portfolioCatTabs" class="tabs"></div>
 
+    <details class="dashboard-visibility-manager">
+      <summary><span><b>홈 반영 설정</b><small>홈 합계와 자산 구성에 포함할 자산·부채를 관리합니다.</small></span><span>설정 열기</span></summary>
+      <div id="dashboardVisibilityManager" class="visibility-manager-body"></div>
+    </details>
+
     <div id="portfolioBatchForm" class="form" style="display:none">
-      <div class="sectionhead"><div><h2 style="font-size:18px">포트폴리오 입력</h2><p>한 번에 여러 건을 추가할 수 있습니다.</p></div><button class="btn secondary" onclick="addPortfolioBatchRow()">＋ 행</button></div>
+      <div class="sectionhead"><div><h2 style="font-size:18px">자산 입력</h2><p>한 번에 여러 건을 추가할 수 있습니다.</p></div><button class="btn secondary" onclick="addPortfolioBatchRow()">＋ 행</button></div>
       <div id="portfolioBatchRows" class="batch-list"></div>
       <div class="actions"><button class="btn soft" onclick="hidePortfolioBatchForm()">취소</button><button class="btn primary" onclick="savePortfolioBatch()">저장</button></div>
     </div>
@@ -1299,7 +1308,7 @@ body.mobile-sheet-open{overflow:hidden}
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span id="noticeCountLabel" class="selection-count">0건</span><button id="noticeWriteToggleBtn" class="btn primary admin-only dev-tools" onclick="toggleNoticeForm(true)">＋ 공지 작성</button></div>
         </div>
         <div id="noticeWriteBox" class="notice-admin-form admin-only dev-tools" style="display:none">
-          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.1.0 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.1.0"></label></div>
+          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.1.1 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.1.1"></label></div>
           <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="noticeContent" class="ko-input wide-textarea" lang="ko" maxlength="10000" placeholder="업데이트 내용 또는 공지사항"></textarea></label>
           <div class="actions"><button class="btn soft" onclick="cancelNoticeEdit()">취소</button><button id="noticeSubmitBtn" class="btn primary" onclick="saveNotice()">공지 등록</button></div>
         </div>
@@ -1434,7 +1443,7 @@ body.mobile-sheet-open{overflow:hidden}
 </div>
 
 <script>
-const APP_VERSION='1.1.0';
+const APP_VERSION='1.1.1';
 const APP_TITLE='WOOYOO ASSET';
 const LEGACY_KEY='wooyoo_assets_v11';
 const LEGACY_OLD_KEY='wooyoo_assets_v10';
@@ -1468,7 +1477,7 @@ let selectedPortfolioIds=new Set(),visiblePortfolioIds=[];
 let editPortfolioId=null,editPropertyId=null,editTradeId=null,editDebtId=null,editPaymentId=null;
 let selectedPropertyId=null,selectedDebtId=null;
 let portfolioBatchDraft=[],tradeBatchDraft=[],paymentBatchDraft=[];
-let mainLineChart,mainPieChart,holdingsBarChart,detailChart,propertyChart,debtChart,monthlyReportCompositionChart,monthlyReportTrendChart;
+let mainLineChart,mainPieChart,detailChart,propertyChart,debtChart,monthlyReportCompositionChart,monthlyReportTrendChart;
 let autoLockTimer=null;
 let supabaseClient=null,currentUser=null,appBooted=false;
 let currentNickname='익명',isDeveloper=false,developerMode=false;
@@ -1618,6 +1627,13 @@ async function checkRemoteTabNotifications(){if(!supabaseClient||!currentUser?.i
 function startTabNotificationWatcher(){clearInterval(tabNotificationTimer);checkRemoteTabNotifications();tabNotificationTimer=setInterval(checkRemoteTabNotifications,90000);}
 
 const money=n=>'₩'+Math.round(Number(n||0)).toLocaleString('ko-KR');
+function homeMoney(n){
+  const value=Math.round(Number(n||0)),sign=value<0?'-':'',abs=Math.abs(value);
+  if(abs>=100000000){const eok=Math.floor(abs/100000000),man=Math.floor((abs%100000000)/10000);return `${sign}${eok.toLocaleString('ko-KR')}억${man?` ${man.toLocaleString('ko-KR')}만원`:'원'}`;}
+  if(abs>=10000)return `${sign}${Math.floor(abs/10000).toLocaleString('ko-KR')}만원`;
+  return `${sign}${abs.toLocaleString('ko-KR')}원`;
+}
+function setHomeMoney(id,value){const el=$(id);if(!el)return;el.textContent=homeMoney(value);el.title=money(value);}
 const num=n=>Number(n||0).toLocaleString('ko-KR',{maximumFractionDigits:2});
 const pct=n=>`${Math.abs(Number(n||0)).toFixed(2)}%`;
 const parseMoney=v=>Number(String(v??'').replace(/,/g,'').replace(/[^0-9.-]/g,''))||0;
@@ -2379,7 +2395,9 @@ function openTab(id,btn){
   if(id==='notices')loadNotices();
   if(id==='board')loadPosts(boardCurrentPage);
   if(id==='developer'&&!isDeveloper){alert('개발자 계정만 접근할 수 있습니다.');openPanelById('dashboard');return;}
-  attachSmartDates();markTabSeen(id);scheduleUiSessionSave();
+  attachSmartDates();markTabSeen(id);
+  requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'auto'}));
+  scheduleUiSessionSave();
 }
 function openPanelById(id){const btn=document.querySelector(`nav button[data-panel="${id}"]`);openTab(id,btn);}
 function renderAll(){
@@ -2437,6 +2455,7 @@ function renderPortfolio(){
   visiblePortfolioIds=arr.map(x=>x.id);selectedPortfolioIds=new Set([...selectedPortfolioIds].filter(id=>visiblePortfolioIds.includes(id)));
   $('portfolioRows').innerHTML=arr.map(x=>{const p=toKRW(x.principal,x.currency),v=toKRW(x.value,x.currency),d=v-p,r=p?d/p*100:0;const group=categoryGroup(x.cat);return `<tr><td class="select-col"><input class="select-box portfolio-row-check" type="checkbox" ${selectedPortfolioIds.has(x.id)?'checked':''} onchange="togglePortfolioSelection(${x.id},this.checked)" aria-label="${dateLabel(x.month)} ${escapeHtml(x.cat)} 선택"></td><td><b>${dateLabel(x.month)}</b><div class="muted">${escapeHtml(x.memo||'')}</div></td><td><span class="owner-dot"></span>${escapeHtml(x.owner)}</td><td><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span></td><td>${escapeHtml(x.cat)}</td><td>${escapeHtml(x.institution||'-')}</td><td><span class="account-mask">${escapeHtml(maskAccountNumber(x.accountNumber))}</span></td><td>${x.currency}</td><td>${originalMoney(x.principal,x.currency)}</td><td>${originalMoney(x.value,x.currency)}</td><td>${money(v)}</td><td class="portfolio-profit-cell"><span class="portfolio-profit-value ${d>0?'pos':d<0?'neg':'neutral'}">${d>0?'▲':d<0?'▼':'－'} ${money(Math.abs(d))}</span></td><td>${trend(r)}</td><td><button onclick="editPortfolio(${x.id})">수정</button> <button onclick="removeRecord('portfolio',${x.id})">삭제</button></td></tr>`}).join('')||'<tr><td colspan="14" class="empty">선택 연도의 포트폴리오 기록이 없습니다.</td></tr>';
   updatePortfolioSelectionUI();
+  renderDashboardVisibilityManager(yearEnd(y));
 }
 function togglePortfolioSelection(id,checked){checked?selectedPortfolioIds.add(id):selectedPortfolioIds.delete(id);updatePortfolioSelectionUI();}
 function toggleAllVisiblePortfolio(checked){visiblePortfolioIds.forEach(id=>checked?selectedPortfolioIds.add(id):selectedPortfolioIds.delete(id));document.querySelectorAll('.portfolio-row-check').forEach(el=>el.checked=checked);updatePortfolioSelectionUI();}
@@ -2636,7 +2655,7 @@ function isDashboardAssetOn(key){return state.dashboardVisibility?.[key]!==false
 function applyDashboardVisibility(keys,checked){
   state.dashboardVisibility=state.dashboardVisibility||{};
   [...new Set((keys||[]).filter(Boolean))].forEach(key=>state.dashboardVisibility[key]=!!checked);
-  persistState();renderDashboard();refreshLocalTabNotifications();
+  persistState();renderDashboard();renderDashboardVisibilityManager(yearEnd($('yearSelect')?.value||currentYear));refreshLocalTabNotifications();
 }
 function toggleDashboardAsset(key,checked,event){event?.stopPropagation();applyDashboardVisibility([key],checked);}
 function toggleDashboardGroup(keys,checked,event){event?.stopPropagation();applyDashboardVisibility(keys,checked);}
@@ -2656,6 +2675,16 @@ function renderDashboardBulkControls(cutoffMonth){
   const keys=dashboardVisibilityKeys(cutoffMonth),onCount=keys.filter(isDashboardAssetOn).length;
   el.innerHTML=keys.length?`<div><b>대시보드 표시 항목</b><span>전체 ${keys.length}개 중 ${onCount}개 ON</span></div><div class="dashboard-bulk-actions"><button class="btn secondary" type="button" onclick="toggleAllDashboardAssets(true)">전체 ON</button><button class="btn soft" type="button" onclick="toggleAllDashboardAssets(false)">전체 OFF</button></div>`:'<span class="muted">표시 설정을 변경할 보유 항목이 없습니다.</span>';
 }
+function renderDashboardVisibilityManager(cutoffMonth=yearEnd($('yearSelect')?.value||currentYear)){
+  const el=$('dashboardVisibilityManager');if(!el)return;
+  const portfolio=getLatestPortfolioItems(cutoffMonth).map(x=>({key:portfolioVisibilityKey(x),group:categoryGroup(x.cat),name:x.cat,owner:x.owner,meta:assetAccountLabel(x)||dateLabel(x.month),value:toKRW(x.value,x.currency)}));
+  const properties=state.properties.map(p=>{const prices=state.propertyTrades.filter(t=>t.propertyId===p.id&&normalizeDate(t.month)<=cutoffMonth).map(t=>Number(t.price||0));return prices.length?{key:propertyVisibilityKey(p),group:'부동산',name:p.name,owner:p.owner,meta:p.location||'지역 미입력',value:Math.max(...prices)}:null;}).filter(Boolean);
+  const debts=state.debts.filter(d=>(d.start||'9999-99-99')<=cutoffMonth).map(d=>({key:debtVisibilityKey(d),group:'부채',name:d.name,owner:d.owner,meta:[d.bank,d.type].filter(Boolean).join(' · ')||'대출',value:Number(balanceAt(d,cutoffMonth)||0)})).filter(x=>x.value>0);
+  const rows=[...portfolio,...properties,...debts],keys=rows.map(x=>x.key),onCount=keys.filter(isDashboardAssetOn).length;
+  const groupOrder=['현금자산','금융자산','부동산','부채'];
+  const groupHtml=groupOrder.map(group=>{const items=rows.filter(x=>x.group===group).sort((a,b)=>b.value-a.value);if(!items.length)return '';const groupKeys=items.map(x=>x.key);return `<section class="visibility-group"><div class="visibility-group-head"><b>${escapeHtml(group)}</b>${dashboardGroupToggleHtml(groupKeys)}</div><div class="visibility-list">${items.map(x=>`<div class="visibility-row"><div class="visibility-row-main"><b>${escapeHtml(x.owner)} · ${escapeHtml(x.name)}</b><small>${escapeHtml(x.meta||'')}</small></div><span class="visibility-row-value">${money(x.value)}</span>${dashboardToggleHtml(x.key,isDashboardAssetOn(x.key))}</div>`).join('')}</div></section>`;}).join('');
+  el.innerHTML=keys.length?`<div class="visibility-manager-overview"><div><b>홈 반영 항목 ${onCount}/${keys.length}개</b><span>OFF 항목은 홈 합계와 자산 구성에서만 제외됩니다.</span></div><div class="visibility-manager-actions"><button class="btn secondary" type="button" onclick="toggleAllDashboardAssets(true)">전체 ON</button><button class="btn soft" type="button" onclick="toggleAllDashboardAssets(false)">전체 OFF</button></div></div><div class="visibility-groups">${groupHtml}</div>`:'<div class="visibility-empty">홈 반영 설정을 변경할 자산·부채가 없습니다.</div>';
+}
 function dashboardSnapshot(cutoffMonth){
   const allItems=getLatestPortfolioItems(cutoffMonth);
   const items=allItems.filter(x=>isDashboardAssetOn(portfolioVisibilityKey(x)));
@@ -2668,6 +2697,15 @@ function dashboardSnapshot(cutoffMonth){
   const property=propertyItems.filter(x=>isDashboardAssetOn(x.key)).reduce((sum,x)=>sum+x.value,0);
   const debt=getDebtAt(cutoffMonth);
   return {items,allItems,propertyItems,portfolioValue,portfolioPrincipal,property,debt,assets:portfolioValue+property,net:portfolioValue+property-debt};
+}
+function completeAssetSnapshot(cutoffMonth){
+  const items=getLatestPortfolioItems(cutoffMonth);
+  const portfolioValue=items.reduce((s,x)=>s+toKRW(x.value,x.currency),0);
+  const portfolioPrincipal=items.reduce((s,x)=>s+toKRW(x.principal,x.currency),0);
+  const propertyItems=state.properties.map(p=>{const prices=state.propertyTrades.filter(t=>t.propertyId===p.id&&normalizeDate(t.month)<=cutoffMonth).map(t=>Number(t.price||0));return {property:p,value:prices.length?Math.max(...prices):0,key:propertyVisibilityKey(p)};});
+  const property=propertyItems.reduce((sum,x)=>sum+x.value,0);
+  const debt=state.debts.reduce((sum,d)=>(d.start||'9999-99-99')<=cutoffMonth?sum+Number(balanceAt(d,cutoffMonth)||0):sum,0);
+  return {items,allItems:items,propertyItems,portfolioValue,portfolioPrincipal,property,debt,assets:portfolioValue+property,net:portfolioValue+property-debt};
 }
 function dashboardToggleHtml(key,on){
   return `<label class="asset-toggle ${on?'is-on':'is-off'}" onclick="event.stopPropagation()"><input type="checkbox" ${on?'checked':''} onchange='toggleDashboardAsset(${JSON.stringify(key)},this.checked,event)'><span>${on?'ON':'OFF'}</span></label>`;
@@ -2693,7 +2731,7 @@ function dashboardLatestPeriod(year){
   const latest=dates.sort().at(-1);return latest.slice(0,7);
 }
 function setSignedAmount(id,value,positiveClass=true,prefix=''){
-  const el=$(id);if(!el)return;const n=Number(value||0),cls=n>0?(positiveClass?'pos':'neg'):n<0?(positiveClass?'neg':'pos'):'neutral',sign=n>0?'+':n<0?'-':'';el.className=cls;el.textContent=`${prefix}${sign}${money(Math.abs(n))}`;
+  const el=$(id);if(!el)return;const n=Number(value||0),cls=n>0?(positiveClass?'pos':'neg'):n<0?(positiveClass?'neg':'pos'):'neutral',sign=n>0?'+':n<0?'-':'';el.className=cls;el.textContent=`${prefix}${sign}${homeMoney(Math.abs(n))}`;el.title=`${sign}${money(Math.abs(n))}`;
 }
 function renderDashboardHomeSummary(y,snap,profit){
   const period=dashboardLatestPeriod(y),cutoff=reportMonthEnd(period),prevPeriod=shiftReportPeriod(period,-1),prevCutoff=reportMonthEnd(prevPeriod),nowSnap=dashboardSnapshot(cutoff),prevSnap=dashboardSnapshot(prevCutoff);
@@ -2705,7 +2743,7 @@ function renderDashboardHomeSummary(y,snap,profit){
   if($('homeChangePeriod'))$('homeChangePeriod').textContent=reportPeriodLabel(period);
   setSignedAmount('monthNetChange',netChange,true,'이번 달 ');setSignedAmount('homeMonthlyNetChange',netChange);setSignedAmount('changeInvestment',investmentChange);setSignedAmount('changeProperty',propertyChange);setSignedAmount('changeDebt',debtReduction);setSignedAmount('changeCash',cashChange);
   const assets=Number(nowSnap.assets||0),debt=Number(nowSnap.debt||0);
-  if($('homeCash'))$('homeCash').textContent=money(cashNow);if($('homeFinance'))$('homeFinance').textContent=money(financeNow);if($('homeProperty'))$('homeProperty').textContent=money(nowSnap.property);if($('homeDebt'))$('homeDebt').textContent=money(debt);
+  setHomeMoney('homeCash',cashNow);setHomeMoney('homeFinance',financeNow);setHomeMoney('homeProperty',nowSnap.property);setHomeMoney('homeDebt',debt);
   if($('homeCashShare'))$('homeCashShare').textContent=`총자산의 ${assets?(cashNow/assets*100).toFixed(1):'0.0'}%`;
   if($('homePropertyShare'))$('homePropertyShare').textContent=`총자산의 ${assets?(nowSnap.property/assets*100).toFixed(1):'0.0'}%`;
   if($('homeDebtRatio'))$('homeDebtRatio').textContent=`자산 대비 ${assets?(debt/assets*100).toFixed(1):'0.0'}%`;
@@ -2715,37 +2753,9 @@ function renderDashboard(){
   const cutoff=yearEnd(y);
   const snap=dashboardSnapshot(cutoff);
   const profit=snap.portfolioValue-snap.portfolioPrincipal,rate=snap.portfolioPrincipal?profit/snap.portfolioPrincipal*100:0;
-  $('sumAsset').textContent=money(snap.assets);$('sumDebt').textContent=money(snap.debt);$('sumNet').textContent=money(snap.net);$('sumProfit').textContent=money(profit);$('sumProfit').className=profit>0?'pos':profit<0?'neg':'';$('profitRate').innerHTML=trend(rate);
+  setHomeMoney('sumAsset',snap.assets);setHomeMoney('sumDebt',snap.debt);setHomeMoney('sumNet',snap.net);setHomeMoney('sumProfit',profit);$('sumProfit').className=profit>0?'pos':profit<0?'neg':'';$('profitRate').innerHTML=trend(rate);
   renderDashboardHomeSummary(y,snap,profit);
 
-  const grouped={현금자산:[],금융자산:[]};
-  snap.allItems.slice().sort((a,b)=>toKRW(b.value,b.currency)-toKRW(a.value,a.currency)).forEach(x=>{
-    const p=toKRW(x.principal,x.currency),v=toKRW(x.value,x.currency),r=p?(v-p)/p*100:0,group=categoryGroup(x.cat),key=portfolioVisibilityKey(x),on=isDashboardAssetOn(key);
-    const card=`<article class="asset-card ${on?'':'dashboard-off'}" onclick='openPortfolioDetail(${JSON.stringify(x.owner)},${JSON.stringify(x.cat)})'><div class="topline"><span class="tag ${group==='현금자산'?'cash':'finance'}">${group}</span><div style="display:flex;align-items:center;gap:7px"><small>${escapeHtml(x.owner)}</small>${dashboardToggleHtml(key,on)}</div></div><h4>${escapeHtml(x.cat)}</h4><p>${escapeHtml(assetAccountLabel(x)||`최근 기록 ${dateLabel(x.month)}`)}</p><strong>${money(v)}</strong><div class="sub"><span>원금 ${money(p)}</span>${trend(r)}</div></article>`;
-    (grouped[group]||(grouped[group]=[])).push({card,value:v,key,on});
-  });
-
-  const propertyRows=snap.propertyItems.filter(x=>x.value>0).map(({property:p,value:high,key})=>{
-    const on=isDashboardAssetOn(key);
-    const card=`<article class="asset-card ${on?'':'dashboard-off'}" onclick="openPropertyDetailModal(${p.id})"><div class="topline"><span class="tag">부동산</span><div style="display:flex;align-items:center;gap:7px"><small>${escapeHtml(p.owner)}</small>${dashboardToggleHtml(key,on)}</div></div><h4>${escapeHtml(p.name)}</h4><p>${escapeHtml(p.location||'지역 미입력')}</p><strong>${money(high)}</strong><div class="sub"><span>${p.purchasePrice?`매매가 ${money(p.purchasePrice)}`:'최고 실거래가 기준'}</span><span>상세보기 →</span></div></article>`;
-    return {card,value:high,key,on};
-  });
-
-  const debtRows=state.debts.filter(d=>(d.start||'9999-99-99')<=cutoff).map(d=>{
-    const balance=Number(balanceAt(d,cutoff)||0),last=latestPayment(d,cutoff),rateNow=Number(last?.rate??d.rate??0),key=debtVisibilityKey(d),on=isDashboardAssetOn(key);
-    const card=`<article class="asset-card debt-holding ${on?'':'dashboard-off'}" onclick="openDebtFromDashboard(${d.id})"><div class="topline"><span class="tag debt">부채</span><div style="display:flex;align-items:center;gap:7px"><small>${escapeHtml(d.owner)}</small>${dashboardToggleHtml(key,on)}</div></div><h4>${escapeHtml(d.name)}</h4><p>${escapeHtml(d.bank||'금융기관 미입력')} · ${escapeHtml(d.type||'대출')}</p><strong>${money(balance)}</strong><div class="sub"><span>대출원금 ${money(d.loanAmount)}</span><span>${num(rateNow)}%</span></div></article>`;
-    return {card,value:balance,key,on};
-  }).filter(x=>x.value>0).sort((a,b)=>b.value-a.value);
-
-  const cash=grouped['현금자산']||[],finance=grouped['금융자산']||[];
-  renderDashboardBulkControls(cutoff);
-  const sections=[
-    holdingGroupHtml('현금자산',cash.length,cash.filter(x=>x.on).reduce((s,x)=>s+x.value,0),cash.reduce((s,x)=>s+x.value,0),cash.map(x=>x.card).join(''),'',cash.map(x=>x.key)),
-    holdingGroupHtml('금융자산',finance.length,finance.filter(x=>x.on).reduce((s,x)=>s+x.value,0),finance.reduce((s,x)=>s+x.value,0),finance.map(x=>x.card).join(''),'',finance.map(x=>x.key)),
-    holdingGroupHtml('부동산',propertyRows.length,propertyRows.filter(x=>x.on).reduce((s,x)=>s+x.value,0),propertyRows.reduce((s,x)=>s+x.value,0),propertyRows.map(x=>x.card).join(''),'',propertyRows.map(x=>x.key)),
-    holdingGroupHtml('부채',debtRows.length,debtRows.filter(x=>x.on).reduce((s,x)=>s+x.value,0),debtRows.reduce((s,x)=>s+x.value,0),debtRows.map(x=>x.card).join(''),'debt-group',debtRows.map(x=>x.key))
-  ].filter(Boolean).join('');
-  $('dashboardItems').innerHTML=sections||'<div class="box empty">표시할 자산·부채 기록이 없습니다.</div>';
   drawDashboardCharts(y);
 }
 function renderBreakdownList(items,emptyText='표시할 항목이 없습니다.'){
@@ -2834,13 +2844,6 @@ function drawDashboardCharts(y){
   const labels=Object.keys(byCat).filter(k=>byCat[k]>0),data=labels.map(k=>byCat[k]);
   drawChart('mainPieChart','mainPieChart','doughnut',{labels,datasets:[{data}]},{responsive:true,maintainAspectRatio:false,plugins:{title:{display:true,text:'ON 자산 항목별 비중'},legend:{position:'bottom'},tooltip:{callbacks:{label:c=>`${c.label}: ${money(c.raw)} (${((c.raw/(data.reduce((a,b)=>a+b,0)||1))*100).toFixed(1)}%)`}}}});
 
-  const holdingRows=[];
-  end.items.forEach(x=>holdingRows.push({label:`${x.owner} · ${x.cat}`,asset:toKRW(x.value,x.currency),debt:0}));
-  end.propertyItems.filter(x=>isDashboardAssetOn(x.key)&&x.value>0).forEach(x=>holdingRows.push({label:`${x.property.owner} · ${x.property.name}`,asset:Number(x.value||0),debt:0}));
-  state.debts.filter(d=>(d.start||'9999-99-99')<=yearEnd(y)&&isDashboardAssetOn(debtVisibilityKey(d))).forEach(d=>{const balance=Number(balanceAt(d,yearEnd(y))||0);if(balance>0)holdingRows.push({label:`${d.owner} · ${d.name}`,asset:0,debt:balance});});
-  holdingRows.sort((a,b)=>(b.asset+b.debt)-(a.asset+a.debt));
-  const chartBox=$('holdingsChartBox');if(chartBox)chartBox.style.height=`${Math.min(620,Math.max(330,holdingRows.length*38+120))}px`;
-  drawChart('holdingsBarChart','holdingsBarChart','bar',{labels:holdingRows.map(x=>x.label),datasets:[{label:'자산 평가액',data:holdingRows.map(x=>x.asset)},{label:'부채 잔액',data:holdingRows.map(x=>x.debt)}]},{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{title:{display:true,text:'보유 항목별 평가액 및 부채 잔액'},legend:{position:'bottom'},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`}}},scales:{x:{ticks:{callback:v=>Number(v).toLocaleString('ko-KR')}},y:{ticks:{autoSkip:false}}}});
 }
 function chartOptions(title){return {responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{title:{display:true,text:title},legend:{position:'bottom'},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${money(c.raw)}`}}},scales:{y:{ticks:{callback:v=>Number(v).toLocaleString('ko-KR')}}}};}
 function drawChart(holderKey,canvasId,type,data,options){if(typeof Chart==='undefined')return;const old=window[holderKey];if(old?.destroy)old.destroy();window[holderKey]=new Chart($(canvasId),{type,data,options});}
@@ -2949,10 +2952,10 @@ function reportSourceHasData(cutoff){
   return state.portfolio.some(x=>normalizeDate(x.month)<=cutoff)||state.properties.some(p=>state.propertyTrades.some(t=>t.propertyId===p.id&&normalizeDate(t.month)<=cutoff))||state.debts.some(d=>(d.start||'9999-99-99')<=cutoff);
 }
 function buildMonthlyReport(period,memo=''){
-  const cutoff=reportMonthEnd(period),previousPeriod=shiftReportPeriod(period,-1),previousCutoff=reportMonthEnd(previousPeriod),snap=dashboardSnapshot(cutoff),previous=dashboardSnapshot(previousCutoff);
+  const cutoff=reportMonthEnd(period),previousPeriod=shiftReportPeriod(period,-1),previousCutoff=reportMonthEnd(previousPeriod),snap=completeAssetSnapshot(cutoff),previous=completeAssetSnapshot(previousCutoff);
   const portfolioItems=snap.items.map(x=>{const principal=toKRW(x.principal,x.currency),value=toKRW(x.value,x.currency),profit=value-principal;return {owner:x.owner,category:x.cat,group:categoryGroup(x.cat),institution:x.institution||'',accountNumber:x.accountNumber||'',principal,value,profit,profitRate:principal?profit/principal*100:0,currency:x.currency||'KRW',recordDate:normalizeDate(x.month)};}).sort((a,b)=>b.value-a.value);
-  const properties=snap.propertyItems.filter(x=>isDashboardAssetOn(x.key)).map(({property:p,value})=>{const trades=state.propertyTrades.filter(t=>t.propertyId===p.id&&normalizeDate(t.month)<=cutoff).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));const latest=trades[trades.length-1];const purchase=Number(p.purchasePrice||0);return {id:p.id,owner:p.owner,name:p.name,location:p.location||'',purchasePrice:purchase,highestTrade:Number(value||0),latestTrade:Number(latest?.price||0),latestTradeDate:latest?.month||'',gainRate:purchase?(Number(value||0)-purchase)/purchase*100:0};}).sort((a,b)=>b.highestTrade-a.highestTrade);
-  const debts=state.debts.filter(d=>(d.start||'9999-99-99')<=cutoff&&isDashboardAssetOn(debtVisibilityKey(d))).map(d=>{const balance=Number(balanceAt(d,cutoff)||0),latest=latestPayment(d,cutoff),monthPayments=state.debtPayments.filter(p=>p.debtId===d.id&&normalizeDate(p.month).slice(0,7)===period);return {id:d.id,owner:d.owner,name:d.name,bank:d.bank||'',type:d.type||'',loanAmount:Number(d.loanAmount||0),balance,rate:Number(latest?.rate??d.rate??0),monthPrincipal:monthPayments.reduce((s,p)=>s+Number(p.principal||0),0),monthInterest:monthPayments.reduce((s,p)=>s+Number(p.interest||0),0),monthTotal:monthPayments.reduce((s,p)=>s+Number(p.total||0),0)};}).sort((a,b)=>b.balance-a.balance);
+  const properties=snap.propertyItems.map(({property:p,value})=>{const trades=state.propertyTrades.filter(t=>t.propertyId===p.id&&normalizeDate(t.month)<=cutoff).sort((a,b)=>normalizeDate(a.month).localeCompare(normalizeDate(b.month)));const latest=trades[trades.length-1];const purchase=Number(p.purchasePrice||0);return {id:p.id,owner:p.owner,name:p.name,location:p.location||'',purchasePrice:purchase,highestTrade:Number(value||0),latestTrade:Number(latest?.price||0),latestTradeDate:latest?.month||'',gainRate:purchase?(Number(value||0)-purchase)/purchase*100:0};}).sort((a,b)=>b.highestTrade-a.highestTrade);
+  const debts=state.debts.filter(d=>(d.start||'9999-99-99')<=cutoff).map(d=>{const balance=Number(balanceAt(d,cutoff)||0),latest=latestPayment(d,cutoff),monthPayments=state.debtPayments.filter(p=>p.debtId===d.id&&normalizeDate(p.month).slice(0,7)===period);return {id:d.id,owner:d.owner,name:d.name,bank:d.bank||'',type:d.type||'',loanAmount:Number(d.loanAmount||0),balance,rate:Number(latest?.rate??d.rate??0),monthPrincipal:monthPayments.reduce((s,p)=>s+Number(p.principal||0),0),monthInterest:monthPayments.reduce((s,p)=>s+Number(p.interest||0),0),monthTotal:monthPayments.reduce((s,p)=>s+Number(p.total||0),0)};}).sort((a,b)=>b.balance-a.balance);
   const cash=portfolioItems.filter(x=>x.group==='현금자산').reduce((s,x)=>s+x.value,0),finance=portfolioItems.filter(x=>x.group==='금융자산').reduce((s,x)=>s+x.value,0),profit=portfolioItems.reduce((s,x)=>s+x.profit,0),principal=portfolioItems.reduce((s,x)=>s+x.principal,0),monthPrincipal=debts.reduce((s,x)=>s+x.monthPrincipal,0),monthInterest=debts.reduce((s,x)=>s+x.monthInterest,0);
   const change=(now,prev)=>({amount:now-prev,rate:prev?(now-prev)/Math.abs(prev)*100:0});
   return {id:`mr_${period}`,period,cutoff,generatedAt:new Date().toISOString(),updatedAt:new Date().toISOString(),memo:String(memo||''),totals:{assets:snap.assets,debt:snap.debt,net:snap.net,cash,finance,property:snap.property,portfolioValue:snap.portfolioValue,portfolioPrincipal:principal,investmentProfit:profit,investmentProfitRate:principal?profit/principal*100:0,monthPrincipal,monthInterest},comparison:{assets:change(snap.assets,previous.assets),debt:change(snap.debt,previous.debt),net:change(snap.net,previous.net),previousPeriod},portfolioItems,properties,debts};
