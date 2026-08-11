@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WOOYOO ASSET V1.1.1</title>
-<meta name="application-name" content="WOOYOO ASSET V1.1.1">
-<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.1.1">
+<title>WOOYOO ASSET V1.1.2</title>
+<meta name="application-name" content="WOOYOO ASSET V1.1.2">
+<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.1.2">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -959,6 +959,44 @@ body.mobile-sheet-open{overflow:hidden}
 @media(max-width:1180px){.panel{max-width:none!important}.dashboard-analysis-grid{grid-template-columns:1fr!important}.dashboard-analysis-grid .chartbox{height:315px!important}}
 @media(max-width:760px){.dashboard-subhead{align-items:flex-start;flex-direction:column}.visibility-groups{grid-template-columns:1fr}.visibility-manager-overview{align-items:stretch;flex-direction:column}.visibility-manager-actions{display:grid;grid-template-columns:1fr 1fr}.visibility-row{grid-template-columns:minmax(0,1fr) auto}.visibility-row-value{grid-column:1/2;grid-row:2;margin-top:-5px}.visibility-row .asset-toggle{grid-column:2;grid-row:1/3}.dashboard-analysis-grid .chartbox{height:300px!important}}
 
+
+
+/* WOOYOO ASSET v1.1.2 — quick settings containment and detailed asset trend */
+.topbar-tools .header-account-menu .header-year-field{
+  display:grid!important;
+  grid-template-columns:72px minmax(0,1fr)!important;
+  align-items:center!important;
+  gap:10px!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin-top:12px!important;
+  overflow:hidden!important;
+}
+.topbar-tools .header-account-menu .header-year-field select{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  height:40px!important;
+  min-height:40px!important;
+  margin:0!important;
+  padding:8px 10px!important;
+  box-sizing:border-box!important;
+}
+.dashboard-trend-box{height:390px!important}
+.metric-tabs{max-width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;flex-wrap:nowrap}
+.metric-tabs::-webkit-scrollbar{display:none}
+.metric-tabs button{flex:0 0 auto;white-space:nowrap}
+@media(max-width:1180px){.dashboard-trend-box{height:380px!important}}
+@media(max-width:760px){
+  .topbar-tools .header-account-menu .header-year-field{grid-template-columns:64px minmax(0,1fr)!important;gap:8px!important}
+  .dashboard-trend-box{height:360px!important}
+  .metric-tabs{display:flex!important;width:100%;padding-bottom:3px}
+}
+@media(max-width:560px){
+  .dashboard-trend-box{height:350px!important}
+  .chart-section-head{min-height:78px!important}
+  .chart-canvas-wrap{height:calc(100% - 78px)!important}
+}
 </style>
 </head>
 <body class="auth-pending">
@@ -1016,7 +1054,7 @@ body.mobile-sheet-open{overflow:hidden}
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.1.1</span></h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.1.2</span></h1><p>Private family wealth dashboard</p></div>
     </div>
     <div class="welcome-account-bar">
       <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
@@ -1144,7 +1182,7 @@ body.mobile-sheet-open{overflow:hidden}
 
     <div class="dashboard-analysis-grid">
       <div class="box chartbox dashboard-trend-box">
-        <div class="chart-section-head"><div><h3>자산 추이</h3><p>보고 싶은 지표를 선택하세요.</p></div><div id="dashboardMetricTabs" class="metric-tabs"><button type="button" data-metric="net" class="active" onclick="setDashboardMetric('net')">순자산</button><button type="button" data-metric="assets" onclick="setDashboardMetric('assets')">총자산</button><button type="button" data-metric="profit" onclick="setDashboardMetric('profit')">투자손익</button></div></div>
+        <div class="chart-section-head"><div><h3>자산 추이</h3><p>월별 자산 흐름과 자산 종류별 추이를 확인하세요.</p></div><div id="dashboardMetricTabs" class="metric-tabs"><button type="button" data-metric="net" class="active" onclick="setDashboardMetric('net')">순자산</button><button type="button" data-metric="assets" onclick="setDashboardMetric('assets')">총자산</button><button type="button" data-metric="profit" onclick="setDashboardMetric('profit')">투자손익</button><button type="button" data-metric="cash" onclick="setDashboardMetric('cash')">현금자산</button><button type="button" data-metric="finance" onclick="setDashboardMetric('finance')">투자자산</button></div></div>
         <div class="chart-canvas-wrap"><canvas id="mainLineChart"></canvas></div>
       </div>
       <div class="box chartbox dashboard-composition-box"><div class="chart-section-head"><div><h3>자산 구성</h3><p>대시보드 ON 항목 기준</p></div></div><div class="chart-canvas-wrap"><canvas id="mainPieChart"></canvas></div></div>
@@ -1308,7 +1346,7 @@ body.mobile-sheet-open{overflow:hidden}
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span id="noticeCountLabel" class="selection-count">0건</span><button id="noticeWriteToggleBtn" class="btn primary admin-only dev-tools" onclick="toggleNoticeForm(true)">＋ 공지 작성</button></div>
         </div>
         <div id="noticeWriteBox" class="notice-admin-form admin-only dev-tools" style="display:none">
-          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.1.1 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.1.1"></label></div>
+          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.1.2 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.1.2"></label></div>
           <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="noticeContent" class="ko-input wide-textarea" lang="ko" maxlength="10000" placeholder="업데이트 내용 또는 공지사항"></textarea></label>
           <div class="actions"><button class="btn soft" onclick="cancelNoticeEdit()">취소</button><button id="noticeSubmitBtn" class="btn primary" onclick="saveNotice()">공지 등록</button></div>
         </div>
@@ -1443,7 +1481,7 @@ body.mobile-sheet-open{overflow:hidden}
 </div>
 
 <script>
-const APP_VERSION='1.1.1';
+const APP_VERSION='1.1.2';
 const APP_TITLE='WOOYOO ASSET';
 const LEGACY_KEY='wooyoo_assets_v11';
 const LEGACY_OLD_KEY='wooyoo_assets_v10';
@@ -2721,7 +2759,7 @@ function openDebtFromDashboard(id){
   setTimeout(()=>{const target=$('debtDetail')||$('debtCards');target?.scrollIntoView({behavior:'smooth',block:'start'});},80);
 }
 function openAssetGroup(group){activePortfolioOwner='전체';activePortfolioGroup=group;activePortfolioCat='전체';openPanelById('portfolio');renderPortfolioTabs();renderPortfolio();}
-function setDashboardMetric(metric){dashboardMetric=['net','assets','profit'].includes(metric)?metric:'net';document.querySelectorAll('#dashboardMetricTabs [data-metric]').forEach(btn=>btn.classList.toggle('active',btn.dataset.metric===dashboardMetric));drawDashboardCharts($('yearSelect').value);}
+function setDashboardMetric(metric){dashboardMetric=['net','assets','profit','cash','finance'].includes(metric)?metric:'net';document.querySelectorAll('#dashboardMetricTabs [data-metric]').forEach(btn=>btn.classList.toggle('active',btn.dataset.metric===dashboardMetric));drawDashboardCharts($('yearSelect').value);}
 function dashboardLatestPeriod(year){
   const y=String(year),dates=[];
   state.portfolio.forEach(x=>{const d=normalizeDate(x.month);if(d.startsWith(y))dates.push(d);});
@@ -2833,11 +2871,36 @@ function openProfitBreakdown(){
     detailChart=new Chart($('detailChart'),{type:'bar',data:{labels,datasets:[{label:'수익률 (%)',data}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{title:{display:true,text:'항목별 수익률'},legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw.toFixed(2)}%`}}},scales:{x:{ticks:{callback:v=>`${v}%`}},y:{ticks:{autoSkip:false}}}}});
   }
 }
+function portfolioGroupSeriesByMonth(rows,group){
+  const categoryNames=[...new Set(rows.flatMap(row=>row.items.filter(x=>categoryGroup(x.cat)===group).map(x=>x.cat)))];
+  const totals=rows.map(row=>row.items.filter(x=>categoryGroup(x.cat)===group).reduce((sum,x)=>sum+toKRW(x.value,x.currency),0));
+  const datasets=[{label:group==='현금자산'?'현금자산 합계':'투자자산 합계',data:totals,tension:.28,fill:false,borderWidth:3,pointRadius:2.5,pointHoverRadius:5}];
+  categoryNames.sort((a,b)=>{
+    const aLast=rows.at(-1).items.filter(x=>x.cat===a&&categoryGroup(x.cat)===group).reduce((sum,x)=>sum+toKRW(x.value,x.currency),0);
+    const bLast=rows.at(-1).items.filter(x=>x.cat===b&&categoryGroup(x.cat)===group).reduce((sum,x)=>sum+toKRW(x.value,x.currency),0);
+    return bLast-aLast||a.localeCompare(b,'ko');
+  }).forEach(cat=>{
+    datasets.push({label:cat,data:rows.map(row=>row.items.filter(x=>x.cat===cat&&categoryGroup(x.cat)===group).reduce((sum,x)=>sum+toKRW(x.value,x.currency),0)),tension:.28,fill:false,borderWidth:1.8,pointRadius:2,pointHoverRadius:4});
+  });
+  return datasets;
+}
 function drawDashboardCharts(y){
   const rows=Array.from({length:12},(_,i)=>{const m=monthCutoff(y,i+1),snap=dashboardSnapshot(m);return {label:`${i+1}월`,...snap,investmentProfit:snap.portfolioValue-snap.portfolioPrincipal};});
-  const metricMap={net:{label:'순자산',data:rows.map(x=>x.net)},assets:{label:'총자산',data:rows.map(x=>x.assets)},profit:{label:'투자 평가손익',data:rows.map(x=>x.investmentProfit)}};const metric=metricMap[dashboardMetric]||metricMap.net;
   document.querySelectorAll('#dashboardMetricTabs [data-metric]').forEach(btn=>btn.classList.toggle('active',btn.dataset.metric===dashboardMetric));
-  drawChart('mainLineChart','mainLineChart','line',{labels:rows.map(x=>x.label),datasets:[{label:metric.label,data:metric.data,tension:.28,fill:true}]},chartOptions(`${metric.label} 월별 추이`));
+  let trendTitle='',trendDatasets=[];
+  if(dashboardMetric==='cash'){
+    trendTitle='현금자산 월별 추이 · 종류별';
+    trendDatasets=portfolioGroupSeriesByMonth(rows,'현금자산');
+  }else if(dashboardMetric==='finance'){
+    trendTitle='투자자산 월별 추이 · 종류별';
+    trendDatasets=portfolioGroupSeriesByMonth(rows,'금융자산');
+  }else{
+    const metricMap={net:{label:'순자산',data:rows.map(x=>x.net)},assets:{label:'총자산',data:rows.map(x=>x.assets)},profit:{label:'투자 평가손익',data:rows.map(x=>x.investmentProfit)}};
+    const metric=metricMap[dashboardMetric]||metricMap.net;
+    trendTitle=`${metric.label} 월별 추이`;
+    trendDatasets=[{label:metric.label,data:metric.data,tension:.28,fill:true,borderWidth:2.5,pointRadius:2.5,pointHoverRadius:5}];
+  }
+  drawChart('mainLineChart','mainLineChart','line',{labels:rows.map(x=>x.label),datasets:trendDatasets},chartOptions(trendTitle));
   const end=rows[11],byCat={};
   end.items.forEach(x=>byCat[x.cat]=(byCat[x.cat]||0)+toKRW(x.value,x.currency));
   end.propertyItems.filter(x=>isDashboardAssetOn(x.key)&&x.value>0).forEach(x=>{byCat[x.property.name]=(byCat[x.property.name]||0)+x.value;});
