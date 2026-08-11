@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WOOYOO ASSET V1.0.8</title>
-<meta name="application-name" content="WOOYOO ASSET V1.0.8">
-<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.0.8">
+<title>WOOYOO ASSET V1.1.0</title>
+<meta name="application-name" content="WOOYOO ASSET V1.1.0">
+<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.1.0">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -921,6 +921,33 @@ nav button.active .nav-update-dot{display:none}
   body.report-print-mode .pos,body.report-print-mode .neg,body.report-print-mode .neutral{min-width:0!important;display:inline!important}
 }
 
+
+
+/* WOOYOO ASSET v1.1.0 — asset-app redesign */
+:root{
+  --v110-bg:#f5f7f8;--v110-card:#ffffff;--v110-line:#e8ecef;--v110-text:#15211f;--v110-muted:#7b8784;
+  --v110-primary:#0f766e;--v110-primary-soft:#eaf6f4;--v110-nav:#10221f;--v110-nav-muted:#9fb0ac;
+}
+body{background:var(--v110-bg)!important;color:var(--v110-text)}
+.app{max-width:none!important;margin:0!important;padding:18px 28px 72px 268px!important}
+.hero.wooyoo-topbar{position:sticky!important;top:10px!important;z-index:40!important;display:flex!important;grid-template-columns:none!important;align-items:center!important;justify-content:space-between!important;width:100%!important;min-height:68px!important;height:68px!important;padding:10px 12px 10px 16px!important;margin:0 0 22px!important;border:1px solid rgba(226,232,240,.95)!important;border-radius:16px!important;background:rgba(255,255,255,.94)!important;color:var(--v110-text)!important;box-shadow:0 10px 32px rgba(15,23,42,.07)!important;backdrop-filter:blur(14px)!important;overflow:visible!important}
+.hero.wooyoo-topbar:after{display:none!important}.topbar-brand{gap:10px!important;min-width:0!important}.topbar-brand .logo{display:grid!important;width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;border-radius:13px!important;font-size:22px!important;box-shadow:none!important}.topbar-brand h1{margin:0!important;color:#15211f!important;font-size:16px!important;line-height:1.05!important;letter-spacing:.055em!important;white-space:nowrap!important}.topbar-brand h1 b{color:var(--v110-primary)!important}.topbar-brand p{display:block!important;margin:4px 0 0!important;color:var(--v110-muted)!important;font-size:10.5px!important;line-height:1!important;white-space:nowrap!important}.topbar-tools{position:relative!important;display:flex!important;grid-template-columns:none!important;align-items:center!important;justify-content:flex-end!important;gap:9px!important;width:auto!important;min-width:0!important}.topbar-tools>*{width:auto!important;height:auto!important;min-height:0!important;margin:0!important}.topbar-fx{display:flex!important;align-items:center!important;gap:7px!important;padding:8px 11px!important;border:1px solid var(--v110-line)!important;border-radius:10px!important;background:#f9fbfb!important;color:var(--v110-muted)!important;font-size:10px!important;white-space:nowrap!important}.topbar-fx strong{color:#34423f!important;font-size:12px!important}.topbar-profile-button{display:flex;align-items:center;gap:9px;min-width:190px;max-width:255px;height:46px!important;padding:5px 9px;border:1px solid var(--v110-line);border-radius:12px;background:#fff;color:var(--v110-text);cursor:pointer;text-align:left}.topbar-profile-button:hover{background:#f8fbfa;border-color:#cbdcd8}.topbar-avatar{display:grid;place-items:center;width:32px;height:32px;flex:0 0 32px;border-radius:9px;background:var(--v110-primary-soft);font-size:17px}.topbar-profile-copy{min-width:0;flex:1}.topbar-profile-copy small{display:block;color:var(--v110-muted);font-size:9.5px}.topbar-profile-copy strong{display:block;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.topbar-chevron{color:#98a29f}.header-account-menu{display:none;position:absolute;right:0;top:55px;width:320px;padding:14px;border:1px solid var(--v110-line);border-radius:15px;background:#fff;box-shadow:0 22px 55px rgba(15,23,42,.17);z-index:60}.header-account-menu.show{display:block}.header-menu-title{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:10px;border-bottom:1px solid #eef1f2}.header-menu-title b{font-size:13px}.header-menu-title small{color:var(--v110-muted);font-size:10px}.header-year-field{display:block;margin-top:12px;color:var(--v110-muted)!important;font-size:10.5px!important;text-align:left!important;background:transparent!important;border:0!important;padding:0!important;height:auto!important}.header-year-field select{width:100%!important;height:40px!important;min-height:40px!important;margin-top:5px!important;border:1px solid #dce3e3!important;color:var(--v110-text)!important;background:#fff!important;font-size:12px!important}.header-fx-detail{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;color:var(--v110-muted);font-size:10.5px}.header-fx-detail small{max-width:185px;text-align:right;font-size:9.5px}.header-menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.header-menu-grid .btn{width:100%!important;height:38px!important;min-height:38px!important;font-size:10.5px!important}.header-logout{width:100%!important;height:38px!important;min-height:38px!important;margin-top:8px!important;font-size:10.5px!important}
+#nav{position:fixed!important;left:16px!important;top:16px!important;bottom:16px!important;z-index:45!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;gap:4px!important;width:224px!important;max-width:224px!important;margin:0!important;padding:14px 12px 150px!important;border:0!important;border-radius:22px!important;background:var(--v110-nav)!important;box-shadow:0 20px 50px rgba(16,34,31,.18)!important;overflow-y:auto!important;overflow-x:hidden!important;backdrop-filter:none!important}.side-nav-brand{display:flex;align-items:center;gap:10px;padding:6px 7px 18px;color:#fff}.side-nav-brand>span{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#d9f99d;color:#173126;font-size:17px;font-weight:950}.side-nav-brand b{display:block;font-size:14px;letter-spacing:.07em}.side-nav-brand small{display:block;margin-top:2px;color:#91a7a1;font-size:8.5px;letter-spacing:.18em}.side-nav-label{padding:10px 9px 6px;color:#6f8781;font-size:8.5px;font-weight:900;letter-spacing:.16em}.side-nav-label.secondary-label{margin-top:8px;border-top:1px solid rgba(255,255,255,.08);padding-top:16px}#nav button{position:relative!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;width:100%!important;min-width:0!important;min-height:42px!important;padding:9px 10px!important;border:0!important;border-radius:11px!important;background:transparent!important;color:var(--v110-nav-muted)!important;box-shadow:none!important;font-size:12px!important;font-weight:750!important;text-align:left!important}#nav button:hover{background:rgba(255,255,255,.07)!important;color:#fff!important}#nav button.active{background:#fff!important;color:#17312c!important;box-shadow:none!important}.side-nav-icon{display:grid;place-items:center;width:24px;flex:0 0 24px;font-size:14px;font-weight:900}.nav-more-toggle .nav-more-caret{margin-left:auto;transition:.18s}.nav-more-toggle.open .nav-more-caret{transform:rotate(180deg)}.nav-more-items{display:none;gap:3px}.nav-more-items.show{display:grid}.nav-more-items button{padding-left:14px!important;min-height:38px!important;font-size:11.5px!important}.nav-update-dot{margin-left:auto!important}
+.floating-donation{position:fixed!important;left:28px!important;right:auto!important;top:auto!important;bottom:30px!important;z-index:46!important;width:200px!important;padding:9px 10px!important;border-color:rgba(255,255,255,.12)!important;border-radius:12px!important;background:rgba(255,255,255,.07)!important;box-shadow:none!important;color:#fff!important}.floating-donation b{color:#e7efed!important;font-size:10px!important}.floating-donation span{color:#91a7a1!important;font-size:8.5px!important;line-height:1.35!important}.floating-donation .btn{min-height:27px!important;margin-top:6px!important;border:1px solid rgba(255,255,255,.12)!important;background:rgba(255,255,255,.08)!important;color:#dfe9e6!important;font-size:8.5px!important}
+.mobile-bottom-nav,.mobile-more-sheet{display:none}
+.panel{max-width:1280px;margin:0 auto}.sectionhead{border-bottom:0!important;padding-bottom:0!important}.sectionhead h2{font-size:20px!important}.sectionhead p{color:var(--v110-muted)!important}
+.dashboard-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin:6px 0 16px}.dashboard-page-head .eyebrow,.monthly-change-head .eyebrow{display:block;color:var(--v110-primary);font-size:9px;font-weight:950;letter-spacing:.14em}.dashboard-page-head h2{margin:3px 0 3px;color:#13201e;font-size:25px;letter-spacing:-.035em}.dashboard-page-head p{margin:0;color:var(--v110-muted);font-size:11.5px}.dashboard-report-shortcut{min-height:36px!important;font-size:10.5px!important}.dashboard-hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(330px,.85fr);gap:14px}.net-worth-hero,.monthly-change-card{border:1px solid var(--v110-line);border-radius:20px;background:#fff;box-shadow:0 8px 24px rgba(15,23,42,.045)}.net-worth-hero{position:relative;overflow:hidden;min-height:260px;padding:26px;cursor:pointer;background:linear-gradient(145deg,#112922,#163b33 62%,#0f766e 145%);color:#fff}.net-worth-hero:after{content:"";position:absolute;width:260px;height:260px;right:-100px;bottom:-150px;border-radius:50%;background:rgba(255,255,255,.055)}.net-worth-top{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between}.net-worth-top span{color:#c5d8d3;font-size:12px;font-weight:750}.net-worth-top small{color:#95bbb1;font-size:9.5px}.net-worth-hero>b{position:relative;z-index:1;display:block;margin-top:16px;font-size:38px;line-height:1.1;letter-spacing:-.045em}.net-month-change{position:relative;z-index:1;display:inline-flex;margin-top:11px;padding:6px 9px;border-radius:999px;background:rgba(255,255,255,.08);font-size:10.5px;font-weight:850}.net-month-change.pos{color:#b8f7c8}.net-month-change.neg{color:#fecaca}.net-month-change.neutral{color:#d7e4e1}.net-worth-breakdown{position:absolute;left:26px;right:26px;bottom:24px;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:10px}.net-worth-breakdown>div{padding-top:12px;border-top:1px solid rgba(255,255,255,.14)}.net-worth-breakdown small{display:block;color:#91aaa4;font-size:9.5px}.net-worth-breakdown strong{display:block;margin-top:4px;color:#fff;font-size:14px}.monthly-change-card{padding:20px}.monthly-change-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.monthly-change-head h3{margin:3px 0 0;font-size:16px}.monthly-change-head>small{color:var(--v110-muted);font-size:10px}.monthly-change-main{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin:16px 0 8px;padding:14px 0;border-top:1px solid #edf0f1;border-bottom:1px solid #edf0f1}.monthly-change-main small{color:var(--v110-muted);font-size:10.5px}.monthly-change-main b{font-size:18px}.monthly-change-list{display:grid;gap:7px}.monthly-change-list>div{display:flex;align-items:center;justify-content:space-between;gap:12px}.monthly-change-list span{color:#5f6c69;font-size:10.5px}.monthly-change-list b{font-size:11px}.monthly-change-note{margin:12px 0 0;color:#98a29f;font-size:8.8px;line-height:1.5}.asset-class-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}.asset-class-card{display:grid;grid-template-columns:42px minmax(0,1fr) auto;align-items:center;gap:11px;min-height:112px;padding:16px;border:1px solid var(--v110-line);border-radius:16px;background:#fff;color:var(--v110-text);text-align:left;cursor:pointer;box-shadow:0 5px 18px rgba(15,23,42,.035);transition:.15s}.asset-class-card:hover{transform:translateY(-2px);border-color:#cbdad7;box-shadow:0 10px 25px rgba(15,23,42,.07)}.asset-class-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:#f2f6f5;color:#42605a;font-size:17px;font-weight:900}.finance-card .asset-class-icon{background:#edf6ff;color:#2d63a5}.property-overview-card .asset-class-icon{background:#fff6e8;color:#a56616}.debt-overview-card .asset-class-icon{background:#fff0f0;color:#b44747}.asset-class-card small{display:block;color:var(--v110-muted);font-size:10px}.asset-class-card b{display:block;margin-top:4px;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.asset-class-card em{display:block;margin-top:5px;color:#7d8986;font-size:9.5px;font-style:normal}.asset-class-card em .pos,.asset-class-card em .neg,.asset-class-card em .neutral{min-width:0;display:inline;font-size:9.5px}.asset-card-arrow{color:#a5afac;font-size:20px}.dashboard-analysis-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(330px,.75fr);gap:14px;margin-top:14px}.dashboard-analysis-grid .chartbox{height:360px!important;padding:18px!important}.chart-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;height:48px}.chart-section-head h3{margin:0;font-size:14px}.chart-section-head p{margin:3px 0 0;color:var(--v110-muted);font-size:9.5px}.chart-canvas-wrap{height:calc(100% - 48px);min-height:0}.metric-tabs{display:flex;gap:4px;padding:3px;border-radius:10px;background:#f2f5f5}.metric-tabs button{min-height:28px;padding:5px 8px;border:0;border-radius:8px;background:transparent;color:#7b8784;font-size:9.5px;font-weight:850;cursor:pointer}.metric-tabs button.active{background:#fff;color:#17312c;box-shadow:0 2px 7px rgba(15,23,42,.08)}.dashboard-detail-disclosure{margin-top:14px;border:1px solid var(--v110-line);border-radius:16px;background:#fff;box-shadow:0 5px 18px rgba(15,23,42,.03);overflow:hidden}.dashboard-detail-disclosure>summary{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 17px;cursor:pointer;list-style:none}.dashboard-detail-disclosure>summary::-webkit-details-marker{display:none}.dashboard-detail-disclosure>summary span:first-child{display:flex;flex-direction:column}.dashboard-detail-disclosure>summary b{font-size:12.5px}.dashboard-detail-disclosure>summary small{margin-top:3px;color:var(--v110-muted);font-size:9.5px}.dashboard-detail-disclosure>summary span:last-child{color:var(--v110-primary);font-size:10px;font-weight:800}.dashboard-detail-disclosure[open]>summary{border-bottom:1px solid #edf0f1}.dashboard-detail-body{padding:14px}.holdings-chartbox{margin-top:0!important}.dashboard-bulk-toolbar{box-shadow:none!important}.holding-group{box-shadow:none!important}.card,.box,.form,.tablewrap,.property-card,.debt-card,.community-card{box-shadow:0 5px 18px rgba(15,23,42,.035)!important;border-color:var(--v110-line)!important}.box,.form{border-radius:16px!important}.tablewrap{border-radius:14px!important}th{background:#f7f9f9!important;color:#6c7875!important}tbody tr:nth-child(even){background:#fcfdfd!important}.tabs button.active{background:#17312c!important;border-color:#17312c!important}.primary{background:var(--v110-primary)!important}.secondary{background:var(--v110-primary-soft)!important;color:#075e58!important}
+@media(max-width:1180px){.asset-class-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-hero-grid,.dashboard-analysis-grid{grid-template-columns:1fr}.monthly-change-card{min-height:auto}.dashboard-composition-box{height:330px!important}}
+@media(max-width:900px){.app{padding:10px 10px 90px!important}.hero.wooyoo-topbar{top:5px!important;height:60px!important;min-height:60px!important;margin-bottom:14px!important;padding:8px 9px!important;border-radius:14px!important}.topbar-brand .logo{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important}.topbar-brand h1{font-size:13px!important}.topbar-brand p{font-size:9px!important}.topbar-fx{display:none!important}.topbar-profile-button{min-width:0;max-width:160px;height:42px!important}.topbar-avatar{display:none}.topbar-profile-copy small{font-size:8px}.topbar-profile-copy strong{font-size:10.5px}.header-account-menu{position:fixed;right:10px;left:10px;top:72px;width:auto}.floating-donation{display:none!important}#nav{display:none!important}.mobile-bottom-nav{position:fixed;left:9px;right:9px;bottom:8px;z-index:70;display:grid;grid-template-columns:repeat(4,1fr);gap:3px;padding:6px;border:1px solid #e3e8e7;border-radius:17px;background:rgba(255,255,255,.96);box-shadow:0 12px 35px rgba(15,23,42,.16);backdrop-filter:blur(16px)}.mobile-bottom-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:48px;border:0;border-radius:12px;background:transparent;color:#8a9592;font-size:14px;cursor:pointer}.mobile-bottom-nav button small{font-size:9px;font-weight:800}.mobile-bottom-nav button.active{background:var(--v110-primary-soft);color:#0b6b63}.mobile-more-sheet{position:fixed;inset:0;z-index:80;align-items:flex-end;padding:10px;background:rgba(15,23,42,.36);backdrop-filter:blur(3px)}.mobile-more-sheet.show{display:flex}.mobile-more-card{width:100%;max-height:78vh;padding:15px;border-radius:21px;background:#fff;box-shadow:0 20px 50px rgba(15,23,42,.2)}.mobile-more-head{display:flex;align-items:center;justify-content:space-between;padding:2px 2px 13px}.mobile-more-head b{font-size:16px}.mobile-more-head button{border:0;background:#f1f5f4;border-radius:9px;padding:7px 9px;color:#64716e;font-size:10px}.mobile-more-items{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.mobile-more-items button{display:flex;align-items:center;gap:10px;min-height:54px;padding:11px;border:1px solid #e7ebea;border-radius:13px;background:#fff;color:#263633;text-align:left}.mobile-more-items button span{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#f1f5f4}.mobile-more-items button b{font-size:11.5px}.dashboard-page-head{align-items:flex-start;flex-direction:column;gap:9px}.dashboard-report-shortcut{width:100%}.dashboard-hero-grid{grid-template-columns:1fr}.net-worth-hero{min-height:235px;padding:22px}.net-worth-hero>b{font-size:32px}.net-worth-breakdown{left:22px;right:22px;bottom:20px}.asset-class-grid{grid-template-columns:1fr 1fr}.dashboard-analysis-grid{grid-template-columns:1fr}.dashboard-analysis-grid .chartbox{height:330px!important}.metric-tabs button{padding:5px 6px}.sectionhead{align-items:flex-start!important}.panel{max-width:none}}
+@media(max-width:560px){.topbar-title-wrap h1{font-size:12px!important}.topbar-profile-button{max-width:135px;padding:5px 7px}.dashboard-page-head h2{font-size:22px}.net-worth-hero{min-height:220px}.net-worth-hero>b{font-size:28px}.asset-class-grid{grid-template-columns:1fr}.asset-class-card{min-height:96px}.dashboard-analysis-grid .chartbox{height:300px!important;padding:14px!important}.chart-section-head{height:auto;min-height:68px;flex-direction:column}.chart-canvas-wrap{height:calc(100% - 68px)}.metric-tabs{width:100%;display:grid;grid-template-columns:repeat(3,1fr)}.mobile-more-items{grid-template-columns:1fr 1fr}.monthly-change-list span{font-size:10px}}
+
+/* v1.1.0 header specificity hotfix */
+.topbar-tools>.header-account-menu{width:320px!important;height:auto!important;min-height:0!important;max-width:none!important;margin:0!important}
+.topbar-tools .header-account-menu .header-year-field{display:block!important;width:100%!important;height:auto!important;min-height:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;color:var(--v110-muted)!important;text-align:left!important}
+.topbar-tools .header-account-menu .header-year-field select{width:100%!important;height:40px!important;min-height:40px!important;margin-top:5px!important;padding:8px 10px!important;text-align:left!important}
+body.mobile-sheet-open{overflow:hidden}
+@media(max-width:900px){.topbar-tools>.header-account-menu{position:fixed!important;left:10px!important;right:10px!important;top:72px!important;width:auto!important}}
+
 </style>
 </head>
 <body class="auth-pending">
@@ -978,7 +1005,7 @@ nav button.active .nav-update-dot{display:none}
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.0.8</span></h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.1.0</span></h1><p>Private family wealth dashboard</p></div>
     </div>
     <div class="welcome-account-bar">
       <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
@@ -1031,28 +1058,34 @@ nav button.active .nav-update-dot{display:none}
 </div>
 
 <div id="mainApp" class="app app-locked">
-  <header class="hero">
-    <div class="brand">
+  <header class="hero wooyoo-topbar">
+    <div class="brand topbar-brand">
       <div id="brandLogo" class="logo">🐮</div>
-      <div><span style="display:block;color:#83d7cb;font-size:10px;font-weight:800;letter-spacing:.16em;margin-bottom:5px">FAMILY WEALTH MANAGEMENT</span><h1><b>WOOYOO</b> ASSET</h1><p>우리 가족의 자산·부동산·부채를 한눈에</p></div>
+      <div class="topbar-title-wrap"><h1><b>WOOYOO</b> ASSET</h1><p id="headerPageTitle">홈</p></div>
     </div>
-    <div class="hero-tools">
-      <button class="btn home-btn" type="button" onclick="goHome()" aria-label="대시보드 홈으로 이동">홈</button>
-      <label>조회 연도<select id="yearSelect"></select></label>
-      <div class="portfolio-pill"><small>현재 포트폴리오</small><strong id="activeProfileName">-</strong></div>
-      <div class="fx-pill">
-        <small>USD/KRW 최신 환율</small>
-        <strong id="fxText">조회 중...</strong>
-        <em id="fxAt">인터넷 연결 시 자동 갱신</em>
+    <div class="hero-tools topbar-tools">
+      <div class="topbar-fx" title="USD/KRW 환율"><span>USD/KRW</span><strong id="fxText">조회 중...</strong></div>
+      <button class="topbar-profile-button" type="button" onclick="toggleHeaderMenu(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="topbar-avatar">🐮</span><span class="topbar-profile-copy"><small>현재 포트폴리오</small><strong id="activeProfileName">-</strong></span><span class="topbar-chevron">⌄</span>
+      </button>
+      <div id="headerAccountMenu" class="header-account-menu" onclick="event.stopPropagation()">
+        <div class="header-menu-title"><b>빠른 설정</b><small id="memberCountBadge">가입회원 -명</small></div>
+        <label class="header-year-field">조회 연도<select id="yearSelect"></select></label>
+        <div class="header-fx-detail"><span>환율 정보</span><small id="fxAt">인터넷 연결 시 자동 갱신</small></div>
+        <div class="header-menu-grid">
+          <button class="btn soft" type="button" onclick="refreshFx(true)">환율 새로고침</button>
+          <button class="btn soft" type="button" onclick="switchPortfolio()">포트폴리오 전환</button>
+          <button class="btn soft" type="button" onclick="lockApp()">잠금</button>
+          <button class="btn soft" type="button" onclick="openPanelById('settings');toggleHeaderMenu()">설정</button>
+        </div>
+        <button class="btn danger header-logout" type="button" onclick="signOutUser()">로그아웃</button>
       </div>
-      <button class="btn secondary" onclick="refreshFx(true)">환율 새로고침</button>
-      <button class="btn lock-btn" onclick="switchPortfolio()">포트폴리오 전환</button>
-      <button class="btn lock-btn" onclick="lockApp()">잠금</button>
-      <div class="logout-stack"><button class="btn lock-btn" onclick="signOutUser()">로그아웃</button><small id="memberCountBadge">가입회원 -명</small></div>
     </div>
   </header>
 
-  <nav id="nav"></nav>
+  <nav id="nav" aria-label="주요 메뉴"></nav>
+  <div id="mobileBottomNav" class="mobile-bottom-nav" aria-label="모바일 주요 메뉴"></div>
+  <div id="mobileMoreSheet" class="mobile-more-sheet" onclick="if(event.target===this)toggleMobileMore(false)"><div class="mobile-more-card"><div class="mobile-more-head"><b>더보기</b><button type="button" onclick="toggleMobileMore(false)">닫기</button></div><div id="mobileMoreItems" class="mobile-more-items"></div></div></div>
 
   <aside class="floating-donation" aria-label="개발자 후원">
     <b>☕ 개발자 후원</b>
@@ -1060,23 +1093,60 @@ nav button.active .nav-update-dot{display:none}
     <button class="btn secondary" type="button" onclick="copyDonationAccount()">계좌번호 복사</button>
   </aside>
 
-  <section id="dashboard" class="panel active">
-    <div class="sectionhead"><div><h2>대시보드</h2><p>선택 연도의 최신 자산·부채 현황입니다.</p></div></div>
-    <div class="cards">
-      <div class="card summary-detail-card" role="button" tabindex="0" onclick="openAssetBreakdown()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAssetBreakdown()}" aria-label="총자산 항목별 상세보기"><span>총자산</span><b id="sumAsset">₩0</b><small id="assetSub">현금·금융자산 + 부동산</small><em>상세보기 →</em></div>
-      <div class="card summary-detail-card" role="button" tabindex="0" onclick="openDebtBreakdown()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDebtBreakdown()}" aria-label="총부채 대출별 상세보기"><span>총부채</span><b id="sumDebt">₩0</b><small id="debtSub">선택 연도 말 기준</small><em>상세보기 →</em></div>
-      <div class="card summary-detail-card" role="button" tabindex="0" onclick="openNetAssetBreakdown()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openNetAssetBreakdown()}" aria-label="순자산 구성 상세보기"><span>순자산</span><b id="sumNet">₩0</b><small id="netSub">총자산 - 총부채</small><em>상세보기 →</em></div>
-      <div class="card profit-summary-card" role="button" tabindex="0" onclick="openProfitBreakdown()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProfitBreakdown()}" aria-label="투자 평가손익 항목별 상세보기"><span>투자 평가손익</span><b id="sumProfit">₩0</b><small id="profitRate">0.00%</small><em>항목별 보기 →</em></div>
+  <section id="dashboard" class="panel active dashboard-v110">
+    <div class="dashboard-page-head">
+      <div><span class="eyebrow">OVERVIEW</span><h2>내 자산</h2><p id="homePeriodLabel">최신 자산 현황</p></div>
+      <button class="btn soft dashboard-report-shortcut" type="button" onclick="openPanelById('reports')">월말 리포트 보기</button>
     </div>
-    <div class="grid2 dashboard-chart-grid">
-      <div class="box chartbox"><canvas id="mainLineChart"></canvas></div>
-      <div class="box chartbox"><canvas id="mainPieChart"></canvas></div>
+
+    <div class="dashboard-hero-grid">
+      <article class="net-worth-hero" role="button" tabindex="0" onclick="openNetAssetBreakdown()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openNetAssetBreakdown()}">
+        <div class="net-worth-top"><span>내 순자산</span><small>상세보기 ›</small></div>
+        <b id="sumNet">₩0</b>
+        <div id="monthNetChange" class="net-month-change neutral">이번 달 변동 ₩0</div>
+        <div class="net-worth-breakdown">
+          <div><small>총자산</small><strong id="sumAsset">₩0</strong></div>
+          <div><small>총부채</small><strong id="sumDebt">₩0</strong></div>
+        </div>
+      </article>
+
+      <article class="monthly-change-card">
+        <div class="monthly-change-head"><div><span class="eyebrow">MONTHLY CHANGE</span><h3>이번 달 자산 변화</h3></div><small id="homeChangePeriod">-</small></div>
+        <div class="monthly-change-main"><small>순자산 변화</small><b id="homeMonthlyNetChange" class="neutral">₩0</b></div>
+        <div class="monthly-change-list">
+          <div><span>투자 평가손익 변화</span><b id="changeInvestment" class="neutral">₩0</b></div>
+          <div><span>부동산 평가액 변화</span><b id="changeProperty" class="neutral">₩0</b></div>
+          <div><span>부채 감소</span><b id="changeDebt" class="neutral">₩0</b></div>
+          <div><span>현금자산 변화</span><b id="changeCash" class="neutral">₩0</b></div>
+        </div>
+        <p class="monthly-change-note">각 항목은 월말 스냅샷 기준 주요 변화 지표이며 합계가 순자산 변동과 정확히 일치하지 않을 수 있습니다.</p>
+      </article>
     </div>
-    <div id="holdingsChartBox" class="box chartbox holdings-chartbox"><canvas id="holdingsBarChart"></canvas></div>
-    <div class="sectionhead dashboard-holdings-head" style="margin-top:18px"><div><h2 style="font-size:19px">보유 항목</h2><p>항목을 누르면 월별 원금·평가액과 누적 현황을 볼 수 있습니다.</p></div></div>
-    <p class="dashboard-visibility-note">각 자산·부채의 ON/OFF를 변경하면 ON 상태인 항목만 대시보드 합계와 그래프에 반영됩니다.</p>
-    <div id="dashboardBulkControls" class="dashboard-bulk-toolbar" aria-label="보유 항목 전체 표시 설정"></div>
-    <div id="dashboardItems" class="dashboard-groups"></div>
+
+    <div class="asset-class-grid">
+      <button class="asset-class-card cash-card" type="button" onclick="openAssetGroup('현금자산')"><span class="asset-class-icon">₩</span><div><small>현금자산</small><b id="homeCash">₩0</b><em id="homeCashShare">총자산의 0%</em></div><span class="asset-card-arrow">›</span></button>
+      <button class="asset-class-card finance-card" type="button" onclick="openAssetGroup('금융자산')"><span class="asset-class-icon">↗</span><div><small>투자자산</small><b id="homeFinance">₩0</b><em><span id="sumProfit">₩0</span> · <span id="profitRate">0.00%</span></em></div><span class="asset-card-arrow">›</span></button>
+      <button class="asset-class-card property-overview-card" type="button" onclick="openPanelById('realestate')"><span class="asset-class-icon">⌂</span><div><small>부동산</small><b id="homeProperty">₩0</b><em id="homePropertyShare">총자산의 0%</em></div><span class="asset-card-arrow">›</span></button>
+      <button class="asset-class-card debt-overview-card" type="button" onclick="openPanelById('debt')"><span class="asset-class-icon">↓</span><div><small>부채</small><b id="homeDebt">₩0</b><em id="homeDebtRatio">자산 대비 0%</em></div><span class="asset-card-arrow">›</span></button>
+    </div>
+
+    <div class="dashboard-analysis-grid">
+      <div class="box chartbox dashboard-trend-box">
+        <div class="chart-section-head"><div><h3>자산 추이</h3><p>보고 싶은 지표를 선택하세요.</p></div><div id="dashboardMetricTabs" class="metric-tabs"><button type="button" data-metric="net" class="active" onclick="setDashboardMetric('net')">순자산</button><button type="button" data-metric="assets" onclick="setDashboardMetric('assets')">총자산</button><button type="button" data-metric="profit" onclick="setDashboardMetric('profit')">투자손익</button></div></div>
+        <div class="chart-canvas-wrap"><canvas id="mainLineChart"></canvas></div>
+      </div>
+      <div class="box chartbox dashboard-composition-box"><div class="chart-section-head"><div><h3>자산 구성</h3><p>대시보드 ON 항목 기준</p></div></div><div class="chart-canvas-wrap"><canvas id="mainPieChart"></canvas></div></div>
+    </div>
+
+    <details class="dashboard-detail-disclosure">
+      <summary><span><b>전체 보유 항목</b><small>항목별 평가액과 ON/OFF 설정을 확인합니다.</small></span><span>펼쳐보기</span></summary>
+      <div class="dashboard-detail-body">
+        <div id="holdingsChartBox" class="box chartbox holdings-chartbox"><canvas id="holdingsBarChart"></canvas></div>
+        <p class="dashboard-visibility-note">각 자산·부채의 ON/OFF를 변경하면 ON 상태인 항목만 홈 합계와 그래프에 반영됩니다.</p>
+        <div id="dashboardBulkControls" class="dashboard-bulk-toolbar" aria-label="보유 항목 전체 표시 설정"></div>
+        <div id="dashboardItems" class="dashboard-groups"></div>
+      </div>
+    </details>
   </section>
 
   <section id="reports" class="panel">
@@ -1229,7 +1299,7 @@ nav button.active .nav-update-dot{display:none}
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span id="noticeCountLabel" class="selection-count">0건</span><button id="noticeWriteToggleBtn" class="btn primary admin-only dev-tools" onclick="toggleNoticeForm(true)">＋ 공지 작성</button></div>
         </div>
         <div id="noticeWriteBox" class="notice-admin-form admin-only dev-tools" style="display:none">
-          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.0.8 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.0.8"></label></div>
+          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.1.0 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.1.0"></label></div>
           <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="noticeContent" class="ko-input wide-textarea" lang="ko" maxlength="10000" placeholder="업데이트 내용 또는 공지사항"></textarea></label>
           <div class="actions"><button class="btn soft" onclick="cancelNoticeEdit()">취소</button><button id="noticeSubmitBtn" class="btn primary" onclick="saveNotice()">공지 등록</button></div>
         </div>
@@ -1364,7 +1434,7 @@ nav button.active .nav-update-dot{display:none}
 </div>
 
 <script>
-const APP_VERSION='1.0.8';
+const APP_VERSION='1.1.0';
 const APP_TITLE='WOOYOO ASSET';
 const LEGACY_KEY='wooyoo_assets_v11';
 const LEGACY_OLD_KEY='wooyoo_assets_v10';
@@ -1410,6 +1480,7 @@ let publicMemberCount=null;
 let uiSessionSaveTimer=null,authStartInProgress=false,passwordRecoveryMode=false;
 let tabNotificationSignatures={},tabNotificationTimer=null;
 let selectedMonthlyReportId=null;
+let dashboardMetric='net';
 
 
 function setAuthStorageNamespace(userId){
@@ -2253,6 +2324,27 @@ async function signOutUser(){
   location.reload();
 }
 
+function navIcon(id){return ({dashboard:'⌂',portfolio:'₩',realestate:'▦',debt:'↓',reports:'▥',buytable:'＋',notices:'●',board:'✎',settings:'⚙',developer:'◆'})[id]||'•';}
+function toggleMoreNav(force){const box=$('navMoreItems');if(!box)return;const show=typeof force==='boolean'?force:!box.classList.contains('show');box.classList.toggle('show',show);$('navMoreToggle')?.classList.toggle('open',show);}
+function toggleMobileMore(force){const sheet=$('mobileMoreSheet');if(!sheet)return;const show=typeof force==='boolean'?force:!sheet.classList.contains('show');sheet.classList.toggle('show',show);document.body.classList.toggle('mobile-sheet-open',show);}
+function toggleHeaderMenu(event){event?.stopPropagation?.();const menu=$('headerAccountMenu');if(!menu)return;const show=!menu.classList.contains('show');menu.classList.toggle('show',show);document.querySelector('.topbar-profile-button')?.setAttribute('aria-expanded',show?'true':'false');}
+function closeHeaderMenu(){const menu=$('headerAccountMenu');if(!menu)return;menu.classList.remove('show');document.querySelector('.topbar-profile-button')?.setAttribute('aria-expanded','false');}
+function openMobilePanel(id){toggleMobileMore(false);openPanelById(id);}
+function renderHeaderContext(id){const labels={dashboard:'홈',portfolio:'자산',realestate:'부동산',debt:'부채',reports:'리포트',buytable:'매수표',notices:'공지사항',board:'자유게시판',settings:'설정',developer:'개발자'};if($('headerPageTitle'))$('headerPageTitle').textContent=labels[id]||'홈';}
+function renderNavigation(){
+  const primary=[['dashboard','홈'],['portfolio','자산'],['realestate','부동산'],['debt','부채'],['reports','리포트']];
+  const more=[['buytable','매수표'],['notices','공지사항'],['board','자유게시판'],['settings','설정']];if(isDeveloper)more.push(['developer','개발자']);
+  $('nav').innerHTML=`<div class="side-nav-brand"><span>W</span><div><b>WOOYOO</b><small>ASSET</small></div></div><div class="side-nav-label">MY ASSET</div>${primary.map((x,i)=>`<button data-panel="${x[0]}" data-label="${x[1]}" class="${i===0?'active':''}" onclick="openTab('${x[0]}',this)"><span class="side-nav-icon">${navIcon(x[0])}</span><span>${x[1]}</span><span class="nav-update-dot" aria-hidden="true"></span></button>`).join('')}<div class="side-nav-label secondary-label">MORE</div><button id="navMoreToggle" class="nav-more-toggle" type="button" onclick="toggleMoreNav()"><span class="side-nav-icon">•••</span><span>더보기</span><span class="nav-more-caret">⌄</span></button><div id="navMoreItems" class="nav-more-items">${more.map(x=>`<button data-panel="${x[0]}" data-label="${x[1]}" onclick="openTab('${x[0]}',this)"><span class="side-nav-icon">${navIcon(x[0])}</span><span>${x[1]}</span><span class="nav-update-dot" aria-hidden="true"></span></button>`).join('')}</div>`;
+  const mobilePrimary=[['dashboard','홈'],['portfolio','자산'],['reports','리포트']];
+  $('mobileBottomNav').innerHTML=mobilePrimary.map((x,i)=>`<button data-mobile-panel="${x[0]}" class="${i===0?'active':''}" onclick="openPanelById('${x[0]}')"><span>${navIcon(x[0])}</span><small>${x[1]}</small></button>`).join('')+`<button type="button" onclick="toggleMobileMore(true)"><span>•••</span><small>더보기</small></button>`;
+  $('mobileMoreItems').innerHTML=[['realestate','부동산'],['debt','부채'],...more].map(x=>`<button type="button" onclick="openMobilePanel('${x[0]}')"><span>${navIcon(x[0])}</span><b>${x[1]}</b></button>`).join('');
+}
+function syncNavigationState(id){
+  document.querySelectorAll('button[data-panel]').forEach(x=>x.classList.toggle('active',x.dataset.panel===id));
+  document.querySelectorAll('[data-mobile-panel]').forEach(x=>x.classList.toggle('active',x.dataset.mobilePanel===id));
+  const moreIds=['buytable','notices','board','settings','developer'];if(moreIds.includes(id))toggleMoreNav(true);
+  renderHeaderContext(id);
+}
 function init(){
   applyAppVersion();
   for(let y=2020;y<=currentYear+100;y++){
@@ -2261,9 +2353,8 @@ function init(){
   }
   $('yearSelect').addEventListener('change',handleYearChange);
   $('resetYearSelect').addEventListener('change',renderSettings);
-  const navs=[['dashboard','대시보드'],['reports','월말 리포트'],['portfolio','포트폴리오'],['realestate','부동산'],['debt','부채'],['buytable','매수표'],['notices','공지사항'],['board','자유게시판'],['settings','설정']];
-  if(isDeveloper)navs.push(['developer','개발자']);
-  $('nav').innerHTML=navs.map((x,i)=>`<button data-panel="${x[0]}" data-label="${x[1]}" class="${i===0?'active':''}" onclick="openTab('${x[0]}',this)"><span>${x[1]}</span><span class="nav-update-dot" aria-hidden="true"></span></button>`).join('');
+  renderNavigation();
+  document.addEventListener('click',e=>{if(!e.target.closest('.topbar-tools'))closeHeaderMenu();});
   $('importFile').addEventListener('change',importData);$('logoFile').addEventListener('change',handleLogoUpload);
   attachMoneyFormatting();attachKoreanPreference();attachSmartDates();migrateLegacyProfile();
   document.addEventListener('input',scheduleUiSessionSave,true);document.addEventListener('change',scheduleUiSessionSave,true);
@@ -2280,8 +2371,7 @@ function handleYearChange(){
 function openTab(id,btn){
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
   const panel=$(id);if(!panel)return;panel.classList.add('active');
-  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
-  if(btn)btn.classList.add('active');
+  syncNavigationState(id);
   if(id==='reports')renderMonthlyReports();
   if(id==='realestate')renderProperties();
   if(id==='debt')renderDebts();
@@ -2592,12 +2682,41 @@ function openDebtFromDashboard(id){
   renderDebts();
   setTimeout(()=>{const target=$('debtDetail')||$('debtCards');target?.scrollIntoView({behavior:'smooth',block:'start'});},80);
 }
+function openAssetGroup(group){activePortfolioOwner='전체';activePortfolioGroup=group;activePortfolioCat='전체';openPanelById('portfolio');renderPortfolioTabs();renderPortfolio();}
+function setDashboardMetric(metric){dashboardMetric=['net','assets','profit'].includes(metric)?metric:'net';document.querySelectorAll('#dashboardMetricTabs [data-metric]').forEach(btn=>btn.classList.toggle('active',btn.dataset.metric===dashboardMetric));drawDashboardCharts($('yearSelect').value);}
+function dashboardLatestPeriod(year){
+  const y=String(year),dates=[];
+  state.portfolio.forEach(x=>{const d=normalizeDate(x.month);if(d.startsWith(y))dates.push(d);});
+  state.propertyTrades.forEach(x=>{const d=normalizeDate(x.month);if(d.startsWith(y))dates.push(d);});
+  state.debtPayments.forEach(x=>{const d=normalizeDate(x.month);if(d.startsWith(y))dates.push(d);});
+  const now=new Date();if(!dates.length)return `${y}-${String(Number(y)===now.getFullYear()?now.getMonth()+1:12).padStart(2,'0')}`;
+  const latest=dates.sort().at(-1);return latest.slice(0,7);
+}
+function setSignedAmount(id,value,positiveClass=true,prefix=''){
+  const el=$(id);if(!el)return;const n=Number(value||0),cls=n>0?(positiveClass?'pos':'neg'):n<0?(positiveClass?'neg':'pos'):'neutral',sign=n>0?'+':n<0?'-':'';el.className=cls;el.textContent=`${prefix}${sign}${money(Math.abs(n))}`;
+}
+function renderDashboardHomeSummary(y,snap,profit){
+  const period=dashboardLatestPeriod(y),cutoff=reportMonthEnd(period),prevPeriod=shiftReportPeriod(period,-1),prevCutoff=reportMonthEnd(prevPeriod),nowSnap=dashboardSnapshot(cutoff),prevSnap=dashboardSnapshot(prevCutoff);
+  const cashNow=nowSnap.items.filter(x=>categoryGroup(x.cat)==='현금자산').reduce((s,x)=>s+toKRW(x.value,x.currency),0),cashPrev=prevSnap.items.filter(x=>categoryGroup(x.cat)==='현금자산').reduce((s,x)=>s+toKRW(x.value,x.currency),0);
+  const financeNow=nowSnap.items.filter(x=>categoryGroup(x.cat)==='금융자산').reduce((s,x)=>s+toKRW(x.value,x.currency),0);
+  const profitNow=nowSnap.portfolioValue-nowSnap.portfolioPrincipal,profitPrev=prevSnap.portfolioValue-prevSnap.portfolioPrincipal;
+  const netChange=nowSnap.net-prevSnap.net,propertyChange=nowSnap.property-prevSnap.property,debtReduction=prevSnap.debt-nowSnap.debt,cashChange=cashNow-cashPrev,investmentChange=profitNow-profitPrev;
+  if($('homePeriodLabel'))$('homePeriodLabel').textContent=`${reportPeriodLabel(period)} 기준 최신 자산 현황`;
+  if($('homeChangePeriod'))$('homeChangePeriod').textContent=reportPeriodLabel(period);
+  setSignedAmount('monthNetChange',netChange,true,'이번 달 ');setSignedAmount('homeMonthlyNetChange',netChange);setSignedAmount('changeInvestment',investmentChange);setSignedAmount('changeProperty',propertyChange);setSignedAmount('changeDebt',debtReduction);setSignedAmount('changeCash',cashChange);
+  const assets=Number(nowSnap.assets||0),debt=Number(nowSnap.debt||0);
+  if($('homeCash'))$('homeCash').textContent=money(cashNow);if($('homeFinance'))$('homeFinance').textContent=money(financeNow);if($('homeProperty'))$('homeProperty').textContent=money(nowSnap.property);if($('homeDebt'))$('homeDebt').textContent=money(debt);
+  if($('homeCashShare'))$('homeCashShare').textContent=`총자산의 ${assets?(cashNow/assets*100).toFixed(1):'0.0'}%`;
+  if($('homePropertyShare'))$('homePropertyShare').textContent=`총자산의 ${assets?(nowSnap.property/assets*100).toFixed(1):'0.0'}%`;
+  if($('homeDebtRatio'))$('homeDebtRatio').textContent=`자산 대비 ${assets?(debt/assets*100).toFixed(1):'0.0'}%`;
+}
 function renderDashboard(){
   const y=$('yearSelect').value;
   const cutoff=yearEnd(y);
   const snap=dashboardSnapshot(cutoff);
   const profit=snap.portfolioValue-snap.portfolioPrincipal,rate=snap.portfolioPrincipal?profit/snap.portfolioPrincipal*100:0;
   $('sumAsset').textContent=money(snap.assets);$('sumDebt').textContent=money(snap.debt);$('sumNet').textContent=money(snap.net);$('sumProfit').textContent=money(profit);$('sumProfit').className=profit>0?'pos':profit<0?'neg':'';$('profitRate').innerHTML=trend(rate);
+  renderDashboardHomeSummary(y,snap,profit);
 
   const grouped={현금자산:[],금융자산:[]};
   snap.allItems.slice().sort((a,b)=>toKRW(b.value,b.currency)-toKRW(a.value,a.currency)).forEach(x=>{
@@ -2706,7 +2825,9 @@ function openProfitBreakdown(){
 }
 function drawDashboardCharts(y){
   const rows=Array.from({length:12},(_,i)=>{const m=monthCutoff(y,i+1),snap=dashboardSnapshot(m);return {label:`${i+1}월`,...snap,investmentProfit:snap.portfolioValue-snap.portfolioPrincipal};});
-  drawChart('mainLineChart','mainLineChart','line',{labels:rows.map(x=>x.label),datasets:[{label:'총자산',data:rows.map(x=>x.assets),tension:.25},{label:'총부채',data:rows.map(x=>x.debt),tension:.25},{label:'순자산',data:rows.map(x=>x.net),tension:.25},{label:'투자 평가손익',data:rows.map(x=>x.investmentProfit),tension:.25,borderDash:[6,4]}]},chartOptions('월별 자산·부채·순자산·투자 평가손익'));
+  const metricMap={net:{label:'순자산',data:rows.map(x=>x.net)},assets:{label:'총자산',data:rows.map(x=>x.assets)},profit:{label:'투자 평가손익',data:rows.map(x=>x.investmentProfit)}};const metric=metricMap[dashboardMetric]||metricMap.net;
+  document.querySelectorAll('#dashboardMetricTabs [data-metric]').forEach(btn=>btn.classList.toggle('active',btn.dataset.metric===dashboardMetric));
+  drawChart('mainLineChart','mainLineChart','line',{labels:rows.map(x=>x.label),datasets:[{label:metric.label,data:metric.data,tension:.28,fill:true}]},chartOptions(`${metric.label} 월별 추이`));
   const end=rows[11],byCat={};
   end.items.forEach(x=>byCat[x.cat]=(byCat[x.cat]||0)+toKRW(x.value,x.currency));
   end.propertyItems.filter(x=>isDashboardAssetOn(x.key)&&x.value>0).forEach(x=>{byCat[x.property.name]=(byCat[x.property.name]||0)+x.value;});
