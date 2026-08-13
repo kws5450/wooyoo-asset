@@ -3,9 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WOOYOO ASSET V1.1.2</title>
-<meta name="application-name" content="WOOYOO ASSET V1.1.2">
-<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.1.2">
+<title>WOOYOO ASSET V1.1.3</title>
+<meta name="application-name" content="WOOYOO ASSET V1.1.3">
+<meta name="apple-mobile-web-app-title" content="WOOYOO ASSET V1.1.3">
+<meta name="theme-color" content="#10221f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -997,6 +1004,20 @@ body.mobile-sheet-open{overflow:hidden}
   .chart-section-head{min-height:78px!important}
   .chart-canvas-wrap{height:calc(100% - 78px)!important}
 }
+
+/* WOOYOO ASSET v1.1.3 — PWA / mobile app shell */
+@supports(padding:max(0px)){
+  @media(max-width:900px){
+    .app{padding-bottom:max(90px,calc(82px + env(safe-area-inset-bottom)))!important}
+    .mobile-bottom-nav{bottom:max(8px,env(safe-area-inset-bottom))}
+    .auth-screen,.welcome-screen{padding-top:max(14px,env(safe-area-inset-top));padding-bottom:max(14px,env(safe-area-inset-bottom))}
+  }
+}
+@media(display-mode:standalone){
+  body{overscroll-behavior-y:none}
+  #pwaInstallBtn,#pwaInstallHint{display:none!important}
+}
+
 </style>
 </head>
 <body class="auth-pending">
@@ -1025,10 +1046,12 @@ body.mobile-sheet-open{overflow:hidden}
       <ol>
         <li>상단의 <strong>회원가입</strong> 탭을 선택하세요.</li>
         <li>사용할 <strong>이메일, 닉네임, 비밀번호</strong>를 입력하세요.</li>
-        <li><strong>회원가입</strong> 버튼을 누른 뒤 로그인 탭으로 돌아오세요.</li>
-        <li>가입한 이메일과 비밀번호로 로그인한 후 새 포트폴리오를 만들면 됩니다.</li>
+        <li><strong>회원가입</strong> 버튼을 누르면 별도의 이메일 인증 없이 계정이 생성됩니다.</li>
+        <li>가입 완료 후 바로 포트폴리오를 만들고 이용할 수 있습니다.</li>
       </ol>
-      <p>비밀번호는 6자 이상이어야 합니다. 이메일 인증이 설정된 경우에는 받은 메일의 인증 링크를 먼저 확인하세요.</p>
+      <p>비밀번호는 6자 이상이어야 합니다. 비밀번호를 잊은 경우에만 재설정 이메일이 발송됩니다.</p>
+      <button id="pwaInstallBtn" class="btn secondary" type="button" style="width:100%;margin-top:12px;display:none" onclick="installWooyooApp()">📱 WOOYOO ASSET 앱으로 설치</button>
+      <p id="pwaInstallHint" style="display:none;margin-top:8px;padding-top:0;border-top:0">스마트폰 홈 화면에 설치하면 브라우저 주소창 없이 앱처럼 사용할 수 있습니다.</p>
     </div>
   </div>
 </div>
@@ -1054,7 +1077,7 @@ body.mobile-sheet-open{overflow:hidden}
   <div class="welcome-card">
     <div class="welcome-brand">
       <div id="welcomeLogo" class="welcome-logo">🐮</div>
-      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.1.2</span></h1><p>Private family wealth dashboard</p></div>
+      <div><h1><b>WOOYOO</b> ASSET <span class="version-chip" data-app-version>v1.1.3</span></h1><p>Private family wealth dashboard</p></div>
     </div>
     <div class="welcome-account-bar">
       <div class="welcome-account-info"><small>로그인 계정</small><b id="welcomeAccountEmail">-</b></div>
@@ -1346,7 +1369,7 @@ body.mobile-sheet-open{overflow:hidden}
           <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span id="noticeCountLabel" class="selection-count">0건</span><button id="noticeWriteToggleBtn" class="btn primary admin-only dev-tools" onclick="toggleNoticeForm(true)">＋ 공지 작성</button></div>
         </div>
         <div id="noticeWriteBox" class="notice-admin-form admin-only dev-tools" style="display:none">
-          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.1.2 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.1.2"></label></div>
+          <div class="formgrid"><label>공지 제목<input id="noticeTitle" class="ko-input" lang="ko" maxlength="120" placeholder="예: v1.1.3 업데이트"></label><label>버전<input id="noticeVersion" maxlength="30" placeholder="v1.1.3"></label></div>
           <label style="display:block;margin-top:10px;font-size:12px;color:var(--muted);font-weight:750">내용<textarea id="noticeContent" class="ko-input wide-textarea" lang="ko" maxlength="10000" placeholder="업데이트 내용 또는 공지사항"></textarea></label>
           <div class="actions"><button class="btn soft" onclick="cancelNoticeEdit()">취소</button><button id="noticeSubmitBtn" class="btn primary" onclick="saveNotice()">공지 등록</button></div>
         </div>
@@ -1481,7 +1504,7 @@ body.mobile-sheet-open{overflow:hidden}
 </div>
 
 <script>
-const APP_VERSION='1.1.2';
+const APP_VERSION='1.1.3';
 const APP_TITLE='WOOYOO ASSET';
 const LEGACY_KEY='wooyoo_assets_v11';
 const LEGACY_OLD_KEY='wooyoo_assets_v10';
@@ -2355,7 +2378,12 @@ async function signUpWithEmail(){
   if(data?.user?.id){
     await supabaseClient.from('app_profiles').upsert({user_id:data.user.id,nickname},{onConflict:'user_id'});
   }
-  setAuthMessage('회원가입이 완료되었습니다. 이메일 인증 설정이 켜져 있다면 인증 후 로그인하세요.','ok');
+  if(data?.session?.user){
+    setAuthMessage('회원가입이 완료되었습니다. 바로 시작합니다.','ok');
+    await startAuthedApp(data.session.user);
+    return;
+  }
+  setAuthMessage('회원가입은 완료되었지만 자동 로그인이 시작되지 않았습니다. Supabase의 Confirm email 설정이 OFF인지 확인해 주세요.','ok');
 }
 async function signInWithEmail(){
   if(!supabaseClient)return bootAuth();
@@ -3397,6 +3425,35 @@ async function loadDeveloperData(){
   box.innerHTML=allUsers.join('')||'<div class="empty">가입 회원이 없습니다.</div>';
 }
 
+
+
+// WOOYOO ASSET v1.1.3 — PWA install / service worker
+let deferredPwaInstallPrompt=null;
+function isStandaloneApp(){return window.matchMedia?.('(display-mode: standalone)').matches||window.navigator.standalone===true;}
+function refreshPwaInstallUi(){
+  const btn=$('pwaInstallBtn'),hint=$('pwaInstallHint');if(!btn)return;
+  if(isStandaloneApp()){btn.style.display='none';if(hint)hint.style.display='none';return;}
+  const isIos=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(deferredPwaInstallPrompt||isIos){btn.style.display='inline-flex';if(hint)hint.style.display='block';}
+  else{btn.style.display='none';if(hint)hint.style.display='none';}
+}
+window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredPwaInstallPrompt=event;refreshPwaInstallUi();});
+window.addEventListener('appinstalled',()=>{deferredPwaInstallPrompt=null;refreshPwaInstallUi();});
+async function installWooyooApp(){
+  if(isStandaloneApp())return;
+  if(deferredPwaInstallPrompt){
+    deferredPwaInstallPrompt.prompt();
+    try{await deferredPwaInstallPrompt.userChoice;}catch(e){}
+    deferredPwaInstallPrompt=null;refreshPwaInstallUi();return;
+  }
+  const isIos=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(isIos){alert('iPhone/iPad에서는 Safari 하단의 공유 버튼(□↑)을 누른 뒤 “홈 화면에 추가”를 선택해 주세요.');return;}
+  alert('브라우저 메뉴에서 “앱 설치” 또는 “홈 화면에 추가”를 선택해 주세요.');
+}
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(err=>console.warn('Service Worker registration failed',err)));
+}
+document.addEventListener('DOMContentLoaded',refreshPwaInstallUi);
 
 bootAuth();
 </script>
