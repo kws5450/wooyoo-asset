@@ -1113,7 +1113,7 @@ body.mobile-sheet-open{overflow:hidden}
     <div id="unlockPinPanel" class="pin-panel unlock-panel-v18">
       <div class="selected-profile"><b id="selectedProfileName">선택한 포트폴리오</b><button onclick="backToProfileList()">다른 포트폴리오 선택</button></div>
       <div class="pin-grid">
-        <label class="sr-only">PIN<input id="unlockPin" type="password" inputmode="numeric" maxlength="6" autocomplete="current-password" placeholder="••••••" oninput="syncPinDots()" onkeydown="if(event.key==='Enter')unlockPortfolio()"></label>
+        <label class="sr-only">PIN<input id="unlockPin" type="password" inputmode="numeric" maxlength="6" autocomplete="current-password" placeholder="••••••" oninput="handlePinInput(this)" onkeydown="if(event.key==='Enter'){event.preventDefault();unlockPortfolio()}"></label>
         <div id="pinDots" class="pin-dots" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
         <div class="pin-keypad" aria-label="PIN 숫자 키패드">
           <button type="button" onclick="pressPinDigit('1')">1</button><button type="button" onclick="pressPinDigit('2')">2</button><button type="button" onclick="pressPinDigit('3')">3</button>
@@ -1787,10 +1787,25 @@ function profilePreviewStats(profileId){
   return {totalAssets,net,recordCount:(saved.portfolio||[]).length+(saved.propertyTrades||[]).length+(saved.debtPayments||[]).length};
 }
 function focusFirstProfile(){const first=document.querySelector('.profile-card');if(first){first.scrollIntoView({behavior:'smooth',block:'center'});first.focus();}else showCreateProfile();}
+let pinUnlockInProgress=false;
+let pinAutoUnlockTimer=null;
 function syncPinDots(){const value=String($('unlockPin')?.value||'').replace(/\D/g,'').slice(0,6);if($('unlockPin')&&$('unlockPin').value!==value)$('unlockPin').value=value;document.querySelectorAll('#pinDots span').forEach((dot,i)=>dot.classList.toggle('filled',i<value.length));}
-function pressPinDigit(digit){const input=$('unlockPin');if(!input)return;input.value=(input.value.replace(/\D/g,'')+digit).slice(0,6);syncPinDots();if(input.value.length===6)setTimeout(unlockPortfolio,120);}
-function backspacePinInput(){const input=$('unlockPin');if(!input)return;input.value=input.value.slice(0,-1);syncPinDots();}
-function clearPinInput(){const input=$('unlockPin');if(!input)return;input.value='';syncPinDots();}
+function schedulePinAutoUnlock(){
+  clearTimeout(pinAutoUnlockTimer);
+  const input=$('unlockPin');
+  if(!input||input.value.length!==6||pinUnlockInProgress)return;
+  pinAutoUnlockTimer=setTimeout(()=>unlockPortfolio(),100);
+}
+function handlePinInput(input){
+  if(!input)return;
+  input.value=String(input.value||'').replace(/\D/g,'').slice(0,6);
+  syncPinDots();
+  setWelcomeError('');
+  if(input.value.length===6)schedulePinAutoUnlock();
+}
+function pressPinDigit(digit){const input=$('unlockPin');if(!input||pinUnlockInProgress)return;input.value=(input.value.replace(/\D/g,'')+digit).slice(0,6);handlePinInput(input);}
+function backspacePinInput(){const input=$('unlockPin');if(!input||pinUnlockInProgress)return;clearTimeout(pinAutoUnlockTimer);input.value=input.value.slice(0,-1);handlePinInput(input);}
+function clearPinInput(){const input=$('unlockPin');if(!input||pinUnlockInProgress)return;clearTimeout(pinAutoUnlockTimer);input.value='';handlePinInput(input);}
 function renderProfileList(){
   const profiles=getProfiles();
   const list=$('profileList');
@@ -1862,11 +1877,30 @@ async function verifyPin(pin){
   try{return await derivePinHash(pin,base64ToBytes(profile.salt))===profile.hash;}catch(e){return false;}
 }
 async function unlockPortfolio(){
+  if(pinUnlockInProgress)return;
   if(!activeProfileId)return setWelcomeError('포트폴리오를 다시 선택해 주세요.');
-  const pin=$('unlockPin').value.trim();
+  const input=$('unlockPin');
+  const pin=String(input?.value||'').replace(/\D/g,'').slice(0,6);
+  if(input)input.value=pin;
+  syncPinDots();
   if(!/^\d{6}$/.test(pin))return setWelcomeError('6자리 PIN을 입력해 주세요.');
-  if(!(await verifyPin(pin))){$('unlockPin').value='';syncPinDots();setWelcomeError('PIN이 올바르지 않습니다.');return;}
-  $('unlockPin').value='';syncPinDots();updateProfile(activeProfileId,{lastOpened:new Date().toISOString()});openApp({forceDashboard:true});
+  clearTimeout(pinAutoUnlockTimer);
+  pinUnlockInProgress=true;
+  try{
+    if(!(await verifyPin(pin))){
+      if(input)input.value='';
+      syncPinDots();
+      setWelcomeError('PIN이 올바르지 않습니다.');
+      setTimeout(()=>input?.focus({preventScroll:true}),60);
+      return;
+    }
+    if(input)input.value='';
+    syncPinDots();
+    updateProfile(activeProfileId,{lastOpened:new Date().toISOString()});
+    openApp({forceDashboard:true});
+  }finally{
+    pinUnlockInProgress=false;
+  }
 }
 function openApp(options={}){
   const forceDashboard=!!options.forceDashboard;

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wooyoo-asset-v1.1.3';
+const CACHE_NAME = 'wooyoo-asset-v1.1.3-pin-hotfix-1';
 
 const APP_SHELL = [
   '/',
