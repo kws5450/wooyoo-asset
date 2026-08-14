@@ -1045,6 +1045,35 @@ body.mobile-sheet-open{overflow:hidden}
   .buy-quote-toolbar .btn{width:100%}
 }
 
+
+/* v1.1.7 buy-table search UX */
+.buy-table{overflow-x:auto!important;overflow-y:visible!important}
+.buy-table table{min-width:1080px}
+.buy-table td{vertical-align:top}
+.stock-picker{min-width:300px!important}
+.stock-search-results{
+  position:static!important;
+  left:auto!important;right:auto!important;top:auto!important;
+  width:100%!important;
+  max-height:none!important;
+  overflow:visible!important;
+  margin-top:7px!important;
+  padding:5px!important;
+  border:1px solid #dfe6e4!important;
+  border-radius:11px!important;
+  box-shadow:0 7px 20px rgba(15,23,42,.10)!important;
+}
+.stock-search-results.show{display:grid!important;gap:3px}
+.stock-result-btn{min-height:48px!important}
+.stock-result-btn b{font-size:11.5px!important}
+.stock-result-btn small{font-size:9.5px!important}
+@media(max-width:720px){
+  .buy-table{margin-left:-8px!important;margin-right:-8px!important;border-radius:10px!important}
+  .buy-table table{min-width:920px!important}
+  .stock-picker{min-width:260px!important}
+  .stock-result-btn{min-height:52px!important;padding:10px!important}
+}
+
 </style>
 </head>
 <body class="auth-pending">
@@ -1535,7 +1564,7 @@ body.mobile-sheet-open{overflow:hidden}
 </div>
 
 <script>
-const APP_VERSION='1.1.6';
+const APP_VERSION='1.1.7';
 const APP_TITLE='WOOYOO ASSET';
 const LEGACY_KEY='wooyoo_assets_v11';
 const LEGACY_OLD_KEY='wooyoo_assets_v10';
@@ -3187,30 +3216,76 @@ function clearBuyStock(id){
 }
 async function handleStockSearch(id,query){
   const row=state.buyTable.rows.find(r=>r.id===id);if(!row)return;
-  row.name=query;row.code='';row.market='';row.quoteAt='';persistState();updateBuyPlanStatus();
+  row.name=query;row.code='';row.market='KR';row.exchange='';row.quoteExchange='';row.currency='KRW';row.assetType='';row.quoteAt='';
+  persistState();updateBuyPlanStatus();
   const box=$(`stockSearch-${id}`);
   clearTimeout(stockSearchTimers[id]);
   if(!box)return;
   const q=String(query||'').trim();
   if(q.length<1){box.classList.remove('show');box.innerHTML='';return;}
+
   stockSearchTimers[id]=setTimeout(async()=>{
     if(!supabaseClient){setBuyQuoteStatus('Supabase 연결 후 종목검색을 사용할 수 있습니다.','err');return;}
-    box.innerHTML='<div class="empty" style="padding:10px">검색 중...</div>';box.classList.add('show');
+    box.innerHTML='<div class="empty" style="padding:10px">검색 중...</div>';
+    box.classList.add('show');
+
     try{
-      const {data,error}=await supabaseClient.from('stock_master')
-        .select('code,name,market,exchange,quote_exchange,currency,asset_type').eq('active',true)
-        .or(`name.ilike.%${q.replace(/[%_,]/g,'')}%,code.ilike.%${q.replace(/[%_,]/g,'')}%`)
-        .order('name',{ascending:true}).limit(10);
-      if(error)throw error;
-      const rows=data||[];
+      const safe=q.replace(/[%_,]/g,'').trim();
+      const upper=safe.toUpperCase();
+
+      const [exactNameRes,exactCodeRes,partialRes]=await Promise.all([
+        supabaseClient.from('stock_master')
+          .select('code,name,market,exchange,quote_exchange,currency,asset_type')
+          .eq('active',true).eq('name',safe).limit(5),
+        supabaseClient.from('stock_master')
+          .select('code,name,market,exchange,quote_exchange,currency,asset_type')
+          .eq('active',true).eq('code',upper).limit(5),
+        supabaseClient.from('stock_master')
+          .select('code,name,market,exchange,quote_exchange,currency,asset_type')
+          .eq('active',true)
+          .or(`name.ilike.%${safe}%,code.ilike.%${safe}%`)
+          .limit(40)
+      ]);
+
+      if(exactNameRes.error)throw exactNameRes.error;
+      if(exactCodeRes.error)throw exactCodeRes.error;
+      if(partialRes.error)throw partialRes.error;
+
+      const merged=[...(exactNameRes.data||[]),...(exactCodeRes.data||[]),...(partialRes.data||[])];
+      const unique=new Map();
+      merged.forEach(s=>unique.set(`${s.market}|${s.code}`,s));
+
+      const score=s=>{
+        const name=String(s.name||'').toLowerCase();
+        const code=String(s.code||'').toUpperCase();
+        const needle=safe.toLowerCase();
+        if(code===upper)return 0;
+        if(name===needle)return 0;
+        if(name.startsWith(needle))return 1;
+        if(code.startsWith(upper))return 1;
+        if(name.includes(needle))return 2;
+        return 3;
+      };
+
+      const rows=[...unique.values()]
+        .sort((a,b)=>{
+          const d=score(a)-score(b);
+          if(d)return d;
+          const krA=a.market==='KR'?0:1,krB=b.market==='KR'?0:1;
+          if(krA!==krB)return krA-krB;
+          return String(a.name||'').length-String(b.name||'').length || String(a.name||'').localeCompare(String(b.name||''),'ko');
+        })
+        .slice(0,12);
+
       box.innerHTML=rows.length?rows.map(s=>`<button type="button" class="stock-result-btn" onclick='selectBuyStock(${id},${JSON.stringify(s.code)},${JSON.stringify(s.name)},${JSON.stringify(s.market)},${JSON.stringify(s.exchange||'')},${JSON.stringify(s.quote_exchange||'')},${JSON.stringify(s.currency||'KRW')},${JSON.stringify(s.asset_type||'')})'><b>${escapeHtml(s.name)}</b><small>${escapeHtml((s.market==='US'?'🇺🇸':'🇰🇷')+' '+(s.exchange||s.market||'KR')+' · '+s.code+(s.asset_type?' · '+s.asset_type:''))}</small></button>`).join(''):'<div class="empty" style="padding:10px">검색 결과가 없습니다.</div>';
-      setBuyQuoteStatus('종목 마스터 연결됨 · 국내/미국 검색 가능','ok');
+
+      setBuyQuoteStatus('종목 마스터 연결됨 · 정확한 종목을 우선 표시합니다.','ok');
     }catch(e){
       console.warn('stock master search failed',e);
-      box.innerHTML='<div class="empty" style="padding:10px">종목 마스터 설정이 필요합니다.</div>';
-      setBuyQuoteStatus('종목 마스터가 아직 연결되지 않았습니다. 수동 입력은 계속 사용할 수 있습니다.','err');
+      box.innerHTML='<div class="empty" style="padding:10px">종목 검색 중 오류가 발생했습니다.</div>';
+      setBuyQuoteStatus('종목 검색 연결을 확인해 주세요. 수동 입력은 계속 사용할 수 있습니다.','err');
     }
-  },220);
+  },180);
 }
 function selectBuyStock(id,code,name,market,exchange,quoteExchange,currency,assetType){
   const row=state.buyTable.rows.find(r=>r.id===id);if(!row)return;
@@ -3237,10 +3312,18 @@ async function refreshBuyQuotes(){
       if(row&&Number(q.price)>0){row.price=Number(q.price);row.currency=String(q.currency||row.currency||'KRW').toUpperCase();row.exchange=String(q.exchange||row.exchange||'').toUpperCase();row.quoteExchange=String(q.quoteExchange||row.quoteExchange||'').toUpperCase();row.quoteAt=String(q.quoteAt||new Date().toISOString());updated++;}
     });
     persistState();renderBuyTable();
-    setBuyQuoteStatus(updated?`${updated}개 종목 현재가를 업데이트했습니다.`:'조회된 현재가가 없습니다.','ok');
+    const backendErrors=Array.isArray(data?.errors)?data.errors:[];
+    if(updated){
+      setBuyQuoteStatus(`${updated}개 종목 현재가를 업데이트했습니다.${backendErrors.length?` · ${backendErrors.length}개 조회 실패`:''}`,'ok');
+    }else if(backendErrors.length){
+      setBuyQuoteStatus(`현재가 조회 실패: ${backendErrors[0]?.message||'알 수 없는 오류'}`,'err');
+    }else{
+      setBuyQuoteStatus('조회된 현재가가 없습니다.','err');
+    }
   }catch(e){
     console.warn('quote refresh failed',e);
-    setBuyQuoteStatus('현재가 자동조회 백엔드 설정이 아직 완료되지 않았습니다. 직접 입력은 정상 사용 가능합니다.','err');
+    const detail=String(e?.message||e||'').trim();
+    setBuyQuoteStatus(detail?`현재가 조회 오류: ${detail}`:'현재가 조회에 실패했습니다. stock-quote 연결을 확인해 주세요.','err');
   }
 }
 function renderBuyTable(){
